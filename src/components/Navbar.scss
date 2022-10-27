@@ -1,0 +1,33 @@
+@import "../styles/variables.scss";
+
+.navbar {
+  border: $test;
+  background-color: green;
+  height: 120px;
+  padding: 0px 20px 0px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-name {
+  font-family: $font-family-logo;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+}
+
+.logo-image {
+  border: $test3;
+  // border-radius: 50%;
+  height: 115px;
+  width: 140px;
+}
+
+.nav-buttons {
+  border: none;
+  background-color: transparent;
+  margin: 0em 0.3em 0em 0.3em;
+  font-size: 1.5em;
+}
