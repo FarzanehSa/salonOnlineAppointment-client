@@ -7,23 +7,22 @@ import './stylist.scss';
 
 const Stylist = () => {
 
-  // const [id, setId] = useState(Number(useParams().id));
   const id = Number(useParams().id);
-  const { stylists, schedule } = useContext(GeneralContext);
+  const { stylists, availability } = useContext(GeneralContext);
   const [stylist, setStylist] = useState({});
-  const [stylistSchedule, setStylistSchedule] = useState([]);
+  const [stylistAvailability, setStylistAvailability] = useState([]);
 
   useEffect(() => {
 
     const myStylist = stylists.filter(sty => sty.id === id)[0];
-    const mySchedule = schedule.filter(sch => sch.name === myStylist.name);
+    const myAvailability = availability.filter(sch => sch.name === myStylist.name);
 
     setStylist(prev => myStylist);
-    setStylistSchedule(prev => mySchedule);
+    setStylistAvailability(prev => myAvailability);
 
   }, [stylists]); // eslint-disable-line
   
-  const scheduleArray = stylistSchedule.map(row => {
+  const availabilityArray = stylistAvailability.map(row => {
     return (
       <tr className='single-stylist-schedule-row' key={row.id}>
         <td className='single-stylist-schedule-day'>{row.day} </td>
@@ -32,7 +31,7 @@ const Stylist = () => {
       )
     })
 
-  console.log('👩‍🎨', stylist, stylistSchedule);
+  console.log('👩‍🎨', stylist, stylistAvailability);
 
   return (
     (stylist) && (
@@ -44,12 +43,12 @@ const Stylist = () => {
             <span className='single-stylist-name'>{stylist.name}</span>
             <span className='single-stylist-level'>{stylist.level}</span>
           </div>
-          <div className='schedule-box'>
+          <div className='availability-box'>
             <table>
               <tr className="table-title">
                 <th>hours</th>
               </tr>
-              {scheduleArray}
+              {availabilityArray}
             </table>
           </div>
         </div>
