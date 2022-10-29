@@ -24,14 +24,25 @@ const Services = () => {
     }));
   }
 
+  const reqClicked = function(id) {
+    console.log(id)
+  }
+
   const groupsArray = visGroup.map(row => {
 
     const filteredService = services.filter(service => service.groupid === row.id)
       .map(xService => {
         // service-box
         return (
-          <div className="service-box" style={{display: row.vis ? 'flex' : 'none' }}>
-            <span>{xService.service}</span>
+          <div className="service-box" style={{display: row.vis ? 'flex' : 'none' }} key={xService.id}>
+            <div className="service-box-name-price">
+              <span className="service-name">{xService.service}</span>
+              <span className="service-price">Price(min): ${xService.price}</span>
+            </div>
+            <p className="service-description">{xService.description}</p>
+            <div className="service-button">
+              <button className="btn-service-req" onClick={() => reqClicked(xService.id)}>Request</button>
+            </div>
           </div>
         )
       })
@@ -39,15 +50,16 @@ const Services = () => {
     return (
       <div className="service-group" key={row.id}>
         <div className="service-group-box" onClick={() => groupClicked(row.id)}>
-          <span className="arrow"><FontAwesomeIcon icon="fa-solid fa-chevron-down" /></span>
+          <span className="arrow">
+            {(row.vis) && <FontAwesomeIcon icon="fa-solid fa-chevron-down" />}
+            {(!row.vis) && <FontAwesomeIcon icon="fa-solid fa-chevron-right" />}
+          </span>
           <span className="service-group-line">{row.group}</span>
         </div>
         <div className="service-box-main">{filteredService}</div>
       </div>
     );
   });
-
-  console.log(visGroup);
 
   return (
     (serviceGroups) && (

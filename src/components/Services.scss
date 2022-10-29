@@ -31,7 +31,6 @@
 }
 
 .service-box-main {
-  border: $test;
   width: 100%;
   margin: 1em;
   display: flex;
@@ -40,11 +39,44 @@
 }
 
 .service-box {
-  border: $test;
-  width: 40%;
+  border: 0.5px solid #B8C6DB;;
+  border-radius: 5px;
+  background: #F5F7FA;
+  width: 45%;
   min-width: 300px;
-  height: 10em;
+  min-height: 10em;
   margin: 0.5em;
-  color: rebeccapurple;
+  padding: 1em;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .service-box-name-price {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .service-name {
+    font-weight: 600;
+  }
+  .service-description {
+    text-align: justify;
+  }
+  
+  .service-button {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .btn-service-req {
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    padding: 0.5em 1em;
+
+    background-color: #eb6663;
+    color: white;
+  }
 }
 
