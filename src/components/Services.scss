@@ -1,1 +1,50 @@
 @import "../styles/variables.scss";
+
+.service-group {
+  // background-color: gray;
+  // background-image: linear-gradient(#B8C6DB, #F5F7FA);
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+  .service-group-box {
+    background: linear-gradient(to right, #B8C6DB, #F5F7FA);
+    margin: 1em;
+    height: 4em;
+    width: 100%;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  .service-group-line {
+    font-size: 1.2em;
+    padding-left: 0.2em;
+  }
+  
+  .arrow {
+    font-size: 0.9em;
+    padding-left: 2em;
+  }
+}
+
+.service-box-main {
+  border: $test;
+  width: 100%;
+  margin: 1em;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.service-box {
+  border: $test;
+  width: 40%;
+  min-width: 300px;
+  height: 10em;
+  margin: 0.5em;
+  color: rebeccapurple;
+}
+
