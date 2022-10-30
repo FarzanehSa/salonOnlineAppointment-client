@@ -1,0 +1,23 @@
+@import "../styles/variables.scss";
+
+.booking {
+
+  .weekly-cal {
+    margin: 4em;
+    display: flex;
+    justify-content: center;
+
+    .btn-shift-week {
+      border: none;
+      background: transparent;
+      font-size: 1.2em;
+      cursor: pointer;
+      padding: 0.7em;
+
+      &:disabled {
+        pointer-events: none;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
