@@ -8,6 +8,7 @@ import Navbar from './components/Navbar';
 import Stylists from './components/Stylists';
 import Services from './components/Services';
 import Stylist from './components/Stylist';
+import Booking from './components/Booking';
 import './App.scss';
 
 function App() {
@@ -16,7 +17,9 @@ function App() {
   const [availability, setAvailability] = useState([]);
   const [serviceGroups, setServiceGroups] = useState([]);
   const [services, setServices] = useState([]);
-
+  const [service, setService] = useState();
+  const [stylist, setStylist] = useState();
+  
   useEffect(() => {
 
     const f1 = axios.get('http://localhost:7100/api/stylists');
@@ -32,8 +35,13 @@ function App() {
       });
   }, []);
 
+  const reqClicked = function(serviceId) {
+    setService(serviceId);
+  }
+
   console.log('👨🏼‍🎨👩‍🎨', stylists, availability);
   console.log('✂️🪒', serviceGroups, services);
+  console.log('🪒', service);
 
   return (
     <main className="layout">
@@ -44,7 +52,8 @@ function App() {
           <Routes>
             <Route path='/stylists' element={<Stylists />}/>
             <Route path='/stylists/:id' element={<Stylist />}/>
-            <Route path='/services' element={<Services />}/>
+            <Route path='/services' element={<Services reqClicked={reqClicked}/>}/>
+            <Route path='/booking' element={<Booking service={service} />}/>
           </Routes>
         </div>
 

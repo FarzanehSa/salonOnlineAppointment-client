@@ -14,6 +14,7 @@
     margin: 1em;
     height: 4em;
     width: 100%;
+    cursor: pointer;
 
     display: flex;
     justify-content: flex-start;
@@ -39,7 +40,7 @@
 }
 
 .service-box {
-  border: 0.5px solid #B8C6DB;;
+  border: 0.5px solid #B8C6DB;
   border-radius: 5px;
   background: #F5F7FA;
   width: 45%;
@@ -74,9 +75,12 @@
     border-radius: 5px;
     font-size: 1.1em;
     padding: 0.5em 1em;
+    cursor: pointer;
 
     background-color: #eb6663;
     color: white;
+
+    
   }
 }
 

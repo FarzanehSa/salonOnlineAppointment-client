@@ -1,11 +1,12 @@
 import { useContext, useState, useEffect } from "react";
+import { NavLink } from 'react-router-dom';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import GeneralContext from "../contexts/GeneralContext";
 import './Services.scss';
 
-const Services = () => {
+const Services = ({reqClicked}) => {
 
   const { serviceGroups, services } = useContext(GeneralContext);
   const [visGroup, setVisGroup] = useState([]);
@@ -24,10 +25,6 @@ const Services = () => {
     }));
   }
 
-  const reqClicked = function(id) {
-    console.log(id)
-  }
-
   const groupsArray = visGroup.map(row => {
 
     const filteredService = services.filter(service => service.groupid === row.id)
@@ -41,7 +38,7 @@ const Services = () => {
             </div>
             <p className="service-description">{xService.description}</p>
             <div className="service-button">
-              <button className="btn-service-req" onClick={() => reqClicked(xService.id)}>Request</button>
+              <button className="btn-service-req" onClick={() => reqClicked(xService.id)}><NavLink to="/booking">Request</NavLink></button>
             </div>
           </div>
         )

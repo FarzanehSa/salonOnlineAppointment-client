@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import GeneralContext from "../contexts/GeneralContext";
 
-import './stylist.scss';
+import './Stylist.scss';
 
 const Stylist = () => {
 
