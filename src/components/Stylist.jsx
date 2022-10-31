@@ -45,10 +45,14 @@ const Stylist = () => {
           </div>
           <div className='availability-box'>
             <table>
-              <tr className="table-title">
-                <th>hours</th>
-              </tr>
-              {availabilityArray}
+              <thead>
+                <tr className="table-title">
+                  <th>hours</th>
+                </tr>
+              </thead>
+              <tbody>
+                {availabilityArray}
+              </tbody>
             </table>
           </div>
         </div>
