@@ -8,12 +8,15 @@ export default function useForm(baseFormData, action) {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleChangeStylists = (event) => {
+    setFormData({ ...formData, stylists: event.target.value })
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     action(formData);
-    console.log('hh');
     setFormData(baseFormData);
   };
 
-  return { formData, handleChange, handleSubmit };
+  return { formData, handleChange, handleSubmit, handleChangeStylists };
 }

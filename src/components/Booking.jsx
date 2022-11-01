@@ -1,11 +1,14 @@
-import { useContext, useState, useEffect } from "react";
+import { react, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
-import * as React from 'react';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import ListSubheader from '@mui/material/ListSubheader';
+
+import Checkbox from '@mui/material/Checkbox';
 import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import ListSubheader from '@mui/material/ListSubheader';
+import ListItemText from '@mui/material/ListItemText';
+import MenuItem from '@mui/material/MenuItem';
+import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 
 import GeneralContext from "../contexts/GeneralContext";
@@ -16,9 +19,33 @@ import WeeklyCalender from './WeeklyCalender';
 import useForm from "../hooks/useForm";
 import './Booking.scss';
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 7 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+const names = [
+  'Oliver Hansen',
+  'Van Henry',
+  'April Tucker',
+  'Ralph Hubbard',
+  'Omar Alexander',
+  'Carlos Abbott',
+  'Miriam Wagner',
+  'Bradley Wilkerson',
+  'Virginia Andrews',
+  'Kelly Snyder',
+];
+
 const Booking = ({service, onSearch}) => {
 
-  // const { stylists, availability } = useContext(GeneralContext);
+  const { stylists, availability, serviceGroups, services } = useContext(GeneralContext);
 
   const week = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
   const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -27,12 +54,14 @@ const Booking = ({service, onSearch}) => {
   const [weekInfo, setWeekInfo] = useState([]);
   const now = new Date();
   const [today, setToday] = useState("");
-  const [searchFormBase, setSearchFormBase] = useState({service: ""});
+  const [searchFormBase, setSearchFormBase] = useState({service: (service || ""), stylists: [], date: ""});
   
   useEffect(() => {
     setDayNum(getDayNum());
     setToday(now.toLocaleDateString())
   } ,[]);
+
+
 
   useEffect(() => {
     setWeekInfo([
@@ -88,8 +117,6 @@ const Booking = ({service, onSearch}) => {
     ])
   } ,[dayNum, weekNum]);
 
-  
-
   function calDate(dayNum, todayNum, weekNum) {
     const today = new Date();
     const myDate = new Date(today);
@@ -111,7 +138,21 @@ const Booking = ({service, onSearch}) => {
     setWeekInfo(prev => afterSelect);
   }
 
-  const { formData, handleChange, handleSubmit } = useForm(searchFormBase, onSearch);
+  const serviceSelectArray = serviceGroups.map(gRow => {
+    const goodServices = services.filter(sRow => gRow.id === sRow.groupid);
+    let result = [];
+    for(let i = -1; i < goodServices.length; i++) {
+      if (i === -1) {
+        result.push(<ListSubheader>{gRow.group}</ListSubheader>);
+      }
+      else {
+        result.push(<MenuItem value={goodServices[i].id}>{goodServices[i].service}</MenuItem>);
+      }
+    }
+    return result;
+  })
+
+  const { formData, handleChange, handleSubmit, handleChangeStylists } = useForm(searchFormBase, onSearch);
   console.log(formData);
   // console.log(weekInfo);
 
@@ -126,25 +167,41 @@ const Booking = ({service, onSearch}) => {
         </div>
         <form onSubmit={handleSubmit}>
 
-          <FormControl sx={{ m: 1, minWidth: 120 }} >
-            
-            <InputLabel htmlFor="grouped-select">Grouping</InputLabel>
+          <FormControl sx={{ m:1, minWidth: 300 }} >
+            <InputLabel htmlFor="service-select">Select Service</InputLabel>
             <Select 
-              id="grouped-select"
+              id="service-select"
               name="service"
               onChange={handleChange}
               value={formData.service} 
-              label="Grouping"
+              label="service-select"
+              MenuProps={MenuProps}
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <ListSubheader>Category 1</ListSubheader>
-              <MenuItem value={1}>Option 1</MenuItem>
-              <MenuItem value={2}>Option 2</MenuItem>
-              <ListSubheader>Category 2</ListSubheader>
-              <MenuItem value={3}>Option 3</MenuItem>
-              <MenuItem value={4}>Option 4</MenuItem>
+              {serviceSelectArray}
+            </Select>
+          </FormControl>
+          <FormControl sx={{ m: 1, width: 300 }}>
+            <InputLabel htmlFor="stylists-select">Stylists</InputLabel>
+            <Select
+              // labelId="demo-multiple-checkbox-label"
+              id="stylists-select"
+              multiple
+              name="stylists"
+              value={formData.stylists}
+              onChange={handleChangeStylists}
+              label="service-select"
+              renderValue={(selected) => {
+                if (formData.stylists.length === 1) return selected
+                return `${formData.stylists.length} stylists selected`
+              }}
+              MenuProps={MenuProps}
+            >
+              {names.map((name) => (
+                <MenuItem key={name} value={name}>
+                  <Checkbox checked={formData.stylists.indexOf(name) > -1} />
+                  <ListItemText primary={name} />
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
           <button>submit</button>
