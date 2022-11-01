@@ -1,13 +1,22 @@
 import { useContext, useState, useEffect } from "react";
+import axios from "axios";
+
+import * as React from 'react';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import ListSubheader from '@mui/material/ListSubheader';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 import GeneralContext from "../contexts/GeneralContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import WeeklyCalender from './WeeklyCalender'
+import WeeklyCalender from './WeeklyCalender';
+import useForm from "../hooks/useForm";
 import './Booking.scss';
 
-const Booking = (props) => {
+const Booking = ({service, onSearch}) => {
 
   // const { stylists, availability } = useContext(GeneralContext);
 
@@ -18,6 +27,7 @@ const Booking = (props) => {
   const [weekInfo, setWeekInfo] = useState([]);
   const now = new Date();
   const [today, setToday] = useState("");
+  const [searchFormBase, setSearchFormBase] = useState({service: ""});
   
   useEffect(() => {
     setDayNum(getDayNum());
@@ -78,6 +88,8 @@ const Booking = (props) => {
     ])
   } ,[dayNum, weekNum]);
 
+  
+
   function calDate(dayNum, todayNum, weekNum) {
     const today = new Date();
     const myDate = new Date(today);
@@ -99,7 +111,9 @@ const Booking = (props) => {
     setWeekInfo(prev => afterSelect);
   }
 
-  console.log(weekInfo);
+  const { formData, handleChange, handleSubmit } = useForm(searchFormBase, onSearch);
+  console.log(formData);
+  // console.log(weekInfo);
 
   return (
     (dayNum &&
@@ -110,8 +124,33 @@ const Booking = (props) => {
           <WeeklyCalender weekInfo={weekInfo} weekNum={weekNum} dayClicked={dayClicked} today={today}/>
           <button className="btn-shift-week" onClick={() => {setWeekNum(prev => prev + 1)}}><FontAwesomeIcon icon="fa-solid fa-chevron-right"/></button>
         </div>
+        <form onSubmit={handleSubmit}>
 
-        {/* {props.service} */}
+          <FormControl sx={{ m: 1, minWidth: 120 }} >
+            
+            <InputLabel htmlFor="grouped-select">Grouping</InputLabel>
+            <Select 
+              id="grouped-select"
+              name="service"
+              onChange={handleChange}
+              value={formData.service} 
+              label="Grouping"
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <ListSubheader>Category 1</ListSubheader>
+              <MenuItem value={1}>Option 1</MenuItem>
+              <MenuItem value={2}>Option 2</MenuItem>
+              <ListSubheader>Category 2</ListSubheader>
+              <MenuItem value={3}>Option 3</MenuItem>
+              <MenuItem value={4}>Option 4</MenuItem>
+            </Select>
+          </FormControl>
+          <button>submit</button>
+        </form>
+
+        
       </div>
     )
   )

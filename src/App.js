@@ -53,7 +53,7 @@ function App() {
             <Route path='/stylists' element={<Stylists />}/>
             <Route path='/stylists/:id' element={<Stylist />}/>
             <Route path='/services' element={<Services reqClicked={reqClicked}/>}/>
-            <Route path='/booking' element={<Booking service={service} />}/>
+            <Route path='/booking' element={<Booking service={service} onSearch={(formData) => console.log(formData)}/>}/>
           </Routes>
         </div>
 
