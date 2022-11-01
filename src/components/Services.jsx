@@ -38,7 +38,7 @@ const Services = ({reqClicked}) => {
             </div>
             <p className="service-description">{xService.description}</p>
             <div className="service-button">
-              <button className="btn-service-req" onClick={() => reqClicked(xService.id)}><NavLink to="/booking">Request</NavLink></button>
+              <button className="btn-service-req" onClick={() => reqClicked(xService)}><NavLink to="/booking">Request</NavLink></button>
             </div>
           </div>
         )
