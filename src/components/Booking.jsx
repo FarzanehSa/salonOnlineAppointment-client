@@ -56,9 +56,13 @@ const Booking = ({service, onSearch}) => {
   const [today, setToday] = useState("");
   const [searchFormBase, setSearchFormBase] = useState({service: (service || ""), stylists: [], date: ""});
   
+  const { formData, handleChange, handleSubmit, handleChangeStylists } = useForm(searchFormBase, onSearch);
+
+
   useEffect(() => {
     setDayNum(getDayNum());
-    setToday(now.toLocaleDateString())
+    setToday(now.toLocaleDateString());
+    
   } ,[]);
 
 
@@ -146,13 +150,23 @@ const Booking = ({service, onSearch}) => {
         result.push(<ListSubheader>{gRow.group}</ListSubheader>);
       }
       else {
-        result.push(<MenuItem value={goodServices[i].id}>{goodServices[i].service}</MenuItem>);
+        result.push(<MenuItem value={goodServices[i]}>{goodServices[i].service}</MenuItem>);
       }
     }
     return result;
   })
 
-  const { formData, handleChange, handleSubmit, handleChangeStylists } = useForm(searchFormBase, onSearch);
+  const StylistSelectArray = stylists.map(row => {
+    return (
+      <MenuItem key={row.id} value={row.id}>
+        <Checkbox checked={formData.stylists.indexOf(row.id) > -1} />
+        <ListItemText primary={row.name} />
+      </MenuItem>
+    )
+  })
+
+  
+
   console.log(formData);
   // console.log(weekInfo);
 
@@ -196,12 +210,13 @@ const Booking = ({service, onSearch}) => {
               }}
               MenuProps={MenuProps}
             >
-              {names.map((name) => (
+              {/* {names.map((name) => (
                 <MenuItem key={name} value={name}>
                   <Checkbox checked={formData.stylists.indexOf(name) > -1} />
                   <ListItemText primary={name} />
                 </MenuItem>
-              ))}
+              ))} */}
+              {StylistSelectArray}
             </Select>
           </FormControl>
           <button>submit</button>
