@@ -38,14 +38,14 @@ const Services = ({reqClicked}) => {
             </div>
             <p className="service-description">{xService.description}</p>
             <div className="service-button">
-              <button className="btn-service-req" onClick={() => reqClicked(xService)}><NavLink to="/booking">Request</NavLink></button>
+              <NavLink to="/booking" onClick={() => reqClicked(xService)} ><button className="btn-service-req" >Request</button></NavLink>
             </div>
           </div>
         )
       })
 
     return (
-      <div className="service-group" key={row.id}>
+      <div className="service-group" key={row.group}>
         <div className="service-group-box" onClick={() => groupClicked(row.id)}>
           <span className="arrow">
             {(row.vis) && <FontAwesomeIcon icon="fa-solid fa-chevron-down" />}
