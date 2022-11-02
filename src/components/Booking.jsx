@@ -30,19 +30,6 @@ const MenuProps = {
   },
 };
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
-
 const Booking = ({service, onSearch}) => {
 
   const { stylists, availability, serviceGroups, services } = useContext(GeneralContext);
@@ -54,16 +41,29 @@ const Booking = ({service, onSearch}) => {
   const [weekInfo, setWeekInfo] = useState([]);
   const now = new Date();
   const [today, setToday] = useState("");
+  const [qualifiedStylists, setQualifiedStylists] = useState();
   const [searchFormBase, setSearchFormBase] = useState({service: (service || ""), stylists: [], date: ""});
-  
   const { formData, handleChange, handleSubmit, handleChangeStylists } = useForm(searchFormBase, onSearch);
 
 
   useEffect(() => {
     setDayNum(getDayNum());
     setToday(now.toLocaleDateString());
-    
+  
   } ,[]);
+  
+  useEffect(() => {
+  
+      const y = serviceGroups.filter(row => row.id === formData.service.groupid)[0]
+      
+      if (y) {
+        const x = y.stylists.map(xId => {
+          return stylists.filter(stylist => stylist.id === xId)[0]
+        });
+        setQualifiedStylists(x);
+      }
+    
+  } ,[formData.service]);
 
 
 
@@ -156,10 +156,11 @@ const Booking = ({service, onSearch}) => {
     return result;
   })
 
-  const StylistSelectArray = stylists.map(row => {
+  const StylistSelectArray = (qualifiedStylists || stylists).map(row => {
+
     return (
-      <MenuItem key={row.id} value={row.id}>
-        <Checkbox checked={formData.stylists.indexOf(row.id) > -1} />
+      <MenuItem key={row.id} value={row}>
+        <Checkbox checked={formData.stylists.map(stylist => stylist.id).indexOf(row.id) > -1} />
         <ListItemText primary={row.name} />
       </MenuItem>
     )
@@ -168,6 +169,7 @@ const Booking = ({service, onSearch}) => {
   
 
   console.log(formData);
+  console.log(qualifiedStylists);
   // console.log(weekInfo);
 
   return (
@@ -205,17 +207,11 @@ const Booking = ({service, onSearch}) => {
               onChange={handleChangeStylists}
               label="service-select"
               renderValue={(selected) => {
-                if (formData.stylists.length === 1) return selected
+                if (formData.stylists.length === 1) return formData.stylists[0].name;
                 return `${formData.stylists.length} stylists selected`
               }}
               MenuProps={MenuProps}
             >
-              {/* {names.map((name) => (
-                <MenuItem key={name} value={name}>
-                  <Checkbox checked={formData.stylists.indexOf(name) > -1} />
-                  <ListItemText primary={name} />
-                </MenuItem>
-              ))} */}
               {StylistSelectArray}
             </Select>
           </FormControl>
