@@ -10,11 +10,16 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
 import GeneralContext from "../contexts/GeneralContext";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import {getWeekNum, calDate, formatDate, getMonthName} from '../helper/dateHelper'
 import WeeklyCalender from './WeeklyCalender';
 import useForm from "../hooks/useForm";
 import './Booking.scss';
@@ -34,112 +39,96 @@ const Booking = ({service, onSearch}) => {
 
   const { stylists, availability, serviceGroups, services } = useContext(GeneralContext);
 
-  const week = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const [weekNum, setWeekNum] = useState(0);
-  const [dayNum, setDayNum] = useState();
+  const [baseDay, setBaseDay] = useState(new Date());
   const [weekInfo, setWeekInfo] = useState([]);
-  const now = new Date();
-  const [today, setToday] = useState("");
+  const [daySelected, setDaySelected] = useState();
+  const [monthName, setMonthName] = useState();
   const [qualifiedStylists, setQualifiedStylists] = useState();
-  const [searchFormBase, setSearchFormBase] = useState({service: (service || ""), stylists: [], date: ""});
-  const { formData, handleChange, handleSubmit, handleChangeStylists } = useForm(searchFormBase, onSearch);
+  const [searchFormBase, setSearchFormBase] = useState({service: (service || ""), stylists: [], date: (daySelected || new Date())});
+  const { formData, handleChange, handleSubmit, handleChangeStylists, handleChangeDate } = useForm(searchFormBase, onSearch);
 
 
   useEffect(() => {
-    setDayNum(getDayNum());
-    setToday(now.toLocaleDateString());
-  
-  } ,[]);
+    setWeekNum(getWeekNum(baseDay))
+  }, []);
   
   useEffect(() => {
-  
       const y = serviceGroups.filter(row => row.id === formData.service.groupid)[0]
-      
       if (y) {
         const x = y.stylists.map(xId => {
           return stylists.filter(stylist => stylist.id === xId)[0]
         });
         setQualifiedStylists(x);
       }
-    
-  } ,[formData.service]);
-
-
+  }, [formData.service]);
 
   useEffect(() => {
     setWeekInfo([
       {
         name: "Monday",
-        select: false,
-        fullDate: calDate(1, dayNum, weekNum),
-        date: calDate(1, dayNum, weekNum).toLocaleDateString(),
-        month: months[Number(calDate(1, dayNum, weekNum).toLocaleDateString().split('/')[0]) - 1]
+        select: baseDay.toString() === calDate(1, baseDay, weekNum).toString(),
+        fullDate: calDate(1, baseDay, weekNum),
+        firstDay: true
       },
       {
         name: "Tuesday",
-        select: false,
-        fullDate: calDate(2, dayNum, weekNum),
-        date: calDate(2, dayNum, weekNum).toLocaleDateString(),
-        month: months[Number(calDate(1, dayNum, weekNum).toLocaleDateString().split('/')[0]) - 1]
+        select: baseDay.toString() === calDate(2, baseDay, weekNum).toString(),
+        fullDate: calDate(2, baseDay, weekNum),
       },
       {
          name: "Wednesday",
-         select: false,
-         fullDate: calDate(3, dayNum, weekNum),
-         date: calDate(3, dayNum, weekNum).toLocaleDateString(),
-         month: months[Number(calDate(1, dayNum, weekNum).toLocaleDateString().split('/')[0]) - 1]
+         select: baseDay.toString() === calDate(3, baseDay, weekNum).toString(),
+         fullDate: calDate(3, baseDay, weekNum),
        },
        {
          name: "Thursday",
-         select: false,
-         fullDate: calDate(4, dayNum, weekNum),
-         date: calDate(4, dayNum, weekNum).toLocaleDateString(),
-         month: months[Number(calDate(1, dayNum, weekNum).toLocaleDateString().split('/')[0]) - 1]
+         select: baseDay.toString() === calDate(4, baseDay, weekNum).toString(),
+         fullDate: calDate(4, baseDay, weekNum),
        },
        {
          name: "Friday",
-         select: false,
-         fullDate: calDate(5, dayNum, weekNum),
-         date: calDate(5, dayNum, weekNum).toLocaleDateString(),
-         month: months[Number(calDate(1, dayNum, weekNum).toLocaleDateString().split('/')[0]) - 1]
+         select: baseDay.toString() === calDate(5, baseDay, weekNum).toString(),
+         fullDate: calDate(5, baseDay, weekNum),
        },
        {
          name: "Saturday",
-         select: false,
-         fullDate: calDate(6, dayNum, weekNum),
-         date: calDate(6, dayNum, weekNum).toLocaleDateString(),
-         month: months[Number(calDate(1, dayNum, weekNum).toLocaleDateString().split('/')[0]) - 1]
+         select: baseDay.toString() === calDate(6, baseDay, weekNum).toString(),
+         fullDate: calDate(6, baseDay, weekNum),
        },
        {
          name: "Sunday",
-         select: false,
-         fullDate: calDate(7, dayNum, weekNum),
-         date: calDate(7, dayNum, weekNum).toLocaleDateString(),
-         month: months[Number(calDate(1, dayNum, weekNum).toLocaleDateString().split('/')[0]) - 1]
+         select: baseDay.toString() === calDate(7, baseDay, weekNum).toString(),
+         fullDate: calDate(7, baseDay, weekNum),
        }
     ])
-  } ,[dayNum, weekNum]);
+  }, [weekNum, baseDay]);
 
-  function calDate(dayNum, todayNum, weekNum) {
-    const today = new Date();
-    const myDate = new Date(today);
-    myDate.setDate(myDate.getDate() + (dayNum - todayNum) + (7 * weekNum));
-    return myDate;
-  }
+  useEffect(() => {  
+    setBaseDay(formData.date)
+  }, [formData.date])
 
-  function getDayNum() {
-    const today = new Date();
-    const dayName = today.toString().split(' ')[0];
-    return (week.indexOf(dayName) + 1)
-  }
+  useEffect(() => {
+    setWeekNum(getWeekNum(baseDay));
+  }, [baseDay])
+  
+  // show name of day (selected one or monday)
+  useEffect(() => {
+    if (weekInfo.length) setMonthName(getMonthName(weekInfo[0].fullDate));
+    for (let i = 0;  i < weekInfo.length; i++) {
+      if (weekInfo[i].select) setMonthName(getMonthName(weekInfo[i].fullDate))
+    }
+  }, [weekInfo]);
 
-  function dayClicked(date) {
+  function dayClicked(recievedDate) {
     const afterSelect = weekInfo.map(row => {
-      if (row.date === date) return {...row, select: true};
+      if (row.fullDate === recievedDate) {
+        return {...row, select: true};
+      }
       return {...row, select: false};
     })
     setWeekInfo(prev => afterSelect);
+    handleChangeDate(recievedDate);
   }
 
   const serviceSelectArray = serviceGroups.map(gRow => {
@@ -157,7 +146,6 @@ const Booking = ({service, onSearch}) => {
   })
 
   const StylistSelectArray = (qualifiedStylists || stylists).map(row => {
-
     return (
       <MenuItem key={row.id} value={row}>
         <Checkbox checked={formData.stylists.map(stylist => stylist.id).indexOf(row.id) > -1} />
@@ -166,59 +154,78 @@ const Booking = ({service, onSearch}) => {
     )
   })
 
-  
-
-  console.log(formData);
-  console.log(qualifiedStylists);
+  // console.log(formData);
+  // console.log(qualifiedStylists);
+  // console.log("📅",daySelected);
+  // console.log("📅📅",baseDay);
   // console.log(weekInfo);
 
   return (
-    (dayNum &&
-      <div className='booking'>
-
-        <div className="weekly-cal">
-          <button className="btn-shift-week" onClick={() => {setWeekNum(prev => prev - 1)}} disabled={weekNum === 0}><FontAwesomeIcon icon="fa-solid fa-chevron-left"/></button>
-          <WeeklyCalender weekInfo={weekInfo} weekNum={weekNum} dayClicked={dayClicked} today={today}/>
-          <button className="btn-shift-week" onClick={() => {setWeekNum(prev => prev + 1)}}><FontAwesomeIcon icon="fa-solid fa-chevron-right"/></button>
-        </div>
+    (baseDay &&
+      <div className='booking-page'>
         <form onSubmit={handleSubmit}>
+          <div className="search-form">
+            <FormControl sx={{ m:1, minWidth: 300 }} className="search-form-service">
+              <InputLabel htmlFor="service-select">Select Service</InputLabel>
+              <Select 
+                id="service-select"
+                name="service"
+                onChange={handleChange}
+                value={formData.service} 
+                label="service-select"
+                MenuProps={MenuProps}
+              >
+                {serviceSelectArray}
+              </Select>
+            </FormControl>
 
-          <FormControl sx={{ m:1, minWidth: 300 }} >
-            <InputLabel htmlFor="service-select">Select Service</InputLabel>
-            <Select 
-              id="service-select"
-              name="service"
-              onChange={handleChange}
-              value={formData.service} 
-              label="service-select"
-              MenuProps={MenuProps}
-            >
-              {serviceSelectArray}
-            </Select>
-          </FormControl>
-          <FormControl sx={{ m: 1, width: 300 }}>
-            <InputLabel htmlFor="stylists-select">Stylists</InputLabel>
-            <Select
-              // labelId="demo-multiple-checkbox-label"
-              id="stylists-select"
-              multiple
-              name="stylists"
-              value={formData.stylists}
-              onChange={handleChangeStylists}
-              label="service-select"
-              renderValue={(selected) => {
-                if (formData.stylists.length === 1) return formData.stylists[0].name;
-                return `${formData.stylists.length} stylists selected`
-              }}
-              MenuProps={MenuProps}
-            >
-              {StylistSelectArray}
-            </Select>
-          </FormControl>
-          <button>submit</button>
+            <FormControl sx={{ m: 1, width: 300 }} className="search-form-stylist">
+              <InputLabel htmlFor="stylists-select" shrink={true}>Select Stylist</InputLabel>
+              <Select
+                id="stylists-select"
+                multiple
+                name="stylists"
+                displayEmpty
+                value={formData.stylists}
+                onChange={handleChangeStylists}
+                label="stylists-select"
+                notched={true}
+                renderValue={(selected) => {
+                  if (formData.stylists.length === 0) return `any stylist`;
+                  if (formData.stylists.length === 1) return formData.stylists[0].name;
+                  return `${formData.stylists.length} stylists selected`
+                }}
+                MenuProps={MenuProps}
+                // inputProps={{ 'aria-label': 'Without label' }}
+              >
+                {StylistSelectArray}
+              </Select>
+            </FormControl>
+            <div className="search-form-date">
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DesktopDatePicker
+                    name="date"
+                    label="Pick a Date"
+                    value={formData.date}
+                    minDate={new Date()}
+                    onClose={() => setWeekNum(getWeekNum(baseDay))}
+                    onChange={handleChangeDate}
+                    renderInput={(params) => <TextField {...params} />}
+                  />
+              </LocalizationProvider>
+            </div>
+            
+            <button>Search</button>
+          </div>
+          
         </form>
-
-        
+        <div className="weekly-cal">
+          <button className="btn-shift-week" onClick={() => {
+            setWeekNum(prev => prev - 1);}} disabled={weekNum === 0}><FontAwesomeIcon icon="fa-solid fa-chevron-left"/></button>
+          <WeeklyCalender weekInfo={weekInfo} weekNum={weekNum} dayClicked={dayClicked} monthName={monthName}/>
+          <button className="btn-shift-week" onClick={() => {
+            setWeekNum(prev => prev + 1);}}><FontAwesomeIcon icon="fa-solid fa-chevron-right"/></button>
+        </div>
       </div>
     )
   )
