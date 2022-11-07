@@ -1,6 +1,22 @@
 @import "../styles/variables.scss";
 
-.booking {
+.booking-page {
+
+  .search-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .search-form-service {
+      margin: 0.5em
+    }
+    .search-form-stylist {
+      margin: 0.5em
+    }
+    .search-form-date {
+      margin: 0.5em
+    }
+  }
 
   .weekly-cal {
     margin: 4em;
