@@ -39,9 +39,9 @@ function App() {
     setService(serviceId);
   }
 
-  console.log('👨🏼‍🎨👩‍🎨', stylists, availability);
-  console.log('✂️🪒', serviceGroups, services);
-  console.log('🪒', service);
+  // console.log('👨🏼‍🎨👩‍🎨', stylists, availability);
+  // console.log('✂️🪒', serviceGroups, services);
+  // console.log('🪒', service);
 
   return (
     <main className="layout">
