@@ -4,79 +4,79 @@
   // border: $test;
   margin: 1em;
   display: flex;
-}
-
-.single-stylist-info {
-  // border: $test2;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-
-.single-stylist-top {
-  // border: $test3;
-  display: flex;
-  justify-content: space-between;
-}
-
-.single-stylist-name-box {
-  // border: $test1;
-  padding: 1em;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-
-  .single-stylist-name {
-    font-size: 2em;
+  
+  .single-stylist-info {
+    // border: $test2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
   }
-  .single-stylist-level {
-    font-size: 1.5em;
-    padding-top: 0.5em;
-    font-style: italic;
+  
+  .single-stylist-top {
+    // border: $test3;
+    display: flex;
+    justify-content: space-between;
   }
-}
-
-.stylist-image {
-  height: 300px;
-  width: 300px;
-}
-
-.availability-box {
-  // border: $test2;
-  padding-top: 2em;
-  padding-right: 1em;
-  font-size: 1.3em;
-  display: flex;
-  flex-direction: column;
-  // align-items: flex-end;
-
-  .table-title {
-    font-weight: 600;
-    font-size: 1.2em;
-    text-align: left;
-    text-decoration: underline;
-  }
-
-  .single-stylist-schedule-row {
-    padding-top: 0.5em;
-    padding-bottom: 0.5em;
-
-    .single-stylist-schedule-day {
-      // border: $test2;
-      text-align: left;
-      
-    }  
-    
-    .single-stylist-schedule-time {
-      // border: $test2;
-      text-align: right;
+  
+  .single-stylist-name-box {
+    // border: $test1;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+  
+    .single-stylist-name {
+      font-size: 2em;
+    }
+    .single-stylist-level {
+      font-size: 1.5em;
+      padding-top: 0.5em;
+      font-style: italic;
     }
   }
-}
-
-.single-stylist-bio {
-  font-size: 1.2em;
-  padding: 1em;
-  text-align: justify;
+  
+  .stylist-image {
+    height: 300px;
+    width: 300px;
+  }
+  
+  .availability-box {
+    // border: $test2;
+    padding-top: 2em;
+    padding-right: 1em;
+    font-size: 1.3em;
+    display: flex;
+    flex-direction: column;
+    // align-items: flex-end;
+  
+    .table-title {
+      font-weight: 600;
+      font-size: 1.2em;
+      text-align: left;
+      text-decoration: underline;
+    }
+  
+    .single-stylist-schedule-row {
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
+  
+      .single-stylist-schedule-day {
+        // border: $test2;
+        text-align: left;
+        
+      }  
+      
+      .single-stylist-schedule-time {
+        // border: $test2;
+        text-align: right;
+      }
+    }
+  }
+  
+  .single-stylist-bio {
+    font-size: 1.2em;
+    padding: 1em;
+    text-align: justify;
+  }
 }
