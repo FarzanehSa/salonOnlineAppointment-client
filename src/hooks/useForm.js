@@ -37,7 +37,7 @@ export default function useForm(baseFormData, action) {
   const handleSubmit = (event) => {
     event.preventDefault();
     action(formData);
-    setFormData(baseFormData);
+    // setFormData(baseFormData);
   };
 
   return { formData, handleChange, handleSubmit, handleChangeStylists, handleChangeDate };

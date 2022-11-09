@@ -35,9 +35,9 @@ const MenuProps = {
   },
 };
 
-const Booking = ({service, onSearch}) => {
+const Booking = ({service, onSearch, timeClicked }) => {
 
-  const { stylists, availability, serviceGroups, services } = useContext(GeneralContext);
+  const { stylists, availability, serviceGroups, services, allSpots, allBooked, setAllBooked, setAllSpots } = useContext(GeneralContext);
 
   const [weekNum, setWeekNum] = useState(0);
   const [baseDay, setBaseDay] = useState(new Date());
@@ -50,7 +50,9 @@ const Booking = ({service, onSearch}) => {
 
 
   useEffect(() => {
-    setWeekNum(getWeekNum(baseDay))
+    setWeekNum(getWeekNum(baseDay));
+    setAllSpots([]);
+    setAllBooked([]);
   }, []);
   
   useEffect(() => {
@@ -149,12 +151,42 @@ const Booking = ({service, onSearch}) => {
     return (
       <MenuItem key={row.id} value={row}>
         <Checkbox checked={formData.stylists.map(stylist => stylist.id).indexOf(row.id) > -1} />
-        <ListItemText primary={row.name} />
+        <ListItemText primary={`${row.name} (${row.level})`} />
       </MenuItem>
     )
   })
 
-  // console.log(formData);
+  const spotsArray = allSpots.map(row => {
+    const minsToAdd = 30;
+    let t = row.start;
+    const tArr = [];
+    while (t !== row.end) {
+      const x = allBooked.filter(app => app.stylistid === row.stylist_id && app.start === t)
+      if (x.length === 0) {
+        tArr.push(t);
+      }
+      t = new Date(new Date("1970/01/01 " + t).getTime() + minsToAdd * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
+    }
+    const bTArr = tArr.map(time => {
+      return (
+        <button className="btn-time" onClick={() => timeClicked(time, row.stylist_id, formData.date, formData.service.id )} key={time}>{time}</button>
+      )
+    })
+    return (
+      <div key={row.stylist_id} className="availabel-time-box-one">
+        <div className="availabel-time-box-one-info">
+          <img src={row.image} alt="stylistImg" className='stylist-image'/>
+          <span className="stylist-name">{row.stylist}</span>
+          <span className="stylist-level">({row.level})</span>
+        </div>
+        <div>
+          {bTArr}
+        </div>
+      </div>
+    )
+  })
+
+  console.log(formData);
   // console.log(qualifiedStylists);
   // console.log("📅",daySelected);
   // console.log("📅📅",baseDay);
@@ -174,6 +206,7 @@ const Booking = ({service, onSearch}) => {
                 value={formData.service} 
                 label="service-select"
                 MenuProps={MenuProps}
+                required
               >
                 {serviceSelectArray}
               </Select>
@@ -215,7 +248,7 @@ const Booking = ({service, onSearch}) => {
               </LocalizationProvider>
             </div>
             
-            <button>Search</button>
+            <button className="btn-search">Search</button>
           </div>
           
         </form>
@@ -225,6 +258,9 @@ const Booking = ({service, onSearch}) => {
           <WeeklyCalender weekInfo={weekInfo} weekNum={weekNum} dayClicked={dayClicked} monthName={monthName}/>
           <button className="btn-shift-week" onClick={() => {
             setWeekNum(prev => prev + 1);}}><FontAwesomeIcon icon="fa-solid fa-chevron-right"/></button>
+        </div>
+        <div className="availabel-time-box">
+           {spotsArray}
         </div>
       </div>
     )

@@ -19,6 +19,8 @@ function App() {
   const [services, setServices] = useState([]);
   const [service, setService] = useState();
   const [stylist, setStylist] = useState();
+  const [allSpots, setAllSpots] = useState([]);
+  const [allBooked, setAllBooked] = useState([]);
   
   useEffect(() => {
 
@@ -39,13 +41,38 @@ function App() {
     setService(serviceId);
   }
 
+  const onSearch = function(formData) {
+    const myDay = new Date(formData.date).toLocaleString('en-us', {weekday:'long'})
+    axios.post(`http://localhost:7100/api/booking`, {...formData, day: myDay})
+    .then(res => {
+      setAllSpots(res.data.options);
+      setAllBooked(res.data.booked);
+    })
+    .catch(error => {
+      console.log(error.message);
+    })
+  }
+
+  const timeClicked = function(newTime, stylistId, date, serviceId) {
+    axios.post(`http://localhost:7100/api/booking/${newTime}`, {stylistId, date, serviceId, userId: 1})
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(error => {
+      console.log(error.message);
+    })
+  }
+
   // console.log('👨🏼‍🎨👩‍🎨', stylists, availability);
   // console.log('✂️🪒', serviceGroups, services);
   // console.log('🪒', service);
+  console.log('📖', allSpots);
+  console.log('📖❌', allBooked);
+
 
   return (
     <main className="layout">
-      <GeneralContext.Provider value={{ stylists, availability, serviceGroups, services }}>
+      <GeneralContext.Provider value={{ stylists, availability, serviceGroups, services, allSpots, allBooked, setAllBooked, setAllSpots }}>
 
         <Navbar />
         <div className="app-body">
@@ -53,7 +80,7 @@ function App() {
             <Route path='/stylists' element={<Stylists />}/>
             <Route path='/stylists/:id' element={<Stylist />}/>
             <Route path='/services' element={<Services reqClicked={reqClicked}/>}/>
-            <Route path='/booking' element={<Booking service={service} onSearch={(formData) => console.log(formData)}/>}/>
+            <Route path='/booking' element={<Booking service={service} onSearch={onSearch} timeClicked={timeClicked}/>}/>
           </Routes>
         </div>
 
