@@ -8,7 +8,6 @@ import InputLabel from '@mui/material/InputLabel';
 import ListSubheader from '@mui/material/ListSubheader';
 import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -21,7 +20,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {getWeekNum, calDate, formatDate, getMonthName} from '../helper/dateHelper'
 import WeeklyCalender from './WeeklyCalender';
-import useForm from "../hooks/useForm";
 import './Booking.scss';
 
 const ITEM_HEIGHT = 48;
@@ -38,32 +36,26 @@ const MenuProps = {
 const Booking = ({service, onSearch, timeClicked }) => {
 
   const { stylists, availability, serviceGroups, services, allSpots, allBooked, setAllBooked, setAllSpots } = useContext(GeneralContext);
-
   const [weekNum, setWeekNum] = useState(0);
   const [baseDay, setBaseDay] = useState(new Date());
   const [weekInfo, setWeekInfo] = useState([]);
-  const [daySelected, setDaySelected] = useState();
   const [monthName, setMonthName] = useState();
-  const [qualifiedStylists, setQualifiedStylists] = useState();
-  const [searchFormBase, setSearchFormBase] = useState({service: (service || ""), stylists: [], date: (daySelected || new Date())});
-  const { formData, handleChange, handleSubmit, handleChangeStylists, handleChangeDate } = useForm(searchFormBase, onSearch);
+  const [qualifiedStylists, setQualifiedStylists] = useState([]);
+  const searchFormBase = {service: (service || ""), stylists: [], date: (new Date())};
 
+  const [formData, setFormData] = useState([searchFormBase]);
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
 
   useEffect(() => {
     setWeekNum(getWeekNum(baseDay));
     setAllSpots([]);
     setAllBooked([]);
   }, []);
-  
+
   useEffect(() => {
-      const y = serviceGroups.filter(row => row.id === formData.service.groupid)[0]
-      if (y) {
-        const x = y.stylists.map(xId => {
-          return stylists.filter(stylist => stylist.id === xId)[0]
-        });
-        setQualifiedStylists(x);
-      }
-  }, [formData.service]);
+    setQualifiedStylists([[...stylists]]);
+  }, [stylists]);
 
   useEffect(() => {
     setWeekInfo([
@@ -107,12 +99,12 @@ const Booking = ({service, onSearch, timeClicked }) => {
   }, [weekNum, baseDay]);
 
   useEffect(() => {  
-    setBaseDay(formData.date)
-  }, [formData.date])
+    setBaseDay(formData[0].date)
+  }, [formData[0].date]);
 
   useEffect(() => {
     setWeekNum(getWeekNum(baseDay));
-  }, [baseDay])
+  }, [baseDay]);
   
   // show name of day (selected one or monday)
   useEffect(() => {
@@ -121,6 +113,67 @@ const Booking = ({service, onSearch, timeClicked }) => {
       if (weekInfo[i].select) setMonthName(getMonthName(weekInfo[i].fullDate))
     }
   }, [weekInfo]);
+
+  const handleChange = (event, index) => {
+    const { name, value } = event.target;
+    let myStylists = [...(formData[index].stylists)];
+
+    // if selected stylist does not have that skill, delete from form
+    if (myStylists.length !== 0) {
+      const myGroup = value.groupid;
+      myStylists = formData[index].stylists.filter(stylist => stylist.skills.indexOf(myGroup) > -1)
+    }
+
+    // only show stylists that have that skill
+    const y = serviceGroups.filter(row => row.id === value.groupid)[0]
+    const x = y.stylists.map(xId => {
+      return stylists.filter(stylist => stylist.id === xId)[0]
+    });
+    setQualifiedStylists(qualifiedStylists.map((row, i) => {
+      if (i === index) return x;
+      return row;
+    }));
+
+    // update formData
+    const newForm = formData.map((row, i) => {
+      if (i === index) return ({...row, [name]: value, stylists: myStylists})
+      return {...row}
+    })
+    setFormData(newForm);
+  };
+
+  const handleChangeStylists = (event, index) => {
+
+    const newForm = formData.map((row, i) => {
+      if (i === index) return ({...row, stylists: event.target.value})
+      return {...row}
+    })
+    setFormData(newForm);
+  };
+
+  const handleChangeDate = (newDate) => {
+    
+    // make sure from-date is always smaller that to-date
+    if (newDate >= now){
+      const newForm = formData.map((row, i) => {
+        if (i === 0) return ({...row, date: newDate})
+        return {...row}
+      })
+      setFormData(newForm);
+    }
+    else {
+      const newForm = formData.map((row, i) => {
+        if (i === 0) return ({...row, date: now})
+        return {...row}
+      })
+      setFormData(newForm);
+    }
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    onSearch(formData);
+  };
 
   function dayClicked(recievedDate) {
     const afterSelect = weekInfo.map(row => {
@@ -147,47 +200,167 @@ const Booking = ({service, onSearch, timeClicked }) => {
     return result;
   })
 
-  const StylistSelectArray = (qualifiedStylists || stylists).map(row => {
-    return (
-      <MenuItem key={row.id} value={row}>
-        <Checkbox checked={formData.stylists.map(stylist => stylist.id).indexOf(row.id) > -1} />
-        <ListItemText primary={`${row.name} (${row.level})`} />
-      </MenuItem>
-    )
-  })
+  // const spotsArray = allSpots.map(row => {
+  //   const minsToAdd = 30;
+  //   let t = row.start;
+  //   const tArr = [];
+  //   while (t !== row.end) {
+  //     const x = allBooked.filter(app => app.stylistid === row.stylist_id && app.start === t)
+  //     if (x.length === 0) {
+  //       tArr.push(t);
+  //     }
+  //     t = new Date(new Date("1970/01/01 " + t).getTime() + minsToAdd * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
+  //   }
+  //   const bTArr = tArr.map(time => {
+  //     return (
+  //       <button className="btn-time" onClick={() => timeClicked(time, row.stylist_id, formData.date, formData.service.id )} key={time}>{time}</button>
+  //     )
+  //   })
+  //   return (
+  //     <div key={row.stylist_id} className="availabel-time-box-one">
+  //       <div className="availabel-time-box-one-info">
+  //         <img src={row.image} alt="stylistImg" className='stylist-image'/>
+  //         <span className="stylist-name">{row.stylist}</span>
+  //         <span className="stylist-level">({row.level})</span>
+  //       </div>
+  //       <div>
+  //         {bTArr}
+  //       </div>
+  //     </div>
+  //   )
+  // })
 
-  const spotsArray = allSpots.map(row => {
-    const minsToAdd = 30;
-    let t = row.start;
-    const tArr = [];
-    while (t !== row.end) {
-      const x = allBooked.filter(app => app.stylistid === row.stylist_id && app.start === t)
-      if (x.length === 0) {
-        tArr.push(t);
+  const spotsArray = allSpots.map((task, index) => {
+
+    const newArr = task.map(row => {
+      const minsToAdd = 30;
+      const duration = row.duration;
+      let t = row.start;
+      const tArr = [];
+      while (t !== row.end) {
+        const estimateEnd = new Date(new Date("1970/01/01 " + t).getTime() + duration * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
+        const x = allBooked.filter(app => app.stylistid === row.stylist_id && ((t < app.start && app.start < estimateEnd) || (t >= app.start && t < app.end)));
+        if (x.length === 0 && estimateEnd <= row.end) {
+          tArr.push(t);
+        }
+        t = new Date(new Date("1970/01/01 " + t).getTime() + minsToAdd * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
       }
-      t = new Date(new Date("1970/01/01 " + t).getTime() + minsToAdd * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
-    }
-    const bTArr = tArr.map(time => {
-      return (
-        <button className="btn-time" onClick={() => timeClicked(time, row.stylist_id, formData.date, formData.service.id )} key={time}>{time}</button>
-      )
+      const bTArr = tArr.map(time => {
+        return (
+          <button className="btn-time" onClick={() => timeClicked(time, row.stylist_id, formData[0].date, formData[index].service.id, row.duration )} key={time}>{time}</button>
+        )
+      })
+      if (tArr.length !== 0) {
+        return (
+          <div key={row.stylist_id} className="availabel-time-box-one">
+            <span>{baseDay.toDateString()}</span>
+            <div className="availabel-time-box-one-info">
+              <img src={row.image} alt="stylistImg" className='stylist-image'/>
+              <span className="stylist-name">{row.stylist}</span>
+              <span className="stylist-level">({row.level})</span>
+            </div>
+            <div>
+              {bTArr}
+            </div>
+          </div>
+        )
+      }
     })
     return (
-      <div key={row.stylist_id} className="availabel-time-box-one">
-        <div className="availabel-time-box-one-info">
-          <img src={row.image} alt="stylistImg" className='stylist-image'/>
-          <span className="stylist-name">{row.stylist}</span>
-          <span className="stylist-level">({row.level})</span>
-        </div>
-        <div>
-          {bTArr}
-        </div>
+      <div key={index}>
+        {newArr}
+      </div>
+    )
+    
+  })
+
+  function handleAddToForm() {
+    setFormData([...formData, {service: (service || ""), stylists: []}]);
+    setQualifiedStylists([...qualifiedStylists, stylists]);
+  }
+
+  function handleDelete(index) {
+    const newForm = [...formData];
+    newForm.splice(index, 1);
+    setFormData(newForm);
+    const newQualified = [...qualifiedStylists];
+    newQualified.splice(index, 1);
+    setQualifiedStylists(newQualified);
+  }
+
+  const formDateArray = formData.map((row, index) => {
+    
+    return (
+      <div className="search-form-row" key={index}>
+        <FormControl sx={{ m:1, minWidth: 300 }} className="search-form-service">
+          <InputLabel htmlFor="service-select">Select Service</InputLabel>
+          <Select 
+            id="service-select"
+            name="service"
+            onChange={e => handleChange(e, index)}
+            value={formData[index].service} 
+            label="service-select"
+            MenuProps={MenuProps}
+            required
+          >
+            {serviceSelectArray}
+          </Select>
+        </FormControl>
+
+        <FormControl sx={{ m: 1, width: 300 }} className="search-form-stylist">
+          <InputLabel htmlFor="stylists-select" shrink={true}>Select Stylist</InputLabel>
+          <Select
+            id="stylists-select"
+            multiple
+            name="stylists"
+            displayEmpty
+            value={formData[index].stylists}
+            onChange={e => handleChangeStylists(e, index)}
+            label="stylists-select"
+            notched={true}
+            renderValue={(selected) => {
+              if (formData[index].stylists.length === 0) return `any stylist`;
+              if (formData[index].stylists.length === 1) return formData[index].stylists[0].name;
+              return `${formData[index].stylists.length} stylists selected`
+            }}
+            MenuProps={MenuProps}
+            // inputProps={{ 'aria-label': 'Without label' }}
+          >
+            {qualifiedStylists && (qualifiedStylists[index] || stylists).map(sty => {
+              return (
+              <MenuItem key={sty.id} value={sty}>
+                <Checkbox checked={formData[index].stylists.map(stylist => stylist.id).indexOf(sty.id) > -1} />
+                <ListItemText primary={`${sty.name} (${sty.level})`} />
+              </MenuItem>
+            )
+            })}
+          </Select>
+        </FormControl>
+        {(index === 0 &&
+        <div className="search-form-date">
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <DesktopDatePicker
+                name="date"
+                label="Pick a Date"
+                value={formData[0].date}
+                minDate={new Date()}
+                onClose={() => setWeekNum(getWeekNum(baseDay))}
+                onChange={handleChangeDate}
+                renderInput={(params) => <TextField {...params} />}
+              />
+          </LocalizationProvider>
+          <button className="btn-search">Search</button>
+        </div>)}
+        {(index !== 0 &&
+        <div className="search-form-delete-row">
+          <button className="btn-delete" type="button" onClick={() => handleDelete(index)}><FontAwesomeIcon icon="fa-solid fa-square-minus" /></button>
+        </div>)}
       </div>
     )
   })
 
-  console.log(formData);
-  // console.log(qualifiedStylists);
+  console.log('🚨👀',formData);
+  console.log('🚨🚨🚨🚨',qualifiedStylists);
   // console.log("📅",daySelected);
   // console.log("📅📅",baseDay);
   // console.log(weekInfo);
@@ -195,63 +368,14 @@ const Booking = ({service, onSearch, timeClicked }) => {
   return (
     (baseDay &&
       <div className='booking-page'>
-        <form onSubmit={handleSubmit}>
-          <div className="search-form">
-            <FormControl sx={{ m:1, minWidth: 300 }} className="search-form-service">
-              <InputLabel htmlFor="service-select">Select Service</InputLabel>
-              <Select 
-                id="service-select"
-                name="service"
-                onChange={handleChange}
-                value={formData.service} 
-                label="service-select"
-                MenuProps={MenuProps}
-                required
-              >
-                {serviceSelectArray}
-              </Select>
-            </FormControl>
-
-            <FormControl sx={{ m: 1, width: 300 }} className="search-form-stylist">
-              <InputLabel htmlFor="stylists-select" shrink={true}>Select Stylist</InputLabel>
-              <Select
-                id="stylists-select"
-                multiple
-                name="stylists"
-                displayEmpty
-                value={formData.stylists}
-                onChange={handleChangeStylists}
-                label="stylists-select"
-                notched={true}
-                renderValue={(selected) => {
-                  if (formData.stylists.length === 0) return `any stylist`;
-                  if (formData.stylists.length === 1) return formData.stylists[0].name;
-                  return `${formData.stylists.length} stylists selected`
-                }}
-                MenuProps={MenuProps}
-                // inputProps={{ 'aria-label': 'Without label' }}
-              >
-                {StylistSelectArray}
-              </Select>
-            </FormControl>
-            <div className="search-form-date">
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                  <DesktopDatePicker
-                    name="date"
-                    label="Pick a Date"
-                    value={formData.date}
-                    minDate={new Date()}
-                    onClose={() => setWeekNum(getWeekNum(baseDay))}
-                    onChange={handleChangeDate}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-              </LocalizationProvider>
-            </div>
-            
-            <button className="btn-search">Search</button>
+        <div className="search-form">
+          <form onSubmit={handleSubmit}>
+            {formDateArray}
+          </form>
+          <div className="add-service-box">
+            <button onClick={() => handleAddToForm()} className="btn-add-service-to-form">+ Add Service</button>
           </div>
-          
-        </form>
+        </div>
         <div className="weekly-cal">
           <button className="btn-shift-week" onClick={() => {
             setWeekNum(prev => prev - 1);}} disabled={weekNum === 0}><FontAwesomeIcon icon="fa-solid fa-chevron-left"/></button>

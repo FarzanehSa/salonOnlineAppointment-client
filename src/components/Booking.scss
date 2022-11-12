@@ -1,28 +1,85 @@
 @import "../styles/variables.scss";
 
 .booking-page {
+  // border: $test3;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   .search-form {
+    // border: $test2;
     margin-top: 2em;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
-    .search-form-service {
-      margin: 0.3em
-    }
-    .search-form-stylist {
-      margin: 0.3em
-    }
-    .search-form-date {
-      margin: 0.3em
+    .search-form-row {
+      // border: $test;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      .search-form-service {
+        margin: 0.3em
+      }
+      .search-form-stylist {
+        margin: 0.3em
+      }
+      .search-form-date {
+        margin: 0.3em;
+        display: flex;
+      }
+
     }
 
     .btn-search {
       border: none;
       border-radius: 5px;
       font-size: 1.1em;
+      margin-right: 0.3em;
+      margin-left: 0.3em;
       padding: 1em 2em;
+      cursor: pointer;
+  
+      background-color: LightCoral;
+      color: black;
+
+      &:hover {
+        background-color: #eb6663;
+        color: white;
+      }
+    }
+
+    .btn-delete {
+      border: none;
+      background-color: transparent;
+      font-size: 2em;
+      color: LightCoral;
+      cursor: pointer;
+
+      &:hover {
+        color: black;
+      }
+    }
+  }
+
+  .add-service-box {
+    // border: $test3;
+    width: 100%;
+    display: flex;
+    justify-self: flex-start;
+    align-items: center;
+
+    .btn-add-service-to-form {
+      border: none;
+      border-radius: 30px;
+      font-size: 1em;
+      margin-right: 0.3em;
+      margin-left: 0.3em;
+      padding: 0.8em 2em;
       cursor: pointer;
   
       background-color: LightCoral;

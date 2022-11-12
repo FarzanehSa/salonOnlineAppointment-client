@@ -42,8 +42,8 @@ function App() {
   }
 
   const onSearch = function(formData) {
-    const myDay = new Date(formData.date).toLocaleString('en-us', {weekday:'long'})
-    axios.post(`http://localhost:7100/api/booking`, {...formData, day: myDay})
+    const myDay = new Date(formData[0].date).toLocaleString('en-us', {weekday:'long'})
+    axios.post(`http://localhost:7100/api/booking`, {reqApps: formData, day: myDay})
     .then(res => {
       setAllSpots(res.data.options);
       setAllBooked(res.data.booked);
@@ -53,8 +53,8 @@ function App() {
     })
   }
 
-  const timeClicked = function(newTime, stylistId, date, serviceId) {
-    axios.post(`http://localhost:7100/api/booking/${newTime}`, {stylistId, date, serviceId, userId: 1})
+  const timeClicked = function(newTime, stylistId, date, serviceId, duration) {
+    axios.post(`http://localhost:7100/api/booking/${newTime}`, {stylistId, date, serviceId, userId: 1, duration })
     .then(res => {
       console.log(res.data);
     })
