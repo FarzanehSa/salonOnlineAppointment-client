@@ -113,6 +113,7 @@
 
   .availabel-time-box {
     // border: $test;
+    width: 80%;
     margin: 3em;
 
     .availabel-time-box-one {
@@ -122,6 +123,12 @@
       display: flex;
       flex-direction: column;
       border-bottom: 0.5px solid grey;
+
+      .availabel-time-box-time {
+        font-size: 1.2em;
+        margin-bottom: 0.5em;
+        font-style: italic;
+      }
       
 
       .availabel-time-box-one-info {

@@ -41,11 +41,35 @@ function App() {
     setService(serviceId);
   }
 
+  const checkAvailability = (allOptions, bookedOnes) => {
+    const newAllOptions = allOptions.map((task, index) => {
+      const newArr = task.map(row => {
+        const minsToAdd = 30;
+        const duration = row.duration;
+        let t = row.start;
+        const tArr = [];
+        while (t !== row.end) {
+          const estimateEnd = new Date(new Date("1970/01/01 " + t).getTime() + duration * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
+          const x = bookedOnes.filter(app => app.stylistid === row.stylist_id && ((t < app.start && app.start < estimateEnd) || (t >= app.start && t < app.end)));
+          if (x.length === 0 && estimateEnd <= row.end) {
+            tArr.push(t);
+          }
+          t = new Date(new Date("1970/01/01 " + t).getTime() + minsToAdd * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
+        }
+        return ({...row, timeAv: tArr});
+        // return ([]);
+      })
+      return (newArr);
+    })
+    return newAllOptions;
+  }
+
   const onSearch = function(formData) {
     const myDay = new Date(formData[0].date).toLocaleString('en-us', {weekday:'long'})
     axios.post(`http://localhost:7100/api/booking`, {reqApps: formData, day: myDay})
     .then(res => {
-      setAllSpots(res.data.options);
+      const temp = checkAvailability(res.data.options, res.data.booked)
+      setAllSpots(temp);
       setAllBooked(res.data.booked);
     })
     .catch(error => {
