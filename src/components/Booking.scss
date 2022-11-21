@@ -176,4 +176,50 @@
       }
     }
   }
+
+  .unavailabel-time-box {
+    // border: $test;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .title-1 {
+      font-size: 1.4em;
+      font-weight: 600;
+      margin-bottom: 0.8em;
+    }
+    .title-2 {
+      font-size: 1.1em;
+      margin-bottom: 1em;
+    }
+    .title-3 {
+      font-size: 1.4em;
+      font-weight: 600;
+      margin-bottom: 0.5em;
+    }
+    .title-4 {
+      font-size: 1.4em;
+      font-weight: 600;
+      margin-bottom: 0.8em;
+    }
+
+    .btn-go-to-date {
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1em;
+      margin-right: 0.3em;
+      margin-left: 0.3em;
+      padding: 1em 2em;
+      cursor: pointer;
+  
+      background-color: LightCoral;
+      color: black;
+
+      &:hover {
+        background-color: #eb6663;
+        color: white;
+      }
+    }
+  }
 }

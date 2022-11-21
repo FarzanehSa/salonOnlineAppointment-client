@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const FirstAvailable = ({formData, handelClick}) => {
+const FirstAvailable = ({formData, searchFirstAvailability, handleDayClicked}) => {
 
   let c = formData[0].date;
   let cop = new Date(c.getTime())
@@ -13,20 +13,23 @@ const FirstAvailable = ({formData, handelClick}) => {
 
   useEffect (() => {
     if (tempData.result.length === 0) {
-      handelClick(tempData, setTempData);
+      searchFirstAvailability(tempData, setTempData);
     }
   }, [tempData.options]);
  
   // console.log('tempData \n', tempData)
   
   return (
-    <div className="availabel-time-box">
-      <div>
-        <p>Sorry, they're booked</p>
-        { tempData.result.length !== 0 &&
-          <p>Check {tempData.receivedDate.slice(0, 10)}</p>
-        }
-      </div>
+    <div>
+      { tempData.result.length !== 0 &&
+        <div className="unavailabel-time-box">
+          <span className="title-1">Sorry, they're booked</span>
+          <span className="title-2">They don't have any appointments available.</span>
+          <span className="title-3">Next available date:</span>
+          <span className="title-4">{tempData.receivedDate.slice(0, 10)}</span>
+          <button className="btn-go-to-date" onClick={() => handleDayClicked(tempData.receivedDate)}>Go to: {tempData.receivedDate.slice(0, 10)}</button>
+        </div>
+      }
     </div>
   )
 }

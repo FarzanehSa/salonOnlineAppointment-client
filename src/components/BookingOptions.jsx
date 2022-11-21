@@ -7,7 +7,7 @@ import {groupServiceReqs} from '../helper/groupServiceReqs'
 
 import  FirstAvailable from './FirstAvailable';
 
-const BookingOptions = ({formData, timeClicked, baseDay}) => {
+const BookingOptions = ({formData, timeClicked, baseDay, handleDayClicked}) => {
 
   const { allSpots } = useContext(GeneralContext);
 
@@ -133,7 +133,7 @@ const checkAvailability = (allOptions, bookedOnes) => {
   return newAllOptions;
 }
 
-const handelClick = (tempData, setTempData) => {
+const searchFirstAvailability = (tempData, setTempData) => {
   const myDate = new Date(tempData.date);
   const day = (myDate.getDate());
   myDate.setDate(day + 1);
@@ -179,7 +179,7 @@ const handelClick = (tempData, setTempData) => {
       ...tempData, 
       options: checkAvailability(res.data.options, res.data.booked),
       booked: res.data.booked,
-      receivedDate: res.data.date.slice(0, 10),
+      receivedDate: res.data.date,
       result: updateAllSpotts,
     }))
 
@@ -198,7 +198,10 @@ const handelClick = (tempData, setTempData) => {
   return (
     <div className="availabel-time-box">
       {updateAllSpotts.length === 0  && allSpots.length !== 0 && (
-        <FirstAvailable formData={formData} handelClick={handelClick}/>
+        <FirstAvailable 
+          formData={formData}
+          searchFirstAvailability={searchFirstAvailability}
+          handleDayClicked={handleDayClicked}/>
       )}
       {spotsArray}
     </div>

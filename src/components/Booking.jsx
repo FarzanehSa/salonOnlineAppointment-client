@@ -139,9 +139,14 @@ const Booking = ({service, onSearch, timeClicked }) => {
   
   const handleChangeDate = (newDate) => {
     // make sure from-date is always smaller that to-date
-    if (newDate >= now){
+    console.log(newDate);
+    
+    let rDate = new Date(newDate);
+    console.log(rDate);
+    
+    if (rDate >= now){
       const newForm = formData.map((row, i) => {
-        if (i === 0) return ({...row, date: newDate})
+        if (i === 0) return ({...row, date: rDate})
         return {...row}
       })
       setFormData(newForm);
@@ -190,6 +195,8 @@ const Booking = ({service, onSearch, timeClicked }) => {
     setWeekInfo(prev => afterSelect);
     handleChangeDate(recievedDate);
   }
+
+  console.log('👀 formData \n', formData);
    
   return (
     (baseDay &&
@@ -222,6 +229,7 @@ const Booking = ({service, onSearch, timeClicked }) => {
               timeClicked={timeClicked}
               baseDay={baseDay}
               onSearch={onSearch}
+              handleDayClicked={handleChangeDate}
             />
           )
         }
