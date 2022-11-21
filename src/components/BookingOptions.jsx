@@ -155,7 +155,6 @@ const handelClick = (tempData, setTempData) => {
 
   axios.post(`http://localhost:7100/api/booking`, {reqApps: formDataCopy, day: myDay})
   .then(res => {
-    console.log(res.data);
     const temp = checkAvailability(res.data.options, res.data.booked)
 
     let updateAllSpotts = groupServiceReqs(temp).map((optionGroup, index) => {

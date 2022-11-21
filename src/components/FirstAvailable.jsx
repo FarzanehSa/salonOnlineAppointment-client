@@ -13,7 +13,6 @@ const FirstAvailable = ({formData, handelClick}) => {
 
   useEffect (() => {
     if (tempData.result.length === 0) {
-      console.log('yesssssssss');
       handelClick(tempData, setTempData);
     }
   }, [tempData.options]);
