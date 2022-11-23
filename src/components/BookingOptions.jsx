@@ -1,5 +1,6 @@
 import { react, useContext, useState, useEffect } from "react";
 import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 
 import GeneralContext from "../contexts/GeneralContext";
 
@@ -45,7 +46,9 @@ const BookingOptions = ({formData, timeClicked, baseDay, handleDayClicked}) => {
       const newArr = optionGroup.map((row, index2) => { // eslint-disable-line
         const bTArr = row.timeAv.map(time => {
           return (
-            <button className="btn-time" onClick={() => timeClicked(time, row.stylist_id, formData[0].date, formData[index].service.id, row.duration )} key={time}>{time}</button>
+            <NavLink to="/booking-confirm" onClick={() => timeClicked(time, optionGroup, formData[0].date )} key={time}><button className="btn-time" >{time}</button></NavLink>
+
+            // <button className="btn-time" onClick={() => timeClicked(time, row, formData[0].date )} key={time}>{time}</button>
           )
         })
         if (row.timeAv.length !== 0) {

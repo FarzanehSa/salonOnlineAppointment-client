@@ -12,7 +12,7 @@ import './Booking.scss';
 
 
 
-const Booking = ({service, onSearch, timeClicked }) => {
+const Booking = ({service, onSearch, timeClicked}) => {
 
   const { stylists, serviceGroups, setAllBooked, setAllSpots } = useContext(GeneralContext);
   const [weekNum, setWeekNum] = useState(0);
@@ -82,7 +82,7 @@ const Booking = ({service, onSearch, timeClicked }) => {
     if (formData[0].service) {
       onSearch(formData);
     }
-  }, [formData[0].date]);
+  }, [formData[0].date]); // eslint-disable-line
 
   useEffect(() => {
     setWeekNum(getWeekNum(baseDay));
@@ -196,7 +196,7 @@ const Booking = ({service, onSearch, timeClicked }) => {
     handleChangeDate(recievedDate);
   }
 
-  console.log('👀 formData \n', formData);
+  // console.log('👀 formData \n', formData);
    
   return (
     (baseDay &&

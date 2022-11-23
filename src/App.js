@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import axios from 'axios';
+
 
 import GeneralContext from './contexts/GeneralContext';
 
@@ -9,6 +10,7 @@ import Stylists from './components/Stylists';
 import Services from './components/Services';
 import Stylist from './components/Stylist';
 import Booking from './components/Booking';
+import BookingConfirm from './components/BookingConfirm';
 import './App.scss';
 
 function App() {
@@ -21,6 +23,7 @@ function App() {
   const [stylist, setStylist] = useState();
   const [allSpots, setAllSpots] = useState([]);
   const [allBooked, setAllBooked] = useState([]);
+  const [wantToBook, setWantToBook] = useState({})
   
   useEffect(() => {
 
@@ -77,14 +80,42 @@ function App() {
     })
   }
 
-  const timeClicked = function(newTime, stylistId, date, serviceId, duration) {
-    axios.post(`http://localhost:7100/api/booking/${newTime}`, {stylistId, date, serviceId, userId: 1, duration })
-    .then(res => {
-      console.log(res.data);
+  function timeClicked(wantedTime, wantedGroup, wantedDate) {
+
+    let bookSummery = [];
+    let start = wantedTime;
+    console.log(wantedGroup);
+    
+    for (let i = 0; i < wantedGroup.length; i++) {
+      console.log('hereeeeeee');
+      let dur = wantedGroup[i].duration;
+      let end = new Date(new Date("1970/01/01 " + start).getTime() + dur * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
+      bookSummery.push({
+        stylistId: wantedGroup[i].stylist_id,
+        stylistName: wantedGroup[i].stylist,
+        stylistImage: wantedGroup[i].image,
+        service: wantedGroup[i].service,
+        startTime: start,
+        endTime: end,
+        date: wantedDate,
+        userId: 1
+      })
+      start = end;
+    }
+   
+    setWantToBook({
+      date: wantedDate,
+      time: wantedTime,
+      stylists: bookSummery
     })
-    .catch(error => {
-      console.log(error.message);
-    })
+
+    // axios.post(`http://localhost:7100/api/booking/${newTime}`, {stylistId, date, serviceId, userId: 1, duration })
+    // .then(res => {
+    //   console.log(res.data);
+    // })
+    // .catch(error => {
+    //   console.log(error.message);
+    // })
   }
 
   // console.log('👨🏼‍🎨👩‍🎨', stylists, availability);
@@ -92,6 +123,8 @@ function App() {
   // console.log('🪒', service);
   console.log('📖', allSpots);
   console.log('📖❌', allBooked);
+
+  console.log('👀👀 wanted to book \n', wantToBook);
 
 
   return (
@@ -105,6 +138,7 @@ function App() {
             <Route path='/stylists/:id' element={<Stylist />}/>
             <Route path='/services' element={<Services reqClicked={reqClicked}/>}/>
             <Route path='/booking' element={<Booking service={service} onSearch={onSearch} timeClicked={timeClicked}/>}/>
+            <Route path='/booking-confirm' element={<BookingConfirm info={wantToBook}/>}/>
           </Routes>
         </div>
 
