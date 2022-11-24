@@ -1,0 +1,104 @@
+@import "../styles/variables.scss";
+
+.confirmation-page {
+  border: $test2;
+
+  margin: 5em;
+
+  display: flex;
+  
+
+  .right-cul {
+    border: $test;
+    width: 55%;
+    padding: 1em;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    .title {
+      font-size: 1.2em;
+      font-weight: 600;
+      margin-bottom: 0.8em;
+    }
+
+    .text-body {
+      text-align: justify;
+      margin-bottom: 1.5em;
+    }
+
+    .buttons {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn-in-confirm-page {
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1em;
+      margin-right: 0.3em;
+      margin-left: 0.3em;
+      padding: 1em 4em;
+      cursor: pointer;
+  
+      background-color: LightCoral;
+      color: black;
+
+      &:hover {
+        background-color: #eb6663;
+        color: white;
+      }
+    }
+  }
+  .left-cul {
+    border: $test1;
+    width: 45%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    .date {
+      font-size: 1.2em;
+      font-weight: 600;
+      font-style: italic;
+    }
+
+    .stylist-info {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-top: 1em;
+      margin-bottom: 1em;
+
+      .stylist-info-text {
+        display: flex;
+        flex-direction: column;
+
+        .time {
+          font-size: 1.2em;
+          font-style: oblique;
+          margin-bottom: 0.2em;
+        }
+
+        .text {
+          font-size: 1.1em;
+        }
+      }
+    }
+
+    .stylist-image {
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      margin-right: 0.3em;
+      padding-right: 0.2em;
+    }
+
+  }
+}

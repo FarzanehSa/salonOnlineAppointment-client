@@ -19,8 +19,9 @@ function App() {
   const [availability, setAvailability] = useState([]);
   const [serviceGroups, setServiceGroups] = useState([]);
   const [services, setServices] = useState([]);
-  const [service, setService] = useState();
-  const [stylist, setStylist] = useState();
+
+  const [formData, setFormData] = useState([{service: "", stylists: [], date: (new Date())}]);
+
   const [allSpots, setAllSpots] = useState([]);
   const [allBooked, setAllBooked] = useState([]);
   const [wantToBook, setWantToBook] = useState({})
@@ -41,7 +42,9 @@ function App() {
   }, []);
 
   const reqClicked = function(serviceId) {
-    setService(serviceId);
+
+
+    setFormData(pre => ([{service: serviceId, stylists: [], date: (new Date())}]));
   }
 
   const checkAvailability = (allOptions, bookedOnes) => {
@@ -94,6 +97,7 @@ function App() {
         stylistId: wantedGroup[i].stylist_id,
         stylistName: wantedGroup[i].stylist,
         stylistImage: wantedGroup[i].image,
+        stylistLevel: wantedGroup[i].level,
         service: wantedGroup[i].service,
         startTime: start,
         endTime: end,
@@ -137,7 +141,7 @@ function App() {
             <Route path='/stylists' element={<Stylists />}/>
             <Route path='/stylists/:id' element={<Stylist />}/>
             <Route path='/services' element={<Services reqClicked={reqClicked}/>}/>
-            <Route path='/booking' element={<Booking service={service} onSearch={onSearch} timeClicked={timeClicked}/>}/>
+            <Route path='/booking' element={<Booking formData={formData} setFormData={setFormData} onSearch={onSearch} timeClicked={timeClicked}/>}/>
             <Route path='/booking-confirm' element={<BookingConfirm info={wantToBook}/>}/>
           </Routes>
         </div>

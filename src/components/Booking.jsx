@@ -12,7 +12,7 @@ import './Booking.scss';
 
 
 
-const Booking = ({service, onSearch, timeClicked}) => {
+const Booking = ({onSearch, timeClicked, formData, setFormData}) => {
 
   const { stylists, serviceGroups, setAllBooked, setAllSpots } = useContext(GeneralContext);
   const [weekNum, setWeekNum] = useState(0);
@@ -20,8 +20,6 @@ const Booking = ({service, onSearch, timeClicked}) => {
   const [weekInfo, setWeekInfo] = useState([]);
   const [monthName, setMonthName] = useState();
   const [qualifiedStylists, setQualifiedStylists] = useState([]);
-  const searchFormBase = {service: (service || ""), stylists: [], date: (new Date())};
-  const [formData, setFormData] = useState([searchFormBase]);
 
   const now = new Date();
   now.setHours(0, 0, 0, 0);
@@ -161,7 +159,7 @@ const Booking = ({service, onSearch, timeClicked}) => {
   }
 
   function handleAddToForm() {
-    setFormData([...formData, {service: (service || ""), stylists: []}]);
+    setFormData([...formData, {service: "", stylists: []}]);
     setQualifiedStylists([...qualifiedStylists, stylists]);
     setAllSpots([]);
   }

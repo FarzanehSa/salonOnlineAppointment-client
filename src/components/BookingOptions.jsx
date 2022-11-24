@@ -82,7 +82,9 @@ const BookingOptions = ({formData, timeClicked, baseDay, handleDayClicked}) => {
     else {
       const bTArr = optionGroup[0].timeAv.map(time => {
         return (
-          <button className="btn-time" onClick={() => timeClicked(time, optionGroup, formData[0].date )} key={time}>{time}</button>
+          <NavLink to="/booking-confirm" onClick={() => timeClicked(time, optionGroup, formData[0].date )} key={time}><button className="btn-time" >{time}</button></NavLink>
+
+          // <button className="btn-time" onClick={() => timeClicked(time, optionGroup, formData[0].date )} key={time}>{time}</button>
         )
       })
       const newArr = optionGroup.map((row, index2) => {
