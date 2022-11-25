@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 
 
@@ -15,12 +15,19 @@ import './App.scss';
 
 function App() {
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  let tomorrow =  new Date();
+  tomorrow.setDate(today.getDate() + 1);
+
   const [stylists, setStylists] = useState([]);
   const [availability, setAvailability] = useState([]);
   const [serviceGroups, setServiceGroups] = useState([]);
   const [services, setServices] = useState([]);
 
-  const [formData, setFormData] = useState([{service: "", stylists: [], date: (new Date())}]);
+  const [formData, setFormData] = useState([{service: "", stylists: []}]);
+  const [selectedDay, setSelectedDay] = useState(tomorrow);
 
   const [allSpots, setAllSpots] = useState([]);
   const [allBooked, setAllBooked] = useState([]);
@@ -42,9 +49,7 @@ function App() {
   }, []);
 
   const reqClicked = function(serviceId) {
-
-
-    setFormData(pre => ([{service: serviceId, stylists: [], date: (new Date())}]));
+    setFormData(pre => ([{service: serviceId, stylists: []}]));
   }
 
   const checkAvailability = (allOptions, bookedOnes) => {
@@ -70,9 +75,9 @@ function App() {
     return newAllOptions;
   }
 
-  const onSearch = function(formData) {
-    const myDay = new Date(formData[0].date).toLocaleString('en-us', {weekday:'long'})
-    axios.post(`http://localhost:7100/api/booking`, {reqApps: formData, day: myDay})
+  const onSearch = function(bookingReqs, receivedDate) {
+    const day = new Date(receivedDate).toLocaleString('en-us', {weekday:'long'})
+    axios.post(`http://localhost:7100/api/booking`, {bookingReqs, day, date: receivedDate})
     .then(res => {
       const temp = checkAvailability(res.data.options, res.data.booked)
       setAllSpots(temp);
@@ -87,10 +92,8 @@ function App() {
 
     let bookSummery = [];
     let start = wantedTime;
-    console.log(wantedGroup);
     
     for (let i = 0; i < wantedGroup.length; i++) {
-      console.log('hereeeeeee');
       let dur = wantedGroup[i].duration;
       let end = new Date(new Date("1970/01/01 " + start).getTime() + dur * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
       bookSummery.push({
@@ -141,7 +144,15 @@ function App() {
             <Route path='/stylists' element={<Stylists />}/>
             <Route path='/stylists/:id' element={<Stylist />}/>
             <Route path='/services' element={<Services reqClicked={reqClicked}/>}/>
-            <Route path='/booking' element={<Booking formData={formData} setFormData={setFormData} onSearch={onSearch} timeClicked={timeClicked}/>}/>
+            <Route path='/booking' element={
+              <Booking
+                formData={formData}
+                setFormData={setFormData}
+                selectedDay={selectedDay}
+                setSelectedDay={setSelectedDay}
+                onSearch={onSearch}
+                timeClicked={timeClicked}
+              />}/>
             <Route path='/booking-confirm' element={<BookingConfirm info={wantToBook}/>}/>
           </Routes>
         </div>

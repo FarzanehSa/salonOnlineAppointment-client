@@ -12,81 +12,94 @@ import './Booking.scss';
 
 
 
-const Booking = ({onSearch, timeClicked, formData, setFormData}) => {
+const Booking = ({onSearch, timeClicked, formData, setFormData, selectedDay, setSelectedDay}) => {
 
-  const { stylists, serviceGroups, setAllBooked, setAllSpots } = useContext(GeneralContext);
+  const { stylists, setAllBooked, setAllSpots } = useContext(GeneralContext);
+
   const [weekNum, setWeekNum] = useState(0);
-  const [baseDay, setBaseDay] = useState(new Date());
   const [weekInfo, setWeekInfo] = useState([]);
   const [monthName, setMonthName] = useState();
-  const [qualifiedStylists, setQualifiedStylists] = useState([]);
+  const [qualifiedStylists, setQualifiedStylists] = useState([[]]);
 
-  const now = new Date();
-  now.setHours(0, 0, 0, 0);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  let tomorrow =  new Date();
+  tomorrow.setDate(today.getDate() + 1);
 
   useEffect(() => {
-    setWeekNum(getWeekNum(baseDay));
+    setWeekNum(getWeekNum(today));
     setAllSpots([]);
     setAllBooked([]);
   }, []);
 
-  useEffect(() => {
-    setQualifiedStylists([[...stylists]]);
-  }, [stylists]);
-
+  // ✅✅✅
   useEffect(() => {
     setWeekInfo([
       {
         name: "Monday",
-        select: baseDay.toString() === calDate(1, baseDay, weekNum).toString(),
-        fullDate: calDate(1, baseDay, weekNum),
+        select: selectedDay.toString() === calDate(1, today, weekNum).toString(),
+        fullDate: calDate(1, today, weekNum),
         firstDay: true
       },
       {
         name: "Tuesday",
-        select: baseDay.toString() === calDate(2, baseDay, weekNum).toString(),
-        fullDate: calDate(2, baseDay, weekNum),
+        select: selectedDay.toString() === calDate(2, today, weekNum).toString(),
+        fullDate: calDate(2, selectedDay, weekNum),
       },
       {
          name: "Wednesday",
-         select: baseDay.toString() === calDate(3, baseDay, weekNum).toString(),
-         fullDate: calDate(3, baseDay, weekNum),
+         select: selectedDay.toString() === calDate(3, today, weekNum).toString(),
+         fullDate: calDate(3, selectedDay, weekNum),
        },
        {
          name: "Thursday",
-         select: baseDay.toString() === calDate(4, baseDay, weekNum).toString(),
-         fullDate: calDate(4, baseDay, weekNum),
+         select: selectedDay.toString() === calDate(4, today, weekNum).toString(),
+         fullDate: calDate(4, selectedDay, weekNum),
        },
        {
          name: "Friday",
-         select: baseDay.toString() === calDate(5, baseDay, weekNum).toString(),
-         fullDate: calDate(5, baseDay, weekNum),
+         select: selectedDay.toString() === calDate(5, today, weekNum).toString(),
+         fullDate: calDate(5, selectedDay, weekNum),
        },
        {
          name: "Saturday",
-         select: baseDay.toString() === calDate(6, baseDay, weekNum).toString(),
-         fullDate: calDate(6, baseDay, weekNum),
+         select: selectedDay.toString() === calDate(6, today, weekNum).toString(),
+         fullDate: calDate(6, selectedDay, weekNum),
        },
        {
          name: "Sunday",
-         select: baseDay.toString() === calDate(7, baseDay, weekNum).toString(),
-         fullDate: calDate(7, baseDay, weekNum),
+         select: selectedDay.toString() === calDate(7, today, weekNum).toString(),
+         fullDate: calDate(7, selectedDay, weekNum),
        }
     ])
-  }, [weekNum, baseDay]);
+  }, [weekNum, selectedDay]);
 
-  useEffect(() => {  
-    setBaseDay(formData[0].date);
-    if (formData[0].service) {
-      onSearch(formData);
-    }
-  }, [formData[0].date]); // eslint-disable-line
-
+  // ✅✅✅
   useEffect(() => {
-    setWeekNum(getWeekNum(baseDay));
-  }, [baseDay]);
-  
-  // show name of day (selected one or monday)
+    setWeekNum(getWeekNum(selectedDay));
+  }, [selectedDay]);
+
+  // ✅✅✅ change qualified stylists list base on service selected (if any)
+  useEffect(() => {
+    const newQualified = formData.map(row => {
+      let myStylist = stylists;
+      if (row.service) {
+        myStylist = myStylist.filter(stylist => stylist.skills.indexOf(row.service.groupid) > -1)
+      }
+      return myStylist;
+    })
+    setQualifiedStylists(newQualified);
+  }, [formData]);
+
+  // ✅✅✅ it do search if there is service, and day clicked
+  useEffect(() => {  
+    if (formData[0].service) {
+      onSearch(formData, selectedDay);
+    }
+  }, [selectedDay]);
+
+  // ✅✅✅ show name of day (selected one or monday)
   useEffect(() => {
     if (weekInfo.length) setMonthName(getMonthName(weekInfo[0].fullDate));
     for (let i = 0;  i < weekInfo.length; i++) {
@@ -94,8 +107,9 @@ const Booking = ({onSearch, timeClicked, formData, setFormData}) => {
     }
   }, [weekInfo]);
 
+  // ✅✅✅
   const handleChangeService = (event, index) => {
-    const { name, value } = event.target;
+    const value = event.target.value;
     let myStylists = [...(formData[index].stylists)];
 
     // if selected stylist does not have that skill, delete from form
@@ -104,21 +118,9 @@ const Booking = ({onSearch, timeClicked, formData, setFormData}) => {
       myStylists = formData[index].stylists.filter(stylist => stylist.skills.indexOf(myGroup) > -1)
     }
 
-    // only show stylists that have that skill
-    const y = serviceGroups.filter(row => row.id === value.groupid)[0]
-    const x = y.stylists.map(xId => {
-      return stylists.filter(stylist => stylist.id === xId)[0]
-    });
-
-
-    setQualifiedStylists(qualifiedStylists.map((row, i) => {
-      if (i === index) return x;
-      return row;
-    }));
-
     // update formData
     const newForm = formData.map((row, i) => {
-      if (i === index) return ({...row, [name]: value, stylists: myStylists})
+      if (i === index) return ({service: value, stylists: myStylists})
       return {...row}
     })
 
@@ -126,6 +128,7 @@ const Booking = ({onSearch, timeClicked, formData, setFormData}) => {
     setAllSpots([]);
   };
 
+  // ✅✅✅
   const handleChangeStylists = (event, index) => {
     const newForm = formData.map((row, i) => {
       if (i === index) return ({...row, stylists: event.target.value})
@@ -135,35 +138,26 @@ const Booking = ({onSearch, timeClicked, formData, setFormData}) => {
     setAllSpots([]);
   };
   
+  // ✅✅✅
   const handleChangeDate = (newDate) => {
     // make sure from-date is always smaller that to-date
-    console.log(newDate);
-    
     let rDate = new Date(newDate);
-    console.log(rDate);
-    
-    if (rDate >= now){
-      const newForm = formData.map((row, i) => {
-        if (i === 0) return ({...row, date: rDate})
-        return {...row}
-      })
-      setFormData(newForm);
+    if (rDate > today){
+      setSelectedDay(rDate);
     }
     else {
-      const newForm = formData.map((row, i) => {
-        if (i === 0) return ({...row, date: now})
-        return {...row}
-      })
-      setFormData(newForm);
+      setSelectedDay(tomorrow);
     }
   }
 
+  // ✅✅✅
   function handleAddToForm() {
     setFormData([...formData, {service: "", stylists: []}]);
     setQualifiedStylists([...qualifiedStylists, stylists]);
     setAllSpots([]);
   }
 
+  // ✅✅✅
   function handleDelete(index) {
     const newForm = [...formData];
     newForm.splice(index, 1);
@@ -174,15 +168,18 @@ const Booking = ({onSearch, timeClicked, formData, setFormData}) => {
     setAllSpots([]);
   }
 
+  // ✅✅✅
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-    onSearch(formData);
+    onSearch(formData, selectedDay);
   };
 
+  // ✅✅✅ for when you move calender but not select any!
   const handleCloseDayPicker = (event) => {
-    setWeekNum(getWeekNum(baseDay));
+    setWeekNum(getWeekNum(selectedDay));
   };
 
+  // ✅✅✅
   function dayClicked(recievedDate) {
     const afterSelect = weekInfo.map(row => {
       if (row.fullDate === recievedDate) {
@@ -197,10 +194,11 @@ const Booking = ({onSearch, timeClicked, formData, setFormData}) => {
   // console.log('👀 formData \n', formData);
    
   return (
-    (baseDay &&
+    (today &&
       <div className='booking-page'>
         <BookingSearchForm
           formData={formData}
+          selectedDay={selectedDay}
           handleChangeService={handleChangeService}
           handleChangeStylists={handleChangeStylists}
           handleChangeDate={handleChangeDate}
@@ -221,15 +219,14 @@ const Booking = ({onSearch, timeClicked, formData, setFormData}) => {
           )
         }
         {
-          baseDay && (
+          // baseDay && (
             <BookingOptions 
               formData={formData}
+              selectedDay={selectedDay}
               timeClicked={timeClicked}
-              baseDay={baseDay}
-              onSearch={onSearch}
-              handleDayClicked={handleChangeDate}
+              handleChangeDate={handleChangeDate}
             />
-          )
+          // )
         }
       </div>
     )
