@@ -1,7 +1,3 @@
-import { useContext, useState, useEffect } from "react";
-
-import GeneralContext from "../contexts/GeneralContext";
-
 import './WeeklyCalender.scss';
 
 const WeeklyCalender = ({weekInfo, weekNum, dayClicked, monthName}) => {
@@ -16,7 +12,7 @@ const WeeklyCalender = ({weekInfo, weekNum, dayClicked, monthName}) => {
     if (row.firstDay) myClass += " weekly-calender-first-day "
 
     return (
-      <button className={`weekly-calender-day-box ${myClass}`} key={row.name}  onClick={() => dayClicked(row.fullDate)} disabled={row.fullDate < now}>
+      <button className={`weekly-calender-day-box ${myClass}`} key={row.name}  onClick={() => dayClicked(row.fullDate)} disabled={row.fullDate <= now}>
         <span className="weekly-calender-day-name">{row.name.slice(0, 3)}</span>
         <span className="weekly-calender-day-date">{row.fullDate.getDate().toString()}</span>
       </button>

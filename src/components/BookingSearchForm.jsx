@@ -27,10 +27,17 @@ const MenuProps = {
   },
 };
 
-const BookingSearchForm = ({formData, handleChangeService, handleChangeStylists, handleChangeDate, handleAddToForm, handleDelete, handleSearchSubmit, handleCloseDayPicker, qualifiedStylists}) => {
+const BookingSearchForm = ({formData, selectedDay, handleChangeService, handleChangeStylists, handleChangeDate, handleAddToForm, handleDelete, handleSearchSubmit, handleCloseDayPicker, qualifiedStylists}) => {
 
   const { stylists, serviceGroups, services } = useContext(GeneralContext);
 
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  let tomorrow =  new Date();
+  tomorrow.setDate(today.getDate() + 1);
+
+  //✅✅✅ showing select service field, with group name and services related to that!
   const serviceSelectArray = serviceGroups.map(gRow => {
     const goodServices = services.filter(sRow => gRow.id === sRow.groupid);
     let result = [];
@@ -82,7 +89,7 @@ const BookingSearchForm = ({formData, handleChangeService, handleChangeStylists,
             }}
             MenuProps={MenuProps}
           >
-            {qualifiedStylists && (qualifiedStylists[index] || stylists).map(sty => {
+            {((qualifiedStylists[index].length && qualifiedStylists[index]) || stylists).map(sty => {
               return (
               <MenuItem key={sty.id} value={sty}>
                 <Checkbox checked={formData[index].stylists.map(stylist => stylist.id).indexOf(sty.id) > -1} />
@@ -98,8 +105,8 @@ const BookingSearchForm = ({formData, handleChangeService, handleChangeStylists,
               <DesktopDatePicker
                 name="date"
                 label="Pick a Date"
-                value={formData[0].date}
-                minDate={new Date()}
+                value={selectedDay}
+                minDate={tomorrow}
                 onClose={handleCloseDayPicker}
                 onChange={handleChangeDate}
                 renderInput={(params) => <TextField {...params} />}

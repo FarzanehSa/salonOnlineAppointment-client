@@ -9,7 +9,6 @@ import './BookingConfirm.scss';
 
 const BookingConfirm = ({info}) => {
 
-  console.log(info);
   const navigate = useNavigate();
 
   return (

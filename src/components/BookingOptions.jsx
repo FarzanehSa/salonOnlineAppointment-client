@@ -8,7 +8,7 @@ import {groupServiceReqs} from '../helper/groupServiceReqs'
 
 import  FirstAvailable from './FirstAvailable';
 
-const BookingOptions = ({formData, timeClicked, baseDay, handleDayClicked}) => {
+const BookingOptions = ({formData, selectedDay, timeClicked, handleChangeDate}) => {
 
   const { allSpots } = useContext(GeneralContext);
 
@@ -46,15 +46,13 @@ const BookingOptions = ({formData, timeClicked, baseDay, handleDayClicked}) => {
       const newArr = optionGroup.map((row, index2) => { // eslint-disable-line
         const bTArr = row.timeAv.map(time => {
           return (
-            <NavLink to="/booking-confirm" onClick={() => timeClicked(time, optionGroup, formData[0].date )} key={time}><button className="btn-time" >{time}</button></NavLink>
-
-            // <button className="btn-time" onClick={() => timeClicked(time, row, formData[0].date )} key={time}>{time}</button>
+            <NavLink to="/booking-confirm" onClick={() => timeClicked(time, optionGroup, selectedDay )} key={time}><button className="btn-time" >{time}</button></NavLink>
           )
         })
         if (row.timeAv.length !== 0) {
           return (
             <div key={index2} className="availabel-time-box-one">
-              <span className="availabel-time-box-time">{baseDay.toDateString()}</span>
+              <span className="availabel-time-box-time">{selectedDay.toDateString()}</span>
               <div className="availabel-time-box-one-info">
                 <div>
                   <img src={row.image} alt="stylistImg" className='stylist-image'/>
@@ -82,9 +80,7 @@ const BookingOptions = ({formData, timeClicked, baseDay, handleDayClicked}) => {
     else {
       const bTArr = optionGroup[0].timeAv.map(time => {
         return (
-          <NavLink to="/booking-confirm" onClick={() => timeClicked(time, optionGroup, formData[0].date )} key={time}><button className="btn-time" >{time}</button></NavLink>
-
-          // <button className="btn-time" onClick={() => timeClicked(time, optionGroup, formData[0].date )} key={time}>{time}</button>
+          <NavLink to="/booking-confirm" onClick={() => timeClicked(time, optionGroup, selectedDay )} key={time}><button className="btn-time" >{time}</button></NavLink>
         )
       })
       const newArr = optionGroup.map((row, index2) => {
@@ -103,7 +99,7 @@ const BookingOptions = ({formData, timeClicked, baseDay, handleDayClicked}) => {
       })
       return (
         <div key={index} className="availabel-time-box-one">
-          <span className="availabel-time-box-time">{baseDay.toDateString()}</span>
+          <span className="availabel-time-box-time">{selectedDay.toDateString()}</span>
           {newArr}
           <div>
             {bTArr}
@@ -146,19 +142,7 @@ const searchFirstAvailability = (tempData, setTempData) => {
 
   const myDay = new Date(tempData.date).toLocaleString('en-us', {weekday:'long'})
 
-  let formDataCopy = []
-  for (let i = 0; i < formData.length; i++) {
-    if (i === 0) {
-      const {date, ...row} = formData[i];
-      formDataCopy.push(row)
-    } else {
-      formDataCopy.push({ ...formData[i]})
-    }
-  }
-  
-  formDataCopy[0].date = tempData.date;
-
-  axios.post(`http://localhost:7100/api/booking`, {reqApps: formDataCopy, day: myDay})
+  axios.post(`http://localhost:7100/api/booking`, {bookingReqs: formData, day: myDay, date: tempData.date})
   .then(res => {
     const temp = checkAvailability(res.data.options, res.data.booked)
 
@@ -204,9 +188,9 @@ const searchFirstAvailability = (tempData, setTempData) => {
     <div className="availabel-time-box">
       {updateAllSpotts.length === 0  && allSpots.length !== 0 && (
         <FirstAvailable 
-          formData={formData}
+          selectedDay={selectedDay}
           searchFirstAvailability={searchFirstAvailability}
-          handleDayClicked={handleDayClicked}/>
+          handleChangeDate={handleChangeDate}/>
       )}
       {spotsArray}
     </div>
