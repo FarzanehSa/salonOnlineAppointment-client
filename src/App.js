@@ -121,6 +121,12 @@ function App() {
     axios.post(`http://localhost:7100/api/booking/save`, {tasks: info, user: user})
     .then(res => {
       console.log(res.data);
+      setFormData([{service: "", stylists: []}]);
+      setSelectedDay(tomorrow);
+    
+      setAllSpots([]);
+      setAllBooked([]);
+      setWantToBook({});
     })
     .catch(error => {
       console.log(error.message);
