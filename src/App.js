@@ -1,7 +1,8 @@
 import {useState, useEffect} from 'react';
 import { Routes, Route } from 'react-router-dom';
 import axios from 'axios';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import GeneralContext from './contexts/GeneralContext';
 
@@ -120,15 +121,16 @@ function App() {
   const handleSendRequest = function(info) {
     axios.post(`http://localhost:7100/api/booking/save`, {tasks: info, user: user})
     .then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       setFormData([{service: "", stylists: []}]);
       setSelectedDay(tomorrow);
-    
+      
       setAllSpots([]);
       setAllBooked([]);
       setWantToBook({});
     })
     .catch(error => {
+      toast(`Something goes wrong, please try again later!`, {type: 'error'});
       console.log(error.message);
     })
 
@@ -148,6 +150,7 @@ function App() {
       <GeneralContext.Provider value={{ stylists, availability, serviceGroups, services, allSpots, allBooked, setAllBooked, setAllSpots, user }}>
 
         <Navbar />
+        <ToastContainer />
         <div className="app-body">
           <Routes>
             <Route path='/stylists' element={<Stylists />}/>
