@@ -21,7 +21,7 @@ const BookingOptions = ({formData, selectedDay, timeClicked, handleChangeDate}) 
     }
   }
 
-  let updateAllSpotts =groupServiceReqs(copyAllSpots);
+  let updateAllSpotts = groupServiceReqs(copyAllSpots);
   updateAllSpotts = updateAllSpotts.map((optionGroup, index) => {
     const len = optionGroup.length;
     if (len === 1) return optionGroup 

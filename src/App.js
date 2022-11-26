@@ -28,6 +28,7 @@ function App() {
 
   const [formData, setFormData] = useState([{service: "", stylists: []}]);
   const [selectedDay, setSelectedDay] = useState(tomorrow);
+  const [user, setUser] = useState({userId: 1, userName: 'guest'});
 
   const [allSpots, setAllSpots] = useState([]);
   const [allBooked, setAllBooked] = useState([]);
@@ -89,7 +90,6 @@ function App() {
   }
 
   function timeClicked(wantedTime, wantedGroup, wantedDate) {
-
     let bookSummery = [];
     let start = wantedTime;
     
@@ -105,7 +105,7 @@ function App() {
         startTime: start,
         endTime: end,
         date: wantedDate,
-        userId: 1
+        serviceId:wantedGroup[i].serviceid
       })
       start = end;
     }
@@ -115,28 +115,31 @@ function App() {
       time: wantedTime,
       stylists: bookSummery
     })
+  }
+  
+  const handleSendRequest = function(info) {
+    axios.post(`http://localhost:7100/api/booking/save`, {tasks: info, user: user})
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(error => {
+      console.log(error.message);
+    })
 
-    // axios.post(`http://localhost:7100/api/booking/${newTime}`, {stylistId, date, serviceId, userId: 1, duration })
-    // .then(res => {
-    //   console.log(res.data);
-    // })
-    // .catch(error => {
-    //   console.log(error.message);
-    // })
   }
 
   // console.log('👨🏼‍🎨👩‍🎨', stylists, availability);
-  // console.log('✂️🪒', serviceGroups, services);
-  // console.log('🪒', service);
+  console.log('✂️🪒', serviceGroups, services);
+
   console.log('📖', allSpots);
   console.log('📖❌', allBooked);
-
+  // console.log('🧤 formData \n', formData);
   console.log('👀👀 wanted to book \n', wantToBook);
 
 
   return (
     <main className="layout">
-      <GeneralContext.Provider value={{ stylists, availability, serviceGroups, services, allSpots, allBooked, setAllBooked, setAllSpots }}>
+      <GeneralContext.Provider value={{ stylists, availability, serviceGroups, services, allSpots, allBooked, setAllBooked, setAllSpots, user }}>
 
         <Navbar />
         <div className="app-body">
@@ -153,7 +156,7 @@ function App() {
                 onSearch={onSearch}
                 timeClicked={timeClicked}
               />}/>
-            <Route path='/booking-confirm' element={<BookingConfirm info={wantToBook}/>}/>
+            <Route path='/booking-confirm' element={<BookingConfirm info={wantToBook} handleSendRequest={handleSendRequest} />}/>
           </Routes>
         </div>
 

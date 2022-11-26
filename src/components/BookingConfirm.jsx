@@ -5,9 +5,7 @@ import './BookingConfirm.scss';
 
 // import GeneralContext from "../contexts/GeneralContext";
 
-// import './Stylist.scss';
-
-const BookingConfirm = ({info}) => {
+const BookingConfirm = ({info, handleSendRequest}) => {
 
   const navigate = useNavigate();
 
@@ -22,7 +20,7 @@ const BookingConfirm = ({info}) => {
           </span>
           <div className="buttons">
             <button className="btn-in-confirm-page" onClick={() => navigate(-1)}>Go Back</button>
-            <button className="btn-in-confirm-page">Request</button>
+            <button className="btn-in-confirm-page" onClick={() => handleSendRequest(info)}>Request</button>
           </div>
         </div>
         <div className="left-cul">
@@ -42,7 +40,6 @@ const BookingConfirm = ({info}) => {
                     <span className="text">{stylist.stylistName} ({stylist.stylistLevel})</span>
                   </div>
                 </div>
-        
               </div>
             )
           })}
