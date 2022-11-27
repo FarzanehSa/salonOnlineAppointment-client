@@ -1,0 +1,42 @@
+@import "../styles/variables.scss";
+
+.inside-modal-success-book {
+  display: flex;
+  flex-direction: column;
+
+  font-size: 1.1em;
+
+  .thank-par {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1.5em;
+
+    .thank {
+      margin-bottom: 0.5em;
+    }
+    
+    .date-all {
+      margin-bottom: 2em
+    }
+
+    .date {
+      font-size: 1.15em;
+      color: crimson;
+    }
+
+    .summary {
+      text-decoration: underline;
+      color: chocolate;
+    }
+  }
+
+  .book-info-row {
+    margin-bottom: 0.5em;
+
+    .time {
+      color: green;
+    }
+  }
+}

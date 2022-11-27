@@ -4,3 +4,16 @@
   border: $test2;
   margin: 0px;
 }
+
+.modal {
+  border: 0.5px solid LightSlateGray;
+  background-color: white;
+  padding: 2em;
+  min-width: 30%;
+  z-index: 2000;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

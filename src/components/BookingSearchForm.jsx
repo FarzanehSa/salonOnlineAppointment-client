@@ -90,7 +90,7 @@ const BookingSearchForm = ({formData, selectedDay, handleChangeService, handleCh
             MenuProps={MenuProps}
           >
             {((qualifiedStylists[index].length && qualifiedStylists[index]) || stylists).map(sty => {
-              return (
+            return (
               <MenuItem key={sty.id} value={sty}>
                 <Checkbox checked={formData[index].stylists.map(stylist => stylist.id).indexOf(sty.id) > -1} />
                 <ListItemText primary={`${sty.name} (${sty.level})`} />
@@ -123,6 +123,7 @@ const BookingSearchForm = ({formData, selectedDay, handleChangeService, handleCh
   })
 
   // console.log('🚨 formData \n',formData);
+  // console.log('🚨🚨🚨 qualifiedStylists \n',qualifiedStylists);
 
   return (
     <div className="search-form">

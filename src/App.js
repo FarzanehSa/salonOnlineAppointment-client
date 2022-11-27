@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Modal from 'react-modal';
 
 import GeneralContext from './contexts/GeneralContext';
 
@@ -12,6 +13,8 @@ import Services from './components/Services';
 import Stylist from './components/Stylist';
 import Booking from './components/Booking';
 import BookingConfirm from './components/BookingConfirm';
+import SuccessfullBook from './components/SuccessfullBook';
+
 import './App.scss';
 
 function App() {
@@ -22,6 +25,8 @@ function App() {
   let tomorrow =  new Date();
   tomorrow.setDate(today.getDate() + 1);
 
+  const [successfullBook, setSuccessfullBook] = useState(false);
+
   const [stylists, setStylists] = useState([]);
   const [availability, setAvailability] = useState([]);
   const [serviceGroups, setServiceGroups] = useState([]);
@@ -29,11 +34,13 @@ function App() {
 
   const [formData, setFormData] = useState([{service: "", stylists: []}]);
   const [selectedDay, setSelectedDay] = useState(tomorrow);
+  const [qualifiedStylists, setQualifiedStylists] = useState([[]]);
+  const [successBookInfo, setSuccessBookInfo] = useState({});
   const [user, setUser] = useState({userId: 1, userName: 'guest'});
 
   const [allSpots, setAllSpots] = useState([]);
   const [allBooked, setAllBooked] = useState([]);
-  const [wantToBook, setWantToBook] = useState({})
+  const [wantToBook, setWantToBook] = useState({});
   
   useEffect(() => {
 
@@ -54,6 +61,10 @@ function App() {
     setFormData(pre => ([{service: serviceId, stylists: []}]));
   }
 
+  function closeModal() {
+    setSuccessfullBook(false);
+  }
+
   const checkAvailability = (allOptions, bookedOnes) => {
     const newAllOptions = allOptions.map((task, index) => {
       const newArr = task.map(row => {
@@ -70,7 +81,6 @@ function App() {
           t = new Date(new Date("1970/01/01 " + t).getTime() + minsToAdd * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
         }
         return ({...row, timeAv: tArr});
-        // return ([]);
       })
       return (newArr);
     })
@@ -121,13 +131,15 @@ function App() {
   const handleSendRequest = function(info) {
     axios.post(`http://localhost:7100/api/booking/save`, {tasks: info, user: user})
     .then(res => {
-      // console.log(res.data);
+      setSuccessBookInfo(res.data)
       setFormData([{service: "", stylists: []}]);
       setSelectedDay(tomorrow);
       
       setAllSpots([]);
       setAllBooked([]);
       setWantToBook({});
+
+      setSuccessfullBook(true);
     })
     .catch(error => {
       toast(`Something goes wrong, please try again later!`, {type: 'error'});
@@ -137,17 +149,26 @@ function App() {
   }
 
   // console.log('👨🏼‍🎨👩‍🎨', stylists, availability);
-  console.log('✂️🪒', serviceGroups, services);
+  // console.log('✂️🪒', serviceGroups, services);
 
-  console.log('📖', allSpots);
-  console.log('📖❌', allBooked);
+  // console.log('📖', allSpots);
+  // console.log('📖❌', allBooked);
   // console.log('🧤 formData \n', formData);
-  console.log('👀👀 wanted to book \n', wantToBook);
+  // console.log('👀👀 wanted to book \n', wantToBook);
 
 
   return (
     <main className="layout">
       <GeneralContext.Provider value={{ stylists, availability, serviceGroups, services, allSpots, allBooked, setAllBooked, setAllSpots, user }}>
+
+        <Modal
+          isOpen={successfullBook}
+          onRequestClose={closeModal}
+          appElement={document.getElementById('root')}
+          className="modal"
+        >
+          {successfullBook && <SuccessfullBook date={successBookInfo.date} info={successBookInfo.savedData} onClose={closeModal} />}
+        </Modal>
 
         <Navbar />
         <ToastContainer />
@@ -164,6 +185,8 @@ function App() {
                 setSelectedDay={setSelectedDay}
                 onSearch={onSearch}
                 timeClicked={timeClicked}
+                qualifiedStylists={qualifiedStylists}
+                setQualifiedStylists={setQualifiedStylists}
               />}/>
             <Route path='/booking-confirm' element={<BookingConfirm info={wantToBook} handleSendRequest={handleSendRequest} />}/>
           </Routes>

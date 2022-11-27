@@ -12,14 +12,13 @@ import './Booking.scss';
 
 
 
-const Booking = ({onSearch, timeClicked, formData, setFormData, selectedDay, setSelectedDay}) => {
+const Booking = ({onSearch, timeClicked, formData, setFormData, selectedDay, setSelectedDay, qualifiedStylists, setQualifiedStylists}) => {
 
   const { stylists, setAllBooked, setAllSpots } = useContext(GeneralContext);
 
   const [weekNum, setWeekNum] = useState(0);
   const [weekInfo, setWeekInfo] = useState([]);
   const [monthName, setMonthName] = useState();
-  const [qualifiedStylists, setQualifiedStylists] = useState([[]]);
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -192,6 +191,7 @@ const Booking = ({onSearch, timeClicked, formData, setFormData, selectedDay, set
   }
 
   // console.log('👀 formData \n', formData);
+  // console.log('👀 qualifiedStylists \n', qualifiedStylists);
    
   return (
     (today &&
