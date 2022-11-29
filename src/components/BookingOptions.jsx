@@ -8,7 +8,7 @@ import {groupServiceReqs} from '../helper/groupServiceReqs'
 
 import  FirstAvailable from './FirstAvailable';
 
-const BookingOptions = ({formData, selectedDay, timeClicked, handleChangeDate}) => {
+const BookingOptions = ({formReqBook, selectedDay, timeClicked, handleChangeDate}) => {
 
   const { allSpots } = useContext(GeneralContext);
 
@@ -142,7 +142,7 @@ const searchFirstAvailability = (tempData, setTempData) => {
 
   const myDay = new Date(tempData.date).toLocaleString('en-us', {weekday:'long'})
 
-  axios.post(`http://localhost:7100/api/booking`, {bookingReqs: formData, day: myDay, date: tempData.date})
+  axios.post(`http://localhost:7100/api/booking`, {bookingReqs: formReqBook, day: myDay, date: tempData.date})
   .then(res => {
     const temp = checkAvailability(res.data.options, res.data.booked)
 

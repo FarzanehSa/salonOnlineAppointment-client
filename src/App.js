@@ -8,6 +8,7 @@ import Modal from 'react-modal';
 import GeneralContext from './contexts/GeneralContext';
 
 import Navbar from './components/Navbar';
+import Login from './components/Login';
 import Stylists from './components/Stylists';
 import Services from './components/Services';
 import Stylist from './components/Stylist';
@@ -32,7 +33,7 @@ function App() {
   const [serviceGroups, setServiceGroups] = useState([]);
   const [services, setServices] = useState([]);
 
-  const [formData, setFormData] = useState([{service: "", stylists: []}]);
+  const [formReqBook, setFormReqBook] = useState([{service: "", stylists: []}]);
   const [selectedDay, setSelectedDay] = useState(tomorrow);
   const [qualifiedStylists, setQualifiedStylists] = useState([[]]);
   const [successBookInfo, setSuccessBookInfo] = useState({});
@@ -43,6 +44,13 @@ function App() {
   const [wantToBook, setWantToBook] = useState({});
   
   useEffect(() => {
+
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      console.log('user');
+      setUser(user);
+    }
+
 
     const f1 = axios.get('http://localhost:7100/api/stylists');
     const f2 = axios.get('http://localhost:7100/api/services');
@@ -55,10 +63,22 @@ function App() {
         setServiceGroups(prev => r2.data.groups);
         setServices(prev => r2.data.services);
       });
-  }, []);
+    }, []);
+    
+    useEffect(() => {
+      localStorage.setItem('user', JSON.stringify(user));
+      // in /dashboard url, pop up modal, if there is no admin user
+      if (!user.name) {
+        // setModalIsOpen(true);
+        console.log('NO USER');
+      } else {
+        // setModalIsOpen(false)
+        console.log('USER LOGGED IN');
+      }
+    }, [user]);
 
   const reqClicked = function(serviceId) {
-    setFormData(pre => ([{service: serviceId, stylists: []}]));
+    setFormReqBook(pre => ([{service: serviceId, stylists: []}]));
   }
 
   function closeModal() {
@@ -132,7 +152,7 @@ function App() {
     axios.post(`http://localhost:7100/api/booking/save`, {tasks: info, user: user})
     .then(res => {
       setSuccessBookInfo(res.data)
-      setFormData([{service: "", stylists: []}]);
+      setFormReqBook([{service: "", stylists: []}]);
       setSelectedDay(tomorrow);
       
       setAllSpots([]);
@@ -153,7 +173,7 @@ function App() {
 
   // console.log('📖', allSpots);
   // console.log('📖❌', allBooked);
-  // console.log('🧤 formData \n', formData);
+  // console.log('🧤 formReqBook \n', formReqBook);
   // console.log('👀👀 wanted to book \n', wantToBook);
 
 
@@ -174,13 +194,14 @@ function App() {
         <ToastContainer />
         <div className="app-body">
           <Routes>
+            <Route path='/Login' element={<Login />}/>
             <Route path='/stylists' element={<Stylists />}/>
             <Route path='/stylists/:id' element={<Stylist />}/>
             <Route path='/services' element={<Services reqClicked={reqClicked}/>}/>
             <Route path='/booking' element={
               <Booking
-                formData={formData}
-                setFormData={setFormData}
+                formReqBook={formReqBook}
+                setFormReqBook={setFormReqBook}
                 selectedDay={selectedDay}
                 setSelectedDay={setSelectedDay}
                 onSearch={onSearch}

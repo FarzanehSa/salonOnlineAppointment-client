@@ -27,7 +27,7 @@ const MenuProps = {
   },
 };
 
-const BookingSearchForm = ({formData, selectedDay, handleChangeService, handleChangeStylists, handleChangeDate, handleAddToForm, handleDelete, handleSearchSubmit, handleCloseDayPicker, qualifiedStylists}) => {
+const BookingSearchForm = ({formReqBook, selectedDay, handleChangeService, handleChangeStylists, handleChangeDate, handleAddToForm, handleDelete, handleSearchSubmit, handleCloseDayPicker, qualifiedStylists}) => {
 
   const { stylists, serviceGroups, services } = useContext(GeneralContext);
 
@@ -52,7 +52,7 @@ const BookingSearchForm = ({formData, selectedDay, handleChangeService, handleCh
     return result;
   });
 
-  const formDateArray = formData.map((row, index) => {
+  const formReqBookArray = formReqBook.map((row, index) => {
     
     return (
       <div className="search-form-row" key={index}>
@@ -62,7 +62,7 @@ const BookingSearchForm = ({formData, selectedDay, handleChangeService, handleCh
             id="service-select"
             name="service"
             onChange={e => handleChangeService(e, index)}
-            value={formData[index].service} 
+            value={formReqBook[index].service} 
             label="service-select"
             MenuProps={MenuProps}
             required
@@ -78,21 +78,21 @@ const BookingSearchForm = ({formData, selectedDay, handleChangeService, handleCh
             multiple
             name="stylists"
             displayEmpty
-            value={formData[index].stylists}
+            value={formReqBook[index].stylists}
             onChange={e => handleChangeStylists(e, index)}
             label="stylists-select"
             notched={true}
             renderValue={(selected) => {
-              if (formData[index].stylists.length === 0) return `any stylist`;
-              if (formData[index].stylists.length === 1) return formData[index].stylists[0].name;
-              return `${formData[index].stylists.length} stylists selected`
+              if (formReqBook[index].stylists.length === 0) return `any stylist`;
+              if (formReqBook[index].stylists.length === 1) return formReqBook[index].stylists[0].name;
+              return `${formReqBook[index].stylists.length} stylists selected`
             }}
             MenuProps={MenuProps}
           >
             {((qualifiedStylists[index].length && qualifiedStylists[index]) || stylists).map(sty => {
             return (
               <MenuItem key={sty.id} value={sty}>
-                <Checkbox checked={formData[index].stylists.map(stylist => stylist.id).indexOf(sty.id) > -1} />
+                <Checkbox checked={formReqBook[index].stylists.map(stylist => stylist.id).indexOf(sty.id) > -1} />
                 <ListItemText primary={`${sty.name} (${sty.level})`} />
               </MenuItem>
             )
@@ -122,15 +122,15 @@ const BookingSearchForm = ({formData, selectedDay, handleChangeService, handleCh
     )
   })
 
-  // console.log('🚨 formData \n',formData);
+  // console.log('🚨 formReqBook \n',formReqBook);
   // console.log('🚨🚨🚨 qualifiedStylists \n',qualifiedStylists);
 
   return (
     <div className="search-form">
       <form onSubmit={handleSearchSubmit}>
-        {formDateArray}
+        {formReqBookArray}
       </form>
-      {formData.length < 3 &&
+      {formReqBook.length < 3 &&
         (<div className="add-service-box">
           <button onClick={() => handleAddToForm()} className="btn-add-service-to-form">+ Add Service</button>
         </div>)

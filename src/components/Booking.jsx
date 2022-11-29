@@ -12,7 +12,7 @@ import './Booking.scss';
 
 
 
-const Booking = ({onSearch, timeClicked, formData, setFormData, selectedDay, setSelectedDay, qualifiedStylists, setQualifiedStylists}) => {
+const Booking = ({onSearch, timeClicked, formReqBook, setFormReqBook, selectedDay, setSelectedDay, qualifiedStylists, setQualifiedStylists}) => {
 
   const { stylists, setAllBooked, setAllSpots } = useContext(GeneralContext);
 
@@ -81,7 +81,7 @@ const Booking = ({onSearch, timeClicked, formData, setFormData, selectedDay, set
 
   // ✅✅✅ change qualified stylists list base on service selected (if any)
   useEffect(() => {
-    const newQualified = formData.map(row => {
+    const newQualified = formReqBook.map(row => {
       let myStylist = stylists;
       if (row.service) {
         myStylist = myStylist.filter(stylist => stylist.skills.indexOf(row.service.groupid) > -1)
@@ -89,12 +89,12 @@ const Booking = ({onSearch, timeClicked, formData, setFormData, selectedDay, set
       return myStylist;
     })
     setQualifiedStylists(newQualified);
-  }, [formData]);
+  }, [formReqBook]);
 
   // ✅✅✅ it do search if there is service, and day clicked
   useEffect(() => {  
-    if (formData[0].service) {
-      onSearch(formData, selectedDay);
+    if (formReqBook[0].service) {
+      onSearch(formReqBook, selectedDay);
     }
   }, [selectedDay]);
 
@@ -109,31 +109,31 @@ const Booking = ({onSearch, timeClicked, formData, setFormData, selectedDay, set
   // ✅✅✅
   const handleChangeService = (event, index) => {
     const value = event.target.value;
-    let myStylists = [...(formData[index].stylists)];
+    let myStylists = [...(formReqBook[index].stylists)];
 
     // if selected stylist does not have that skill, delete from form
     if (myStylists.length !== 0) {
       const myGroup = value.groupid;
-      myStylists = formData[index].stylists.filter(stylist => stylist.skills.indexOf(myGroup) > -1)
+      myStylists = formReqBook[index].stylists.filter(stylist => stylist.skills.indexOf(myGroup) > -1)
     }
 
-    // update formData
-    const newForm = formData.map((row, i) => {
+    // update formReqBook
+    const newForm = formReqBook.map((row, i) => {
       if (i === index) return ({service: value, stylists: myStylists})
       return {...row}
     })
 
-    setFormData(newForm);
+    setFormReqBook(newForm);
     setAllSpots([]);
   };
 
   // ✅✅✅
   const handleChangeStylists = (event, index) => {
-    const newForm = formData.map((row, i) => {
+    const newForm = formReqBook.map((row, i) => {
       if (i === index) return ({...row, stylists: event.target.value})
       return {...row}
     })
-    setFormData(newForm);
+    setFormReqBook(newForm);
     setAllSpots([]);
   };
   
@@ -151,16 +151,16 @@ const Booking = ({onSearch, timeClicked, formData, setFormData, selectedDay, set
 
   // ✅✅✅
   function handleAddToForm() {
-    setFormData([...formData, {service: "", stylists: []}]);
+    setFormReqBook([...formReqBook, {service: "", stylists: []}]);
     setQualifiedStylists([...qualifiedStylists, stylists]);
     setAllSpots([]);
   }
 
   // ✅✅✅
   function handleDelete(index) {
-    const newForm = [...formData];
+    const newForm = [...formReqBook];
     newForm.splice(index, 1);
-    setFormData(newForm);
+    setFormReqBook(newForm);
     const newQualified = [...qualifiedStylists];
     newQualified.splice(index, 1);
     setQualifiedStylists(newQualified);
@@ -170,7 +170,7 @@ const Booking = ({onSearch, timeClicked, formData, setFormData, selectedDay, set
   // ✅✅✅
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-    onSearch(formData, selectedDay);
+    onSearch(formReqBook, selectedDay);
   };
 
   // ✅✅✅ for when you move calender but not select any!
@@ -190,14 +190,14 @@ const Booking = ({onSearch, timeClicked, formData, setFormData, selectedDay, set
     handleChangeDate(recievedDate);
   }
 
-  // console.log('👀 formData \n', formData);
+  // console.log('👀 formReqBook \n', formReqBook);
   // console.log('👀 qualifiedStylists \n', qualifiedStylists);
    
   return (
     (today &&
       <div className='booking-page'>
         <BookingSearchForm
-          formData={formData}
+          formReqBook={formReqBook}
           selectedDay={selectedDay}
           handleChangeService={handleChangeService}
           handleChangeStylists={handleChangeStylists}
@@ -208,7 +208,7 @@ const Booking = ({onSearch, timeClicked, formData, setFormData, selectedDay, set
           handleCloseDayPicker={handleCloseDayPicker}
           qualifiedStylists={qualifiedStylists}
           />
-        { formData[0].service && (
+        { formReqBook[0].service && (
           <div className="weekly-cal">
             <button className="btn-shift-week" onClick={() => {
               setWeekNum(prev => prev - 1);}} disabled={weekNum === 0}><FontAwesomeIcon icon="fa-solid fa-chevron-left"/></button>
@@ -221,7 +221,7 @@ const Booking = ({onSearch, timeClicked, formData, setFormData, selectedDay, set
         {
           // baseDay && (
             <BookingOptions 
-              formData={formData}
+              formReqBook={formReqBook}
               selectedDay={selectedDay}
               timeClicked={timeClicked}
               handleChangeDate={handleChangeDate}
