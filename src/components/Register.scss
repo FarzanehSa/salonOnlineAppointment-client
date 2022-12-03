@@ -1,0 +1,123 @@
+@import "../styles/variables.scss";
+
+.login-modal {
+  font-family: Semplicita,Arial,sans-serif;  
+  border: 0.5px solid LightSlateGray;
+  height: 70%;
+  width: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+
+  .left-section {
+    width: 50%;
+    height: 100%;
+
+    .register-image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .right-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-left: 0.5px solid LightSlateGray;
+    width: 50%;
+    height: 100%;
+  
+    .title {
+      font-size: 2em;
+      margin-bottom: 0.5em;
+      color: DimGray;
+    }
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    width: 100%;
+
+    .name-sec {
+      display: flex;
+    }
+
+    .login-firstname .login-email {
+      margin-right: 0.3em;
+    }
+
+    .login-lastname {
+      margin-left: 0.3em;
+    }
+  }
+  
+  .login-error {
+    color: red;
+    font-size: 0.7em;
+    padding-bottom: 0.5em;
+  }
+
+  .login-username {
+    width: 100%;
+  }
+
+  .btn-login-button {
+    display: block;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    padding: 0.5em 2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    cursor: pointer;
+
+    background-color: LightCoral;
+    color: black;
+
+    &:hover {
+      background-color: #eb6663;
+      color: white;
+    }
+  }
+
+  .btn-go-to-login {
+    border: none;
+    background-color: transparent;
+    font-size: 1em;
+    margin-left: 0.5em;
+    cursor: pointer;
+
+    // background-color: LightCoral;
+    color: LightCoral;
+
+    &:hover {
+      color: Firebrick;
+    }
+  }
+  
+  .text {
+    font-size: 0.8em;
+  }
+
+}
+
+
+
+
+  
+
+
+

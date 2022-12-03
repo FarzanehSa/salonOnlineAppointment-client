@@ -4,10 +4,13 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
+// var bcrypt = require('bcryptjs');
+import bcrypt from 'bcryptjs';
 
 import GeneralContext from './contexts/GeneralContext';
 
 import Navbar from './components/Navbar';
+import Register from './components/Register';
 import Login from './components/Login';
 import Stylists from './components/Stylists';
 import Services from './components/Services';
@@ -42,6 +45,9 @@ function App() {
   const [allSpots, setAllSpots] = useState([]);
   const [allBooked, setAllBooked] = useState([]);
   const [wantToBook, setWantToBook] = useState({});
+  const [loginErrormsg, setLoginErrorMsg] = useState('');
+
+  // const salt = bcrypt.genSaltSync(10);
   
   useEffect(() => {
 
@@ -68,7 +74,7 @@ function App() {
     useEffect(() => {
       localStorage.setItem('user', JSON.stringify(user));
       // in /dashboard url, pop up modal, if there is no admin user
-      if (!user.name) {
+      if (!user.firstname) {
         // setModalIsOpen(true);
         console.log('NO USER');
       } else {
@@ -83,6 +89,35 @@ function App() {
 
   function closeModal() {
     setSuccessfullBook(false);
+  }
+
+  const onRegister = (formData) => {
+    axios.post(`http://localhost:7100/api/register`, {info: {...formData}})
+    .then(res => {
+      if (res.data.errorCode) {
+        setLoginErrorMsg("This email had sign up before, please login to your account.")
+      } else {
+        setUser(res.data.user);
+      }
+    })
+    .catch(error => {
+      console.log(error.message);
+    })
+  }
+
+  const onLogin = (formData) => {
+    axios.post(`http://localhost:7100/api/login`, {info: {...formData}})
+    .then(res => {
+      console.log(res.data);
+      if (res.data.errorCode) {
+        setLoginErrorMsg("This email had sign up before, please login to your account.")
+      } else {
+        setUser(res.data.user);
+      }
+    })
+    .catch(error => {
+      console.log(error.message);
+    })
   }
 
   const checkAvailability = (allOptions, bookedOnes) => {
@@ -175,6 +210,8 @@ function App() {
   // console.log('📖❌', allBooked);
   // console.log('🧤 formReqBook \n', formReqBook);
   // console.log('👀👀 wanted to book \n', wantToBook);
+  // console.log('❌❌❌ loginErrorMsg \n', loginErrormsg);
+  console.log('🦋 user \n', user);
 
 
   return (
@@ -190,11 +227,13 @@ function App() {
           {successfullBook && <SuccessfullBook date={successBookInfo.date} info={successBookInfo.savedData} onClose={closeModal} />}
         </Modal>
 
-        <Navbar />
+        <Navbar setUser={setUser}/>
         <ToastContainer />
         <div className="app-body">
           <Routes>
-            <Route path='/Login' element={<Login />}/>
+            {/* <Route path="/*" element={<NotExistPage />} /> */}
+            <Route path='/register' element={<Register onRegister={onRegister} error={loginErrormsg} setError={setLoginErrorMsg}/>}/>
+            <Route path='/login' element={<Login onLogin={onLogin} error={loginErrormsg} setError={setLoginErrorMsg}/>}/>
             <Route path='/stylists' element={<Stylists />}/>
             <Route path='/stylists/:id' element={<Stylist />}/>
             <Route path='/services' element={<Services reqClicked={reqClicked}/>}/>

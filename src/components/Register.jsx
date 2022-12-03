@@ -1,5 +1,5 @@
 import {React, useContext} from 'react';
-import { NavLink, useNavigat, Navigate} from 'react-router-dom';
+import { NavLink, useNavigate, Navigate} from 'react-router-dom';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -32,14 +32,14 @@ const CssTextField = styled(TextField)({
   },
 });
 
-const Login = ({onLogin, error, setError}) => {
+const Register = ({onRegister, error, setError}) => {
 
   const { user } = useContext(GeneralContext);
 
-  const baseFormLogin = { email: "", password: "" };
-  const { formData, handleChange, handleSubmit } = useLoginForm(baseFormLogin, onLogin, setError);
+  const baseFormRegister = { firstname: "", lastname:"", email:"", password: "", tel:"" };
+  const { formData, handleChange, handleSubmit } = useLoginForm(baseFormRegister, onRegister, setError);
 
-  console.log(formData);
+  // console.log(formData);
 
   if (user.id) {
     return <Navigate to="/" />;
@@ -51,9 +51,61 @@ const Login = ({onLogin, error, setError}) => {
         <img src="https://res.cloudinary.com/demoshoebox/image/upload/v1669945577/Salon/important/1_vtbdyv.jpg" alt="salon" className='register-image'/>
       </div>
       <div className='right-section'>
-        <span className='title'>Welcome</span>
+        <span className='title'>Sign Up</span>
         <form onSubmit={handleSubmit} className='login-form'>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', width: '100%' }}>
+            <div className='name-sec'>
+              <div className='login-firstname'>
+                <CssTextField
+                  required 
+                  id="firstname"
+                  // label="First Name"
+                  name="firstname"
+                  value={formData.firstname}
+                  onChange={handleChange}
+                  variant="outlined"
+                  margin="normal"
+                  size="small"
+                  placeholder="First Name"
+                />
+              </div>
+              <div className='login-lastname'>
+                <CssTextField
+                  required 
+                  id="lastname"
+                  // label="Last Name"
+                  name="lastname"
+                  value={formData.lastname}
+                  onChange={handleChange}
+                  variant="outlined"
+                  margin="normal"
+                  size="small"
+                  placeholder="Last Name"
+                />
+              </div>
+            </div>
+            <div className='login-username'>
+              <CssTextField
+                required 
+                id="tel"
+                // label="Mobile Number"
+                name="tel"
+                value={formData.tel}
+                onChange={handleChange}
+                variant="outlined"
+                margin="normal"
+                size="small"
+                placeholder="Mobile Number"
+                fullWidth
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <FontAwesomeIcon icon="fa-solid fa-phone" />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </div>
             <div className='login-username'>
               <CssTextField
                 required 
@@ -101,10 +153,10 @@ const Login = ({onLogin, error, setError}) => {
             </div>
           </Box>
           {error && <span className='login-error'>{error}</span>}
-          <button type="submit" className="btn-login-button"> Login </button>
+          <button type="submit" className="btn-login-button"> Create Account </button>
           <div>
-            <span className='text'>Don't have an account?</span>
-            <NavLink className="navlink" to="/register"><button type="button" className="btn-go-to-login">Sign Up Now</button></NavLink>
+            <span className='text'>Already have an account?</span>
+            <NavLink className="navlink" to="/login"><button type="button" className="btn-go-to-login">Login</button></NavLink>
           </div>
         </form>
       </div>
@@ -112,4 +164,4 @@ const Login = ({onLogin, error, setError}) => {
   );
 };
 
-export default Login;
+export default Register;
