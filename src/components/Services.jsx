@@ -60,7 +60,7 @@ const Services = ({reqClicked}) => {
 
   return (
     (serviceGroups) && (
-      <div className=''>
+      <div className='services-page'>
         {groupsArray}
       </div>
     )

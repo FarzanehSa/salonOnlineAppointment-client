@@ -38,9 +38,9 @@ const Navbar = ({setUser}) => {
 
         {user.id &&
           <div>
-            <span>Welcome, {user.firstname}</span>
+            <span>Welcome, {user.firstname}!</span>
             <NavLink to="#" className='menu-bars'>
-              <FontAwesomeIcon className='bar' icon="fa-solid fa-bars" onClick={() => showSidebar()} />
+              <FontAwesomeIcon className='bar' icon="fa-solid fa-grip-lines" onClick={() => showSidebar()} />
             </NavLink>
           </div>
         }
@@ -50,8 +50,8 @@ const Navbar = ({setUser}) => {
             onClick={() => showSidebar()}
             onMouseLeave={() => setSidebar(false)}
           >
-            <button onClick={() => {setUser({})}}>logout</button>
-            <button><NavLink className="navlink" to="/booking">Appointments</NavLink></button>
+            <button className='btn-logout' onClick={() => {setUser({})}}>Logout</button>
+            <button className='btn-logout'><NavLink className="navlink" to={`/appointments/${user.id}`}>Appointments</NavLink></button>
           </div>
         </nav>
       </div>

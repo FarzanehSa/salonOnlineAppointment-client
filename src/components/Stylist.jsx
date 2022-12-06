@@ -31,7 +31,7 @@ const Stylist = () => {
       )
     })
 
-  console.log('👩‍🎨', stylist, stylistAvailability);
+  // console.log('👩‍🎨', stylist, stylistAvailability);
 
   return (
     (stylist) && (

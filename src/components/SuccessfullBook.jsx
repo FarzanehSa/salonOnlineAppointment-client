@@ -34,7 +34,7 @@ const SuccessfullBook = ({info, date}) => {
   return (
     <div className="inside-modal-success-book">
       <div className="thank-par">
-        <span className="thank">Thank you {user.userName} !</span>
+        <span className="thank">Thank you {user.firstname} !</span>
         <div className="date-all">
           <span>We booked you for </span>
           <span className="date">{date.slice(0, 10)}</span>

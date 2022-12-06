@@ -1,0 +1,60 @@
+@import "../styles/variables.scss";
+
+.home-page {
+  margin-top: 120px;
+
+  background-image: url("https://res.cloudinary.com/demoshoebox/image/upload/v1670099268/Salon/important/background4_gvwyts.jpg");
+  // background-image: url("https://res.cloudinary.com/demoshoebox/image/upload/v1670096153/Salon/important/background_ye3c23.jpg");
+  height: 100vh;
+  background-size: cover;
+
+  .info {
+    height: 70%;
+    width: 50%;
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .title {
+      font-size: 3em;
+    }
+    .address {
+      font-size: 1.5em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .text-address {
+        margin-bottom: 0.5em;
+      }
+    }
+  }
+
+  .btn-booking {
+    display: block;
+    width: 40%;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2em;
+    padding: 0.5em 2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    cursor: pointer;
+
+    background-color: MediumAquamarine;
+    color: black;
+
+    &:hover {
+      background-color: LightSalmon;
+      color: white;
+    }
+  }
+}

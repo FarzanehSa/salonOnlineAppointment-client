@@ -1,15 +1,16 @@
 @import "../styles/variables.scss";
 
 .confirmation-page {
-  border: $test2;
+  // border: $test2;
 
   margin: 5em;
+  padding-top: 120px;
 
   display: flex;
   
 
   .right-cul {
-    border: $test;
+    // border: $test;
     width: 55%;
     padding: 1em;
 
@@ -55,8 +56,9 @@
     }
   }
   .left-cul {
-    border: $test1;
+    // border: $test1;
     width: 45%;
+    padding-left: 6em;
 
     display: flex;
     flex-direction: column;

@@ -10,6 +10,7 @@ import bcrypt from 'bcryptjs';
 import GeneralContext from './contexts/GeneralContext';
 
 import Navbar from './components/Navbar';
+import Home from './components/Home';
 import Register from './components/Register';
 import Login from './components/Login';
 import Stylists from './components/Stylists';
@@ -18,6 +19,7 @@ import Stylist from './components/Stylist';
 import Booking from './components/Booking';
 import BookingConfirm from './components/BookingConfirm';
 import SuccessfullBook from './components/SuccessfullBook';
+import Appointments from './components/Appointments';
 
 import './App.scss';
 
@@ -40,7 +42,7 @@ function App() {
   const [selectedDay, setSelectedDay] = useState(tomorrow);
   const [qualifiedStylists, setQualifiedStylists] = useState([[]]);
   const [successBookInfo, setSuccessBookInfo] = useState({});
-  const [user, setUser] = useState({userId: 1, userName: 'guest'});
+  const [user, setUser] = useState({});
 
   const [allSpots, setAllSpots] = useState([]);
   const [allBooked, setAllBooked] = useState([]);
@@ -53,7 +55,6 @@ function App() {
 
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
-      console.log('user');
       setUser(user);
     }
 
@@ -73,14 +74,6 @@ function App() {
     
     useEffect(() => {
       localStorage.setItem('user', JSON.stringify(user));
-      // in /dashboard url, pop up modal, if there is no admin user
-      if (!user.firstname) {
-        // setModalIsOpen(true);
-        console.log('NO USER');
-      } else {
-        // setModalIsOpen(false)
-        console.log('USER LOGGED IN');
-      }
     }, [user]);
 
   const reqClicked = function(serviceId) {
@@ -108,7 +101,6 @@ function App() {
   const onLogin = (formData) => {
     axios.post(`http://localhost:7100/api/login`, {info: {...formData}})
     .then(res => {
-      console.log(res.data);
       if (res.data.errorCode) {
         setLoginErrorMsg("This email had sign up before, please login to your account.")
       } else {
@@ -156,6 +148,7 @@ function App() {
   }
 
   function timeClicked(wantedTime, wantedGroup, wantedDate) {
+
     let bookSummery = [];
     let start = wantedTime;
     
@@ -211,7 +204,7 @@ function App() {
   // console.log('🧤 formReqBook \n', formReqBook);
   // console.log('👀👀 wanted to book \n', wantToBook);
   // console.log('❌❌❌ loginErrorMsg \n', loginErrormsg);
-  console.log('🦋 user \n', user);
+  // console.log('🦋 user \n', user);
 
 
   return (
@@ -231,9 +224,10 @@ function App() {
         <ToastContainer />
         <div className="app-body">
           <Routes>
-            {/* <Route path="/*" element={<NotExistPage />} /> */}
+            <Route path="/" element={<Home />} />
+            <Route path="/*" element={<Home />} />
             <Route path='/register' element={<Register onRegister={onRegister} error={loginErrormsg} setError={setLoginErrorMsg}/>}/>
-            <Route path='/login' element={<Login onLogin={onLogin} error={loginErrormsg} setError={setLoginErrorMsg}/>}/>
+            <Route path='/login' element={<Login onLogin={onLogin} error={loginErrormsg} setError={setLoginErrorMsg} wantToBook={wantToBook}/>}/>
             <Route path='/stylists' element={<Stylists />}/>
             <Route path='/stylists/:id' element={<Stylist />}/>
             <Route path='/services' element={<Services reqClicked={reqClicked}/>}/>
@@ -249,6 +243,7 @@ function App() {
                 setQualifiedStylists={setQualifiedStylists}
               />}/>
             <Route path='/booking-confirm' element={<BookingConfirm info={wantToBook} handleSendRequest={handleSendRequest} />}/>
+            <Route path='/appointments/:id' element={<Appointments />}/>
           </Routes>
         </div>
 

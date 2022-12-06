@@ -22,10 +22,10 @@ const Booking = ({onSearch, timeClicked, formReqBook, setFormReqBook, selectedDa
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
-
+  
   let tomorrow =  new Date();
   tomorrow.setDate(today.getDate() + 1);
-
+  
   useEffect(() => {
     setWeekNum(getWeekNum(today));
     setAllSpots([]);

@@ -3,7 +3,7 @@
 .stylist-box {
   // border: $test;
   margin: 1em;
-  margin-top: 140px;
+  margin-top: 200px;
   display: flex;
   
   .single-stylist-info {
@@ -38,6 +38,7 @@
   }
   
   .stylist-image {
+    padding-top: 10px;
     height: 300px;
     width: 300px;
   }

@@ -1,17 +1,18 @@
-import { useContext, useState, useEffect } from "react";
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useContext, useState, useEffect, useReducer } from "react";
+import { Navigate, NavLink } from 'react-router-dom';
 
+import GeneralContext from "../contexts/GeneralContext";
 import './BookingConfirm.scss';
 
 // import GeneralContext from "../contexts/GeneralContext";
 
 const BookingConfirm = ({info, handleSendRequest}) => {
 
-  const navigate = useNavigate();
-
+  const { user } = useContext(GeneralContext);
+  
   return (
     <div>
-      {info.time && 
+      {info.time && user.id &&
       <div className="confirmation-page">
         <div className="right-cul">
           <span className="title">Cancellation Policy</span>
@@ -19,7 +20,7 @@ const BookingConfirm = ({info, handleSendRequest}) => {
             Sometimes life happens… We respectfully request 48 hours notice to cancel or change your appointment. Without ample notice, we miss the opportunity to accept other clients.
           </span>
           <div className="buttons">
-            <button className="btn-in-confirm-page" onClick={() => navigate(-1)}>Go Back</button>
+            <NavLink className="navlink" to="/booking"><button className="btn-in-confirm-page">Go Back</button></NavLink>
             <button className="btn-in-confirm-page" onClick={() => handleSendRequest(info)}>Request</button>
           </div>
         </div>
@@ -47,6 +48,9 @@ const BookingConfirm = ({info, handleSendRequest}) => {
       </div>}
       {!info.time &&
         <Navigate to="/booking" replace={true} />
+      }
+      {info.time && !user.id &&
+        <Navigate to="/login" replace={false} />
       }
       
     </div>

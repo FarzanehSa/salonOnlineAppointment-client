@@ -32,17 +32,17 @@ const CssTextField = styled(TextField)({
   },
 });
 
-const Login = ({onLogin, error, setError}) => {
+const Login = ({onLogin, error, setError, wantToBook}) => {
 
   const { user } = useContext(GeneralContext);
 
   const baseFormLogin = { email: "", password: "" };
   const { formData, handleChange, handleSubmit } = useLoginForm(baseFormLogin, onLogin, setError);
 
-  console.log(formData);
-
-  if (user.id) {
-    return <Navigate to="/" />;
+  if (user.id && wantToBook.date) {
+    return <Navigate to="/booking-confirm" />;
+  } else if (user.id) {
+    return <Navigate to="/booking" />;
   }
 
   return (
