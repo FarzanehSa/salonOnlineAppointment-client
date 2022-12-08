@@ -31,13 +31,13 @@ const Navbar = ({setUser}) => {
         <button className='nav-buttons'><NavLink className="navlink" to="/stylists">Stylists</NavLink></button>
         <button className='nav-buttons'><NavLink className="navlink" to="/booking">Book Now</NavLink></button>
       </div>
-      <div>
+      <div className='login-part'>
         {!user.id &&
           <button className='nav-buttons'><NavLink className="navlink" to="/login">Login</NavLink></button>
         }
 
         {user.id &&
-          <div>
+          <div className='user-log'>
             <span>Welcome, {user.firstname}!</span>
             <NavLink to="#" className='menu-bars'>
               <FontAwesomeIcon className='bar' icon="fa-solid fa-grip-lines" onClick={() => showSidebar()} />

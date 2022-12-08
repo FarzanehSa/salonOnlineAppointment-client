@@ -13,6 +13,7 @@ import TextField from '@mui/material/TextField';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { styled } from '@mui/material/styles';
 
 import GeneralContext from "../contexts/GeneralContext";
 
@@ -26,6 +27,40 @@ const MenuProps = {
     },
   },
 };
+
+const CssDesktopDatePicker = styled(DesktopDatePicker)({
+  '& label.Mui-focused': {
+    color: 'Indigo',
+  },
+  '& .MuiInput-underline:after': {
+    borderBottomColor: 'black',
+  },
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: 'LightGray',
+    },
+    '&:hover fieldset': {
+      borderColor: 'Indigo',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: 'MediumPurple',
+    },
+  },
+});
+
+const CssSelect = styled(Select)({
+  "&.MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "LightGray"
+    },
+    "&:hover fieldset": {
+      borderColor: "Indigo"
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "MediumPurple"
+    },
+  }
+});
 
 const BookingSearchForm = ({formReqBook, selectedDay, handleChangeService, handleChangeStylists, handleChangeDate, handleAddToForm, handleDelete, handleSearchSubmit, handleCloseDayPicker, qualifiedStylists}) => {
 
@@ -53,12 +88,14 @@ const BookingSearchForm = ({formReqBook, selectedDay, handleChangeService, handl
   });
 
   const formReqBookArray = formReqBook.map((row, index) => {
-    
+    const stylistCss = index === 0 ? "search-form-stylist-first" : "search-form-stylist";
+  
     return (
       <div className="search-form-row" key={index}>
-        <FormControl sx={{ m:1, minWidth: 300 }} className="search-form-service">
-          <InputLabel htmlFor="service-select">Select Service</InputLabel>
-          <Select 
+        {/* <FormControl sx={{ m:1, minWidth: 280 }} className="search-form-service"> */}
+        <FormControl className="search-form-service">
+          <InputLabel htmlFor="service-select" className="label">Select Service</InputLabel>
+          <CssSelect
             id="service-select"
             name="service"
             onChange={e => handleChangeService(e, index)}
@@ -66,43 +103,63 @@ const BookingSearchForm = ({formReqBook, selectedDay, handleChangeService, handl
             label="service-select"
             MenuProps={MenuProps}
             required
+            className="service-select"
           >
             {serviceSelectArray}
-          </Select>
+          </CssSelect>
         </FormControl>
 
-        <FormControl sx={{ m: 1, width: 300 }} className="search-form-stylist">
-          <InputLabel htmlFor="stylists-select" shrink={true}>Select Stylist</InputLabel>
-          <Select
-            id="stylists-select"
-            multiple
-            name="stylists"
-            displayEmpty
-            value={formReqBook[index].stylists}
-            onChange={e => handleChangeStylists(e, index)}
-            label="stylists-select"
-            notched={true}
-            renderValue={(selected) => {
-              if (formReqBook[index].stylists.length === 0) return `any stylist`;
-              if (formReqBook[index].stylists.length === 1) return formReqBook[index].stylists[0].name;
-              return `${formReqBook[index].stylists.length} stylists selected`
-            }}
-            MenuProps={MenuProps}
-          >
-            {((qualifiedStylists[index].length && qualifiedStylists[index]) || stylists).map(sty => {
-            return (
-              <MenuItem key={sty.id} value={sty}>
-                <Checkbox checked={formReqBook[index].stylists.map(stylist => stylist.id).indexOf(sty.id) > -1} />
-                <ListItemText primary={`${sty.name} (${sty.level})`} />
-              </MenuItem>
-            )
-            })}
-          </Select>
-        </FormControl>
-        {(index === 0 &&
+        <div className="stylist-delete">
+          <FormControl className={stylistCss}>
+            <InputLabel htmlFor="stylists-select" shrink={true} className="label">Select Stylist</InputLabel>
+            <CssSelect
+              id="stylists-select"
+              multiple
+              name="stylists"
+              displayEmpty
+              value={formReqBook[index].stylists}
+              onChange={e => handleChangeStylists(e, index)}
+              label="stylists-select"
+              notched={true}
+              renderValue={(selected) => {
+                if (formReqBook[index].stylists.length === 0) return `any stylist`;
+                if (formReqBook[index].stylists.length === 1) return formReqBook[index].stylists[0].name;
+                return `${formReqBook[index].stylists.length} stylists selected`
+              }}
+              MenuProps={MenuProps}
+            >
+              {((qualifiedStylists[index].length && qualifiedStylists[index]) || stylists).map(sty => {
+              return (
+                <MenuItem key={sty.id} value={sty}>
+                  <Checkbox checked={formReqBook[index].stylists.map(stylist => stylist.id).indexOf(sty.id) > -1} />
+                  <ListItemText primary={`${sty.name} (${sty.level})`} />
+                </MenuItem>
+              )
+              })}
+            </CssSelect>
+          </FormControl>
+          {(index !== 0 &&
+            <div className="search-form-delete-row">
+              <button className="btn-delete" type="button" onClick={() => handleDelete(index)}><FontAwesomeIcon icon="fa-solid fa-square-minus" /></button>
+            </div>)}
+        </div>
+      </div>
+    )
+  })
+
+  // console.log('🚨 formReqBook \n',formReqBook);
+  // console.log('🚨🚨🚨 qualifiedStylists \n',qualifiedStylists);
+
+  return (
+    <div className="search-form-main">
+      <form onSubmit={handleSearchSubmit} className="search-form">
+        <div className="service-stylist">
+          {formReqBookArray}
+        </div>
         <div className="search-form-date">
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-              <DesktopDatePicker
+              <CssDesktopDatePicker
+                className="date-picker"
                 name="date"
                 label="Pick a Date"
                 value={selectedDay}
@@ -113,22 +170,7 @@ const BookingSearchForm = ({formReqBook, selectedDay, handleChangeService, handl
               />
           </LocalizationProvider>
           <button className="btn-search">Search</button>
-        </div>)}
-        {(index !== 0 &&
-        <div className="search-form-delete-row">
-          <button className="btn-delete" type="button" onClick={() => handleDelete(index)}><FontAwesomeIcon icon="fa-solid fa-square-minus" /></button>
-        </div>)}
-      </div>
-    )
-  })
-
-  // console.log('🚨 formReqBook \n',formReqBook);
-  // console.log('🚨🚨🚨 qualifiedStylists \n',qualifiedStylists);
-
-  return (
-    <div className="search-form">
-      <form onSubmit={handleSearchSubmit}>
-        {formReqBookArray}
+        </div>
       </form>
       {formReqBook.length < 3 &&
         (<div className="add-service-box">

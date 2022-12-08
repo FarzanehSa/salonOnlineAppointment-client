@@ -92,7 +92,7 @@ const BookingOptions = ({formReqBook, selectedDay, timeClicked, handleChangeDate
             <div>
               <span className="stylist-name">{row.stylist}</span>
               <span className="stylist-level">({row.level})</span>
-               <div>( {row.service} )( {row.duration} minutes)</div>
+              <div className="lev-dur">( {row.service} )( {row.duration} minutes)</div>
             </div>
           </div>
         )

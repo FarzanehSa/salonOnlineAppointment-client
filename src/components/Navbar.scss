@@ -16,89 +16,132 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
 
-.logo-name {
-  font-family: $font-family-logo;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 2em;
-}
 
-.logo-image {
-  // border: $test3;
-  // border-radius: 50%;
-  height: 115px;
-  width: 140px;
-}
-
-.nav-buttons {
-  border: none;
-  background-color: transparent;
-  margin: 0em 0.3em 0em 0.3em;
-  font-size: 1.5em;
-}
-
-// ------
-
-.menu-bars {
-  margin-left: 0.5em;
-  font-size: 1.5em;
-  background: none;
-
-  .bar {
-    
-    &:hover {
-      color: Firebrick;
-    }
+  .logo-name {
+    font-family: $font-family-logo;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
   }
-}
-
-.nav-menu {
-  background-color: $nav-color;
-  width: 150px;
-  // height: 100hv;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  // top: 0;
-  right: -80%;
-  transition: 850ms;
-  z-index: 2000;
-  padding-top: 50px;
-
-  a {
-    color: black;
-    &:hover {
-      color: Firebrick;
-    }
+  
+  .logo-image {
+    // border: $test3;
+    // border-radius: 50%;
+    height: 115px;
+    width: 140px;
   }
-
-  .btn-logout {
+  
+  .nav-buttons {
     border: none;
     background-color: transparent;
-    font-size: 1em;
-    color: black;
-    margin-bottom: 1em;
-    cursor: pointer;
+    margin: 0em 0.3em 0em 0.3em;
+    font-size: 1.5em;
+  }
+  
+  // ------
+  
+  .menu-bars {
+    margin-left: 0.5em;
+    font-size: 1.5em;
+    background: none;
+  
+    .bar {
+      
+      &:hover {
+        color: Firebrick;
+      }
+    }
+  }
+  
+  .nav-menu {
+    background-color: $nav-color;
+    width: 150px;
+    // height: 100hv;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    // top: 0;
+    right: -80%;
+    transition: 850ms;
+    z-index: 2000;
+    padding-top: 50px;
+  
+    a {
+      color: black;
+      &:hover {
+        color: Firebrick;
+      }
+    }
+  
+    .btn-logout {
+      border: none;
+      background-color: transparent;
+      font-size: 1em;
+      color: black;
+      margin-bottom: 1em;
+      cursor: pointer;
+  
+      &:hover {
+        color: Firebrick;
+      }
+    }
+  }
+  
+  .nav-menu.active {
+    left: 0;
+    transition: 350ms;
+  }
+  
+  .nav-menu-items {
+    // width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
 
-    &:hover {
-      color: Firebrick;
+
+@media only screen and (max-width: 960px) {
+  .navbar {
+    .nav-buttons {
+      font-size: 0.8em;
+    }
+    .logo-name {
+      font-size: 1.4em;
+    }
+    .logo-image {
+      width: 65px;
+      height: 70px;
+    }
+    .user-log {
+      font-size: 0.8em;
     }
   }
 }
 
-.nav-menu.active {
-  left: 0;
-  transition: 350ms;
-}
-
-.nav-menu-items {
-  // width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+@media only screen and (max-width: 500px) {
+  .navbar {
+    .nav-buttons {
+      font-size: 0.70em;
+    }
+    .logo-name {
+      font-size: 1em;
+    }
+    .logo-image {
+      display: none;
+    }
+    .login-part {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .user-log {
+      font-size: 0.6em;
+    }
+  }
 }
