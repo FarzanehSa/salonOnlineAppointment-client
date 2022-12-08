@@ -2,47 +2,48 @@
 
 .stylist-box {
   // border: $test;
-  margin: 1em;
-  margin-top: 200px;
+  padding: 2em;
+  margin-top: 150px;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
   
   .single-stylist-info {
     // border: $test2;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-  }
-  
-  .single-stylist-top {
-    // border: $test3;
+    width: 100%;
     display: flex;
     justify-content: space-between;
-  }
-  
-  .single-stylist-name-box {
-    // border: $test1;
-    padding: 1em;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-  
-    .single-stylist-name {
-      font-size: 2em;
+    flex-wrap: wrap;
+
+    .image-name {
+      display: flex;
+
+      .stylist-image {
+        height: 300px;
+        width: 300px;
+      }
+
+      .single-stylist-name-box {
+        // border: $test1;
+        padding: 2em;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        
+        .single-stylist-name {
+          font-size: 2em;
+        }
+        .single-stylist-level {
+          font-size: 1.5em;
+          padding-top: 0.5em;
+          font-style: italic;
+        }
+      }
     }
-    .single-stylist-level {
-      font-size: 1.5em;
-      padding-top: 0.5em;
-      font-style: italic;
-    }
   }
-  
-  .stylist-image {
-    padding-top: 10px;
-    height: 300px;
-    width: 300px;
-  }
-  
+
   .availability-box {
     // border: $test2;
     padding-top: 2em;
@@ -66,7 +67,6 @@
       .single-stylist-schedule-day {
         // border: $test2;
         text-align: left;
-        
       }  
       
       .single-stylist-schedule-time {
@@ -80,5 +80,120 @@
     font-size: 1.2em;
     padding: 1em;
     text-align: justify;
+  }
+}
+
+@media only screen and (max-width: 960px) {
+  .stylist-box {
+    padding: 1em;
+    margin-top: 150px;
+    
+    .single-stylist-info {
+      width: 100%;
+  
+      .image-name {
+        display: flex;
+  
+        .stylist-image {
+          height: 275px;
+          width: 275px;
+        }
+  
+        .single-stylist-name-box {
+          // border: $test1;
+          padding: 2em;
+          
+          .single-stylist-name {
+            font-size: 1.5em;
+          }
+          .single-stylist-level {
+            font-size: 1.2em;
+            font-style: italic;
+          }
+        }
+      }
+    }
+  
+    .availability-box {
+      // border: $test2;
+      padding-top: 2em;
+      padding-right: 1em;
+      font-size: 1.1em;
+    
+      .table-title {
+        font-weight: 600;
+        font-size: 1.1em;
+        text-align: left;
+        text-decoration: underline;
+      }
+    
+      .single-stylist-schedule-row {
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+      }
+    }
+    
+    .single-stylist-bio {
+      font-size: 1em;
+      padding: 1em;
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .stylist-box {
+    padding: 0.5em;
+    margin-top: 130px;
+    
+    .single-stylist-info {
+      width: 100%;
+  
+      .image-name {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+  
+        .stylist-image {
+          height: 200px;
+          width: 200px;
+        }
+  
+        .single-stylist-name-box {
+          // border: $test1;
+          padding: 1em;
+          
+          .single-stylist-name {
+            font-size: 1.2em;
+          }
+          .single-stylist-level {
+            font-size: 0.9em;
+          }
+        }
+      }
+    }
+  
+    .availability-box {
+      // border: $test2;
+      padding-top: 0.5em;
+      padding-right: 1em;
+      font-size: 0.9em;
+    
+      .table-title {
+        font-weight: 600;
+        font-size: 1.1em;
+      }
+    
+      .single-stylist-schedule-row {
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+      }
+    }
+    
+    .single-stylist-bio {
+      font-size: 0.8em;
+      padding: 1em;
+    }
   }
 }

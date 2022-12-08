@@ -36,29 +36,29 @@ const Stylist = () => {
   return (
     (stylist) && (
     <div className='stylist-box'>
-      <img src={stylist.image} alt="stylistImg" className='stylist-image'/>
       <div className="single-stylist-info">
-        <div className="single-stylist-top">
+        <div className="image-name">
+          <img src={stylist.image} alt="stylistImg" className='stylist-image'/>
           <div className="single-stylist-name-box">
             <span className='single-stylist-name'>{stylist.name}</span>
             <span className='single-stylist-level'>{stylist.level}</span>
           </div>
-          <div className='availability-box'>
-            <table>
-              <thead>
-                <tr className="table-title">
-                  <th>hours</th>
-                </tr>
-              </thead>
-              <tbody>
-                {availabilityArray}
-              </tbody>
-            </table>
-          </div>
         </div>
-        <div className='single-stylist-bio'>
-          <span>{stylist.bio}</span>
+        <div className='availability-box'>
+          <table>
+            <thead>
+              <tr className="table-title">
+                <th>hours</th>
+              </tr>
+            </thead>
+            <tbody>
+              {availabilityArray}
+            </tbody>
+          </table>
         </div>
+      </div>
+      <div className='single-stylist-bio'>
+        <span>{stylist.bio}</span>
       </div>
     </div>
   )
