@@ -2,87 +2,188 @@
 
 .services-page {
   margin-top: 150px;
-}
 
-.service-group {
-  // background-color: gray;
-  // background-image: linear-gradient(#B8C6DB, #F5F7FA);
-  width: 95%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-
-  .service-group-box {
-    background: linear-gradient(to right, #B8C6DB, #F5F7FA);
-    margin: 1em;
-    height: 4em;
+  .service-group {
+    // background-color: gray;
+    // background-image: linear-gradient(#B8C6DB, #F5F7FA);
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+  
+    .service-group-box {
+      background: linear-gradient(to right, #B8C6DB, #F5F7FA);
+      margin: 1em;
+      height: 4em;
+      width: 100%;
+      cursor: pointer;
+  
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .service-group-line {
+      font-size: 1.2em;
+      padding-left: 0.2em;
+    }
+    
+    .arrow {
+      font-size: 0.9em;
+      padding-left: 2em;
+    }
+  }
+  
+  .service-box-main {
     width: 100%;
-    cursor: pointer;
-
+    margin: 1em;
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
-  .service-group-line {
-    font-size: 1.2em;
-    padding-left: 0.2em;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
   }
   
-  .arrow {
-    font-size: 0.9em;
-    padding-left: 2em;
-  }
-}
-
-.service-box-main {
-  width: 100%;
-  margin: 1em;
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-}
-
-.service-box {
-  border: 0.5px solid #B8C6DB;
-  border-radius: 5px;
-  background: #F5F7FA;
-  width: 45%;
-  min-width: 300px;
-  min-height: 10em;
-  margin: 0.5em;
-  padding: 1em;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-
-  .service-box-name-price {
-    display: flex;
-    justify-content: space-between;
-  }
-
-  .service-name {
-    font-weight: 600;
-  }
-  .service-description {
-    text-align: justify;
-  }
-  
-  .service-button {
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  .btn-service-req {
-    border: none;
+  .service-box {
+    border: 0.5px solid #B8C6DB;
     border-radius: 5px;
-    font-size: 1.1em;
-    padding: 0.5em 1em;
-    cursor: pointer;
-
-    background-color: #eb6663;
-    color: white;
+    background: #F5F7FA;
+    width: 45%;
+    min-width: 300px;
+    min-height: 10em;
+    margin: 0.5em;
+    padding: 1em;
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  
+    .service-box-name-price {
+      display: flex;
+      justify-content: space-between;
+    }
+  
+    .service-name {
+      font-weight: 600;
+    }
+    .service-description {
+      text-align: justify;
+    }
+    
+    .service-button {
+      display: flex;
+      justify-content: flex-end;
+    }
+  
+    .btn-service-req {
+      border: none;
+      border-radius: 5px;
+      font-size: 1.1em;
+      padding: 0.5em 1em;
+      cursor: pointer;
+  
+      background-color: #eb6663;
+      color: white;
+    }
   }
 }
 
+
+@media only screen and (max-width: 960px) {
+
+  .services-page {
+    margin-top: 150px;
+    
+    .service-group {
+      width: 95%;
+    
+      .service-group-box {
+        margin: 0.3em;
+        height: 3.5em;
+        width: 100%;
+      }
+      .service-group-line {
+        font-size: 1.1em;
+        padding-left: 0.2em;
+      }
+      
+      .arrow {
+        font-size: 0.8em;
+        padding-left: 2em;
+      }
+    }
+    
+    .service-box-main {
+      width: 100%;
+      margin: 0.5em;
+    }
+    
+    .service-box {
+      width: 45%;
+      min-width: 300px;
+      min-height: 10em;
+      margin: 0.3em;
+      padding: em;
+      font-size: 0.9em;
+    
+      .service-box-name-price {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+    
+      .btn-service-req {
+        font-size: 1em;
+        padding: 0.5em 1em;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .services-page {
+    margin-top: 150px;
+    
+    .service-group {
+      width: 95%;
+    
+      .service-group-box {
+        margin: 0.3em;
+        height: 2.5em;
+        width: 100%;
+      }
+      .service-group-line {
+        font-size: 1em;
+        padding-left: 0.2em;
+      }
+      
+      .arrow {
+        font-size: 0.7em;
+        padding-left: 2em;
+      }
+    }
+    
+    .service-box-main {
+      width: 100%;
+      margin: 0.2em;
+    }
+    
+    .service-box {
+      width: 45%;
+      min-width: 300px;
+      min-height: 8em;
+      margin: 0.3em;
+      padding: em;
+      font-size: 0.8em;
+    
+      .service-box-name-price {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+    
+      .btn-service-req {
+        font-size: 1em;
+        padding: 0.5em 1em;
+      }
+    }
+  }
+}

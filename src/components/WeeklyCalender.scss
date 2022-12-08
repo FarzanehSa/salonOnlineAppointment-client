@@ -73,4 +73,71 @@
   }
 }
 
+@media only screen and (max-width: 960px) {
+  .weekly-calender {
+    // border: $test1;
+  
+    .weekly-calender-month-box {
+      margin-bottom: 0.8em;
+  
+      .weekly-calender-month {
+        font-size: 1em;
+      }
+  
+      .weekly-calender-week-num {
+        font-size: 1em;
+      }
+    }
+  }
+  
+  .weekly-calender-day-box {
+    height: 70px;
+    width: 60px;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+  
+    .weekly-calender-day-name {
+      font-size: 0.9em;
+    }
+  
+    .weekly-calender-day-date {
+      font-weight: 600;
+      font-size: 1em;
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .weekly-calender {
+    // border: $test1;
+  
+    .weekly-calender-month-box {
+      margin-bottom: 0.6em;
+  
+      .weekly-calender-month {
+        font-size: 0.8em;
+      }
+  
+      .weekly-calender-week-num {
+        font-size: 0.8em;
+      }
+    }
+  }
+  
+  .weekly-calender-day-box {
+    height: 40px;
+    width: 35px;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+  
+    .weekly-calender-day-name {
+      font-size: 0.6em;
+    }
+  
+    .weekly-calender-day-date {
+      font-weight: 600;
+      font-size: 0.7em;
+    }
+  }
+}
 

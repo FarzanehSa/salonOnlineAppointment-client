@@ -9,31 +9,65 @@
   justify-content: center;
   align-items: center;
 
-  .search-form {
-    // border: $test2;
-    margin-top: 2em;
+  .search-form-main {
+    // border: $test1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 
+    .search-form {
+      // border: $test2;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+
+      .service-stylist {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .search-form-date {
+        // margin: 0.3em;
+        // border: $test2;
+        display: flex;
+
+        .date-picker {
+          min-width: 16.5em;
+        }
+      }
+    }
+
     .search-form-row {
       // border: $test;
+      padding-right: 0.4em;
+      padding-bottom: 0.7em;
       display: flex;
       justify-content: flex-start;
       align-items: center;
-
+      
       .search-form-service {
-        margin: 0.3em
-      }
-      .search-form-stylist {
-        margin: 0.3em
-      }
-      .search-form-date {
-        margin: 0.3em;
-        display: flex;
+        padding-right: 0.4em;
+        min-width: 16.5em;
       }
 
+      .stylist-delete {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .search-form-stylist-first {
+          min-width: 16.5em;
+        }
+
+        .search-form-stylist {
+          min-width: 14em;
+        }
+      }
+
+      .label {
+        color: Indigo;
+      }
     }
 
     .btn-search {
@@ -42,7 +76,7 @@
       font-size: 1.1em;
       margin-right: 0.3em;
       margin-left: 0.3em;
-      padding: 1em 2em;
+      padding: 1em 1.3em;
       cursor: pointer;
   
       background-color: LightCoral;
@@ -65,33 +99,34 @@
         color: black;
       }
     }
-  }
 
-  .add-service-box {
-    // border: $test3;
-    width: 100%;
-    display: flex;
-    justify-self: flex-start;
-    align-items: center;
-
-    .btn-add-service-to-form {
-      border: none;
-      border-radius: 30px;
-      font-size: 1em;
-      margin-right: 0.3em;
-      margin-left: 0.3em;
-      padding: 0.8em 2em;
-      cursor: pointer;
+    .add-service-box {
+      // border: $test3;
+      width: 100%;
+      display: flex;
+      justify-self: flex-start;
+      align-items: center;
   
-      background-color: LightCoral;
-      color: black;
-
-      &:hover {
-        background-color: #eb6663;
-        color: white;
+      .btn-add-service-to-form {
+        border: none;
+        border-radius: 30px;
+        font-size: 1em;
+        margin-right: 0.3em;
+        margin-left: 0.3em;
+        padding: 0.8em 2em;
+        cursor: pointer;
+    
+        background-color: LightCoral;
+        color: black;
+  
+        &:hover {
+          background-color: #eb6663;
+          color: white;
+        }
       }
     }
   }
+
 
   .weekly-cal {
     margin: 4em;
@@ -221,6 +256,255 @@
       &:hover {
         background-color: #eb6663;
         color: white;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 960px) {
+
+  .booking-page {
+    .search-form-main {
+  
+      .search-form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+  
+        .search-form-date {
+          // border: $test2;
+          margin-top: 1em;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+  
+          .btn-search {
+            width: 7em;
+            font-size: 1em;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            padding: 1em 1em;
+            cursor: pointer;
+        
+            background-color: #eb6663;
+            color: black;
+          }
+        }
+  
+        .search-form-row {
+          // border: $test;
+          padding: 0;
+          margin-bottom: 1em;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          
+          .search-form-service {
+            padding-right: 0px;
+            padding-bottom: 0.4em;
+            min-width: 16.5em;
+          }
+    
+          .stylist-delete {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
+      }
+  
+      .add-service-box {    
+        .btn-add-service-to-form {
+          font-size: 0.8em;
+          margin: 0em;
+          padding: 0.5em 1.5em;
+        }
+      }
+    }
+
+    .weekly-cal {
+      margin: 2em;
+  
+      .btn-shift-week {
+        font-size: 1em;
+        padding: 0.4em;
+      }
+    }
+
+    .availabel-time-box {
+      // border: $test;
+      width: 80%;
+      margin: 1em;
+  
+      .availabel-time-box-one {
+        // border: $test1;
+        margin: 0.5em;
+        padding-bottom: 0.5em;
+  
+        .availabel-time-box-time {
+          font-size: 1em;
+          margin-bottom: 0.5em;
+        }
+        
+        .availabel-time-box-one-info {
+          // border: $test2;
+          margin-bottom: 1em;
+        }
+      }
+  
+      .stylist-image {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        padding-right: 0.2em;
+      }
+  
+      .stylist-name {
+        font-size: 1.1em;
+        padding-left: 0.2em;
+        padding-right: 0.2em;
+      }
+  
+      .stylist-level {
+        font-size: 1em;
+        padding-left: 0.2em;
+        padding-right: 0.2em;
+      }
+  
+      .btn-time {
+        font-size: 1em;
+        margin: 0.4em 0.4em;
+        padding: 0.5em 1.2em;
+      }
+    }
+  
+    .unavailabel-time-box {
+      // border: $test;
+      .title-1 {
+        font-size: 1.2em;
+        font-weight: 600;
+        margin-bottom: 0.8em;
+      }
+      .title-2 {
+        font-size: 1em;
+        margin-bottom: 1em;
+      }
+      .title-3 {
+        font-size: 1.2em;
+        font-weight: 600;
+        margin-bottom: 0.5em;
+      }
+      .title-4 {
+        font-size: 1.2em;
+        // font-weight: 600;
+        font-style: oblique;
+        margin-bottom: 0.8em;
+      }
+  
+      .btn-go-to-date {
+        font-size: 1em;
+        margin-right: 0em;
+        margin-left: 0em;
+        padding: 1em 1.5em;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+
+  .booking-page {
+    .weekly-cal {
+      margin: 2em;
+  
+      .btn-shift-week {
+        font-size: 0.7em;
+        padding: 0.3em;
+      }
+    }
+
+    .availabel-time-box {
+      // border: $test;
+      width: 90%;
+      margin: 0em; 
+  
+      .availabel-time-box-one {
+        // border: $test1;
+        margin: 0.5em;
+        padding-bottom: 0.5em;
+  
+        .availabel-time-box-time {
+          font-size: 0.8em;
+          margin-bottom: 0.5em;
+        }
+  
+        .availabel-time-box-one-info {
+          // border: $test2;
+          margin-bottom: 0.8em;
+        }
+      }
+  
+      .stylist-image {
+        height: 40px;
+        width: 40px;
+        border-radius: 50%;
+        padding-right: 0.2em;
+      }
+  
+      .stylist-name {
+        font-size: 0.9em;
+        padding-left: 0.2em;
+        padding-right: 0.2em;
+      }
+  
+      .stylist-level {
+        font-size: 0.8em;
+        padding-left: 0.2em;
+        padding-right: 0.2em;
+      }
+
+      .lev-dur {
+        font-size: 0.7em;
+      }
+  
+      .btn-time {
+        font-size: 0.8em;
+        margin: 0.3em 0.3em;
+        padding: 0.4em 1em;
+      }
+    }
+
+    .unavailabel-time-box {
+      // border: $test;
+      .title-1 {
+        font-size: 1em;
+        font-weight: 600;
+        margin-bottom: 0.8em;
+      }
+      .title-2 {
+        font-size: 0.8em;
+        margin-bottom: 1em;
+      }
+      .title-3 {
+        font-size: 1em;
+        font-weight: 600;
+        margin-bottom: 0.5em;
+      }
+      .title-4 {
+        font-size: 1em;
+        // font-weight: 600;
+        font-style: oblique;
+        margin-bottom: 0.8em;
+      }
+  
+      .btn-go-to-date {
+        font-size: 0.8em;
+        margin-right: 0em;
+        margin-left: 0em;
+        padding: 1em 1.2em;
       }
     }
   }
