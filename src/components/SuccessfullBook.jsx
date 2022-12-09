@@ -1,11 +1,9 @@
-import { intlFormat } from "date-fns";
-import { useContext, useState, useEffect } from "react";
+import { useContext } from "react";
 import GeneralContext from "../contexts/GeneralContext";
 
 import './SuccessfullBook.scss';
 
 const SuccessfullBook = ({info, date}) => {
-  // console.log(info);
 
   const { user, services, stylists } = useContext(GeneralContext);
 

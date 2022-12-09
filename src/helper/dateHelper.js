@@ -12,7 +12,6 @@ const getTodayNum = function(date) {
 }
 
 const getWeekNum = function(date) {
-  const dayNum = getTodayNum(date);
   const diff = (date.getTime()  - today.getTime()) / (1000*60*60*24);
   const weekNum = Math.floor(Math.abs(diff + getTodayNum(today) - 1) / 7);
   return weekNum;

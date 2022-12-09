@@ -1,10 +1,8 @@
-import { useContext, useState, useEffect, useReducer } from "react";
+import { useContext } from "react";
 import { Navigate, NavLink } from 'react-router-dom';
 
 import GeneralContext from "../contexts/GeneralContext";
 import './BookingConfirm.scss';
-
-// import GeneralContext from "../contexts/GeneralContext";
 
 const BookingConfirm = ({info, handleSendRequest}) => {
 

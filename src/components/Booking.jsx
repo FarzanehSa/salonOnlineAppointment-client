@@ -30,7 +30,7 @@ const Booking = ({onSearch, timeClicked, formReqBook, setFormReqBook, selectedDa
     setWeekNum(getWeekNum(today));
     setAllSpots([]);
     setAllBooked([]);
-  }, []);
+  }, []); // eslint-disable-line
 
   // ✅✅✅
   useEffect(() => {
@@ -72,7 +72,7 @@ const Booking = ({onSearch, timeClicked, formReqBook, setFormReqBook, selectedDa
          fullDate: calDate(7, selectedDay, weekNum),
        }
     ])
-  }, [weekNum, selectedDay]);
+  }, [weekNum, selectedDay]); // eslint-disable-line
 
   // ✅✅✅
   useEffect(() => {
@@ -89,14 +89,14 @@ const Booking = ({onSearch, timeClicked, formReqBook, setFormReqBook, selectedDa
       return myStylist;
     })
     setQualifiedStylists(newQualified);
-  }, [formReqBook]);
+  }, [formReqBook]); // eslint-disable-line
 
   // ✅✅✅ it do search if there is service, and day clicked
   useEffect(() => {  
     if (formReqBook[0].service) {
       onSearch(formReqBook, selectedDay);
     }
-  }, [selectedDay]);
+  }, [selectedDay]); // eslint-disable-line
 
   // ✅✅✅ show name of day (selected one or monday)
   useEffect(() => {

@@ -4,8 +4,6 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Modal from 'react-modal';
-// var bcrypt = require('bcryptjs');
-import bcrypt from 'bcryptjs';
 
 import GeneralContext from './contexts/GeneralContext';
 
@@ -121,7 +119,7 @@ function App() {
         const tArr = [];
         while (t !== row.end) {
           const estimateEnd = new Date(new Date("1970/01/01 " + t).getTime() + duration * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
-          const x = bookedOnes.filter(app => app.stylistid === row.stylist_id && ((t < app.start && app.start < estimateEnd) || (t >= app.start && t < app.end)));
+          const x = bookedOnes.filter(app => app.stylistid === row.stylist_id && ((t < app.start && app.start < estimateEnd) || (t >= app.start && t < app.end))); // eslint-disable-line
           if (x.length === 0 && estimateEnd <= row.end) {
             tArr.push(t);
           }

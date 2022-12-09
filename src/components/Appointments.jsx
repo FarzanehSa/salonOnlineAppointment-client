@@ -1,5 +1,4 @@
-import { useContext, useState, useEffect } from "react";
-import { NavLink, useNavigat, Navigate} from 'react-router-dom';
+import { useContext, useState } from "react";
 import axios from "axios";
 import Modal from 'react-modal';
 

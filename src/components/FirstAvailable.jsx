@@ -14,7 +14,7 @@ const FirstAvailable = ({selectedDay, searchFirstAvailability, handleChangeDate}
     if (tempData.result.length === 0) {
       searchFirstAvailability(tempData, setTempData);
     }
-  }, [tempData.options]);
+  }, [tempData.options]); // eslint-disable-line
  
   // console.log('tempData \n', tempData);
   

@@ -1,9 +1,3 @@
-import { useContext, useState, useEffect } from "react";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-// import './SuccessfullBook.scss';
-
 const AppointmentDeleteModal = ({onClose, deleteApp, onConfirm}) => {
 
   return (
