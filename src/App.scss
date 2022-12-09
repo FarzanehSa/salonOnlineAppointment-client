@@ -1,7 +1,7 @@
 @import './styles/variables.scss';
 
 .app-body {
-  border: $test3;
+  // border: $test3;
   margin: 0px;
 }
 
@@ -16,4 +16,14 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+@media only screen and (max-width: 960px) {
+  .modal {
+    padding: 1em;
+    min-width: 35%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
 }

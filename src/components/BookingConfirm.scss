@@ -2,13 +2,11 @@
 
 .confirmation-page {
   // border: $test2;
-
-  margin: 5em;
-  padding-top: 120px;
-
+  width: 95%;
+  margin:auto;
+  margin-top: 150px;
   display: flex;
   
-
   .right-cul {
     // border: $test;
     width: 55%;
@@ -106,7 +104,149 @@
 }
 
 @media only screen and (max-width: 960px) {
+  .confirmation-page {
+    width: 95%;
+    margin:auto;
+    margin-top: 120px;
+    display: flex;
+    flex-direction: column-reverse;
+    
+    .right-cul {
+      width: 100%;
+      padding: 1em;
+  
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+  
+      .title {
+        font-size: 1.1em;
+        font-weight: 600;
+        margin-bottom: 0.8em;
+      }
+  
+      .text-body {
+        text-align: justify;
+        margin-bottom: 1.5em;
+      }
+        
+      .btn-in-confirm-page {
+        font-size: 1em;
+        margin-right: 0.2em;
+        margin-left: 0.2em;
+        padding: 1em 3em;
+      }
+    }
+    .left-cul {
+      // border: $test1;
+      width: 100%;
+      padding-left: 3em;
+  
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+  
+      .date {
+        font-size: 1.2em;
+        font-weight: 600;
+        font-style: italic;
+      }
+  
+      .stylist-info {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-top: 1em;
+        margin-bottom: 1em;
+  
+        .stylist-info-text {
+          display: flex;
+          flex-direction: column;
+  
+          .time {
+            font-size: 1.1em;
+            font-style: oblique;
+            margin-bottom: 0.2em;
+          }
+  
+          .text {
+            font-size: 1em;
+          }
+        }
+      }
+  
+      .stylist-image {
+        height: 55px;
+        width: 55px;
+        border-radius: 50%;
+        margin-right: 0.3em;
+        padding-right: 0.2em;
+      }
+  
+    }
+  }
 }
 
 @media only screen and (max-width: 500px) {
+  .confirmation-page {
+    
+    .right-cul {
+      width: 100%;
+      padding: 0.5em;
+  
+      .title {
+        font-size: 1em;
+        font-weight: 600;
+        margin-bottom: 0.8em;
+      }
+  
+      .text-body {
+        margin-bottom: 1em;
+      }
+        
+      .btn-in-confirm-page {
+        font-size: 0.9em;
+        margin-right: 0.2em;
+        margin-left: 0.2em;
+        padding: 1em 2em;
+      }
+    }
+    .left-cul {
+      // border: $test1;
+      width: 100%;
+      padding-left: 0.5em;
+  
+      .date {
+        font-size: 1em;
+      }
+  
+      .stylist-info {
+        margin-top: 0.8em;
+        margin-bottom: 0.8em;
+  
+        .stylist-info-text {
+
+          .time {
+            font-size: 0.9em;
+            margin-bottom: 0.2em;
+          }
+  
+          .text {
+            font-size: 0.9em;
+          }
+        }
+      }
+  
+      .stylist-image {
+        height: 45px;
+        width: 45px;
+        border-radius: 50%;
+        margin-right: 0.3em;
+        padding-right: 0.2em;
+      }
+  
+    }
+  }
 }

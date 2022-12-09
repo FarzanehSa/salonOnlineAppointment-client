@@ -1,10 +1,10 @@
 @import "../styles/variables.scss";
 
 .appointments-page {
-  border: $test2;
+  // border: $test2;
   width: 90%;
   margin: auto;
-  margin-top: 160px;
+  margin-top: 150px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -116,7 +116,7 @@
 
 .confirm-delete-appointment-modal {
   margin: 0.5em;
-  font-size: 1.2em;
+  font-size: 1.1em;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -142,7 +142,7 @@
     .btn-cancel, .btn-confirm {
       border: none;
       border-radius: 5px;
-      font-size: 1.1em;
+      font-size: 1em;
       margin-right: 0.3em;
       margin-left: 0.3em;
       padding: 0.3em 2em;
@@ -160,6 +160,169 @@
         outline-color: black;
         background-color: #eb6663;
         color: white;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 960px) {
+  .appointments-page {
+    width: 90%;
+    margin: auto;
+    margin-top: 130px;
+    
+    .buttons {
+      width: 95%;
+      margin-bottom: 2em;
+  
+      .btn-call-apps {
+        width: 45%;
+        font-size: 0.9em;
+        margin-right: 0.2em;
+        margin-left: 0.2em;
+        padding: 1em 1em;
+      }
+    }
+  
+    .apps-list {
+      width: 95%;
+      z-index: 0;
+      border-bottom: 1px solid grey;
+      margin-bottom: 2em;
+  
+      .title {
+        font-size: 1em;
+        font-weight: 600;
+      }
+  
+      .apps-table {
+        margin-top: 2em;
+        margin-bottom: 2em;
+      }
+  
+      .no-result {
+        font-size: 1em;
+        padding-top: 3em;
+        padding-bottom: 3em;
+      }
+    }
+  
+    th {
+      font-size: 1em;
+    }
+  
+    .date {
+      font-size: 1em;
+    }
+    .time {
+      font-size: 1em;
+    }
+    .service {
+      font-size: 1em;
+    }
+    .stylist {
+      font-size: 1em;
+    }
+  
+    .btn-delete {
+      font-size: 1.5em;
+    }
+  }
+
+  .confirm-delete-appointment-modal {
+    margin: 0.2em;
+    font-size: 0.9em;
+  
+    .buttons {
+  
+      .btn-cancel, .btn-confirm {
+        font-size: 0.9em;
+        margin-right: 0.3em;
+        margin-left: 0.3em;
+        padding: 0.3em 2em;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .appointments-page {
+    width: 90%;
+    margin: auto;
+    margin-top: 130px;
+    
+    .buttons {
+      width: 90%;
+      margin-bottom: 2em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  
+      .btn-call-apps {
+        width: 90%;
+        font-size: 0.8em;
+        margin: 0.5em 0em;
+        padding: 1em 2em;
+      }
+    }
+  
+    .apps-list {
+      width: 95%;
+      z-index: 0;
+      border-bottom: 1px solid grey;
+      margin-bottom: 2em;
+  
+      .title {
+        font-size: 1em;
+        font-weight: 600;
+      }
+  
+      .apps-table {
+        margin-top: 2em;
+        margin-bottom: 2em;
+      }
+  
+      .no-result {
+        font-size: 1em;
+        padding-top: 3em;
+        padding-bottom: 3em;
+      }
+    }
+  
+    th {
+      font-size: 1em;
+    }
+  
+    .date {
+      font-size: 1em;
+    }
+    .time {
+      font-size: 1em;
+    }
+    .service {
+      font-size: 1em;
+    }
+    .stylist {
+      font-size: 1em;
+    }
+  
+    .btn-delete {
+      font-size: 1.5em;
+    }
+  }
+
+  .confirm-delete-appointment-modal {
+    margin: 0.2em;
+    font-size: 0.8em;
+  
+    .buttons {
+  
+      .btn-cancel, .btn-confirm {
+        font-size: 0.9em;
+        margin-right: 0.3em;
+        margin-left: 0.3em;
+        padding: 0.3em 2em;
       }
     }
   }

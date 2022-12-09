@@ -38,7 +38,10 @@ const Navbar = ({setUser}) => {
 
         {user.id &&
           <div className='user-log'>
-            <span>Welcome, {user.firstname}!</span>
+            <div className='welcome-text'>
+              <span>Welcome, </span>
+              <span>{user.firstname}!</span>
+            </div>
             <NavLink to="#" className='menu-bars'>
               <FontAwesomeIcon className='bar' icon="fa-solid fa-grip-lines" onClick={() => showSidebar()} />
             </NavLink>

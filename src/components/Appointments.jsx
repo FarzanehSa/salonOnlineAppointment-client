@@ -113,10 +113,6 @@ const Appointments = () => {
     );
   })
 
-  console.log(pastAppointments);
-  console.log(comingAppointments);
-  console.log(deleteApp);
-
   return (
     <div className="appointments-page">
       {user.id &&

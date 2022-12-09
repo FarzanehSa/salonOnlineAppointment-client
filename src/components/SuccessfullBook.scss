@@ -3,7 +3,6 @@
 .inside-modal-success-book {
   display: flex;
   flex-direction: column;
-
   font-size: 1.1em;
 
   .thank-par {
@@ -37,6 +36,92 @@
 
     .time {
       color: green;
+    }
+  }
+}
+
+@media only screen and (max-width: 960px) {
+  .inside-modal-success-book {
+    display: flex;
+    flex-direction: column;
+    font-size: 1em;
+  
+    .thank-par {
+      margin-bottom: 1em;
+  
+      .thank {
+        margin-bottom: 0.5em;
+      }
+      
+      .date-all {
+        margin-bottom: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+  
+      .date {
+        font-size: 1em;
+        color: crimson;
+      }
+  
+      .summary {
+        text-decoration: underline;
+        color: chocolate;
+      }
+    }
+  
+    .book-info-row {
+      margin-bottom: 0.5em;
+  
+      .time {
+        font-size: 0.9em;
+        color: green;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .inside-modal-success-book {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8em;
+  
+    .thank-par {
+      margin-bottom: 1em;
+  
+      .thank {
+        margin-bottom: 0.5em;
+      }
+      
+      .date-all {
+        margin-bottom: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+  
+      .date {
+        font-size: 1em;
+        color: crimson;
+      }
+  
+      .summary {
+        text-decoration: underline;
+        color: chocolate;
+      }
+    }
+  
+    .book-info-row {
+      margin-bottom: 0.5em;
+  
+      .time {
+        font-size: 0.9em;
+        color: green;
+      }
     }
   }
 }

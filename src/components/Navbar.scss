@@ -39,6 +39,10 @@
     margin: 0em 0.3em 0em 0.3em;
     font-size: 1.5em;
   }
+
+  .user-log {
+    display: flex;
+  }
   
   // ------
   
@@ -63,8 +67,7 @@
     display: flex;
     justify-content: center;
     position: fixed;
-    // top: 0;
-    right: -80%;
+    right: -100%;
     transition: 850ms;
     z-index: 2000;
     padding-top: 50px;
@@ -91,7 +94,7 @@
   }
   
   .nav-menu.active {
-    left: 0;
+    right: 0;
     transition: 350ms;
   }
   
@@ -107,41 +110,117 @@
 
 @media only screen and (max-width: 960px) {
   .navbar {
-    .nav-buttons {
-      font-size: 0.8em;
-    }
+    position: fixed;
+    top: 0;
+  
+    height: 100px;
+    margin: auto;
+    
+    padding: 0px 10px 0px 10px;
+  
     .logo-name {
-      font-size: 1.4em;
+      font-size: 1.5em;
     }
+    
     .logo-image {
-      width: 65px;
-      height: 70px;
+      display: none;
     }
+    
+    .nav-buttons {
+      border: none;
+      background-color: transparent;
+      margin: 0em 0em 0em 0em;
+      font-size: 1em;
+    }
+
     .user-log {
-      font-size: 0.8em;
+      font-size: 0.9em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    // ------
+    
+    .menu-bars {
+      margin-left: 0em;
+      font-size: 1em;
+    }
+    
+    .nav-menu {
+      width: 130px;
+      padding-top: 40px;
+    
+      .btn-logout {
+        font-size: 0.9em;
+        margin-bottom: 1em;
+      }
+    }
+    
+    .nav-menu-items {
+      // width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
   }
 }
 
 @media only screen and (max-width: 500px) {
   .navbar {
-    .nav-buttons {
-      font-size: 0.70em;
-    }
+    position: fixed;
+    top: 0;
+  
+    height: 100px;
+    margin: auto;
+    
+    padding: 0px 5px 0px 5px;
+  
     .logo-name {
-      font-size: 1em;
+      font-size: 1.2em;
     }
-    .logo-image {
-      display: none;
+    
+    .nav-buttons {
+      border: none;
+      background-color: transparent;
+      margin: 0em;
+      font-size: 0.8em;
     }
-    .login-part {
+
+    .user-log {
+      font-size: 0.7em;
+
+      .welcome-text {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+    
+    // ------
+    
+    .menu-bars {
+      margin-left: 0em;
+      font-size: 0.9em;
+    }
+    
+    .nav-menu {
+      width: 110px;
+      padding-top: 30px;
+      }
+    
+      .btn-logout {
+        font-size: 0.7em;
+        margin-bottom: 0.8em;
+      }
+    
+    .nav-menu-items {
+      // width: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-    }
-    .user-log {
-      font-size: 0.6em;
     }
   }
 }
