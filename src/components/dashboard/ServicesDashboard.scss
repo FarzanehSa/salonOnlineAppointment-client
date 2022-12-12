@@ -54,7 +54,8 @@
       // white-space: nowrap;
       margin: 0.2em;
   
-      &:hover {
+      &:hover, &:focus {
+        outline: none;
         // background-color: #eb6663;
         border:0.2em solid PaleTurquoise;
         border-radius: 10px;
@@ -87,7 +88,8 @@
       color: black;
       cursor: pointer;
   
-      &:hover {
+      &:hover, &:focus {
+        outline: none;
         color: LightSeaGreen;
       }
     }
@@ -128,7 +130,8 @@
     color: black;
     cursor: pointer;
 
-    &:hover {
+    &:hover, &:focus {
+      outline: none;
       color: LightSeaGreen;
     }
   }
