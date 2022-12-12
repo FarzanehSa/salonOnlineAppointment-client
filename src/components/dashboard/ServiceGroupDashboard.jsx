@@ -165,7 +165,7 @@ const ServiceGroupDashboard = ({setServiceGroups}) => {
   })
 
   return (
-    <div className="services-dashboard-page">
+    <div className="service-group-dashboard-page">
       <Modal
         isOpen={modalDeleteIsOpen || modalEditIsOpen || modalAddIsOpen}
         onRequestClose={closeModal}
@@ -177,7 +177,7 @@ const ServiceGroupDashboard = ({setServiceGroups}) => {
         {modalDeleteIsOpen && <GroupDeleteModal onClose={closeModal} msg={msg} onConfirmDelete={onConfirmDelete}/>}
         {modalEditIsOpen && <GroupEditModal onClose={closeModal} msg={msg} onConfirmEdit={onConfirmEdit}/>}
       </Modal>
-      <div className="add-service-part">
+      <div className="add-group-part">
         <span className="title">Add new service group</span>
         <form onSubmit={onAdd} className="add-form"> 
           <div className="input-group">

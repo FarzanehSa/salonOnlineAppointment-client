@@ -1,0 +1,13 @@
+@import "../../styles/variables.scss";
+
+.service-dashboard-page {
+  // border: $test;
+  margin: 3em;
+  margin-top: 150px;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}

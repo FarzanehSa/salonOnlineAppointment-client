@@ -22,7 +22,7 @@ import Appointments from './components/Appointments';
 import NavbarAdmin from './components/dashboard/NavbarAdmin';
 import Dashboard from './components/dashboard/Dashboard';
 import ServiceGroupDashboard from './components/dashboard/ServiceGroupDashboard';
-
+import ServiceDashboard from './components/dashboard/ServiceDashboard';
 
 import './App.scss';
 
@@ -145,6 +145,8 @@ function App() {
     const day = new Date(receivedDate).toLocaleString('en-us', {weekday:'long'})
     axios.post(`http://localhost:7100/api/booking`, {bookingReqs, day, date: receivedDate})
     .then(res => {
+      console.log(res.data.options);
+      console.log(res.data.booked);
       const temp = checkAvailability(res.data.options, res.data.booked)
       setAllSpots(temp);
       setAllBooked(res.data.booked);
@@ -206,8 +208,8 @@ function App() {
   // console.log('👨🏼‍🎨👩‍🎨', stylists, availability);
   // console.log('✂️🪒', serviceGroups, services);
 
-  // console.log('📖', allSpots);
-  // console.log('📖❌', allBooked);
+  console.log('📖', allSpots);
+  console.log('📖❌', allBooked);
   // console.log('🧤 formReqBook \n', formReqBook);
   // console.log('👀👀 wanted to book \n', wantToBook);
   // console.log('❌❌❌ loginErrorMsg \n', loginErrormsg);
@@ -256,6 +258,7 @@ function App() {
             <Route path='/appointments/:id' element={<Appointments />}/>
             <Route path='/dashboard' element={<Dashboard />}/>
             <Route path='/dashboard/service-group' element={<ServiceGroupDashboard setServiceGroups={setServiceGroups}/>}/>
+            <Route path='/dashboard/service' element={<ServiceDashboard setServiceGroups={setServiceGroups} setServices={setServices}/>}/>
           </Routes>
         </div>
 

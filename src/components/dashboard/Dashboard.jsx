@@ -15,6 +15,12 @@ const Dashboard = () => {
           <br/>Service Group
         </button>
       </NavLink>
+      <NavLink to="/dashboard/service">
+        <button className="btn-setting">
+          <div className="sign"><FontAwesomeIcon icon="fa-solid fa-gear" /></div>
+          <br/>Service
+        </button>
+      </NavLink>
     </div>
   )
 }
