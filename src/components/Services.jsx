@@ -34,7 +34,7 @@ const Services = ({reqClicked}) => {
           <div className="service-box" style={{display: row.vis ? 'flex' : 'none' }} key={xService.id}>
             <div className="service-box-name-price">
               <span className="service-name">{xService.service}</span>
-              <span className="service-price">Price(min): ${xService.price}</span>
+              <span className="service-price">Price(minimum): ${Math.trunc(xService.price / 100)}</span>
             </div>
             <p className="service-description">{xService.description}</p>
             <div className="service-button">
