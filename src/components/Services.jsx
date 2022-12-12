@@ -45,7 +45,7 @@ const Services = ({reqClicked}) => {
       })
 
     return (
-      <div className="service-group" key={row.group}>
+      <div className="service-group" key={row.id}>
         <div className="service-group-box" onClick={() => groupClicked(row.id)}>
           <span className="arrow">
             {(row.vis) && <FontAwesomeIcon icon="fa-solid fa-chevron-down" />}

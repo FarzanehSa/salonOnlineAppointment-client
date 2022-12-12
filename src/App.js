@@ -21,7 +21,7 @@ import Appointments from './components/Appointments';
 
 import NavbarAdmin from './components/dashboard/NavbarAdmin';
 import Dashboard from './components/dashboard/Dashboard';
-import ServicesDashboard from './components/dashboard/ServicesDashboard';
+import ServiceGroupDashboard from './components/dashboard/ServiceGroupDashboard';
 
 
 import './App.scss';
@@ -63,7 +63,7 @@ function App() {
     }
 
     const f1 = axios.get('http://localhost:7100/api/stylists');
-    const f2 = axios.get('http://localhost:7100/api/services');
+    const f2 = axios.get('http://localhost:7100/api/service-groups');
 
     Promise.all([f1, f2])
       .then(([r1, r2]) => {
@@ -255,7 +255,7 @@ function App() {
             <Route path='/booking-confirm' element={<BookingConfirm info={wantToBook} handleSendRequest={handleSendRequest} />}/>
             <Route path='/appointments/:id' element={<Appointments />}/>
             <Route path='/dashboard' element={<Dashboard />}/>
-            <Route path='/dashboard/service-group' element={<ServicesDashboard setServiceGroups={setServiceGroups}/>}/>
+            <Route path='/dashboard/service-group' element={<ServiceGroupDashboard setServiceGroups={setServiceGroups}/>}/>
           </Routes>
         </div>
 

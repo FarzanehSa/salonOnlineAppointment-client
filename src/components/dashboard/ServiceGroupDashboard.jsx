@@ -10,7 +10,7 @@ import GeneralContext from "../../contexts/GeneralContext";
 import GroupAddModal from "./GroupAddModal";
 import GroupDeleteModal from "./GroupDeleteModal";
 import GroupEditModal from "./GroupEditModal";
-import './ServicesDashboard.scss';
+import './ServiceGroupDashboard.scss';
 
 const CssTextField = styled(TextField)({
   '& label.Mui-focused': {
@@ -32,7 +32,7 @@ const CssTextField = styled(TextField)({
   },
 });
 
-const ServicesDashboard = ({setServiceGroups}) => {
+const ServiceGroupDashboard = ({setServiceGroups}) => {
 
   const { serviceGroups } = useContext(GeneralContext);
 
@@ -91,7 +91,7 @@ const ServicesDashboard = ({setServiceGroups}) => {
 
   const onConfirmAdd = () => {
     setAddGroupForm({serviceGroup: ""});
-    axios.post(`http://localhost:7100/api/services`, {group: addGroupForm})
+    axios.post(`http://localhost:7100/api/service-groups`, {group: addGroupForm})
     .then(res => {
       setServiceGroups(res.data.updateGroups);
     })
@@ -99,7 +99,7 @@ const ServicesDashboard = ({setServiceGroups}) => {
   }
 
   const onConfirmEdit = () => {
-    axios.put(`http://localhost:7100/api/services`, {group: editGroupForm})
+    axios.put(`http://localhost:7100/api/service-groups`, {group: editGroupForm})
     .then(res => {
       const newGroup = serviceGroups.map(row => {
         return (row.id === res.data.updated.id ? {...row, group: res.data.updated.name} : row)
@@ -111,7 +111,7 @@ const ServicesDashboard = ({setServiceGroups}) => {
   }
 
   const onConfirmDelete = () => {
-    axios.delete(`http://localhost:7100/api/services/${deletedGroup}`)
+    axios.delete(`http://localhost:7100/api/service-groups/${deletedGroup}`)
     .then(res => {
       const newGroup = serviceGroups.filter(row => row.id !== res.data.deleted.id);
       setServiceGroups(newGroup);
@@ -206,4 +206,4 @@ const ServicesDashboard = ({setServiceGroups}) => {
   )
 }
 
-export default ServicesDashboard;
+export default ServiceGroupDashboard;
