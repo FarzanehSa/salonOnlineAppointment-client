@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+import LinearProgress from "@mui/material/LinearProgress";
+
 const FirstAvailable = ({selectedDay, searchFirstAvailability, handleChangeDate}) => {
 
   let newDate = new Date(selectedDay.getTime())
@@ -7,20 +9,31 @@ const FirstAvailable = ({selectedDay, searchFirstAvailability, handleChangeDate}
     options: [],
     booked: [],
     result: [],
-    receivedDate: {},
+    receivedDate: selectedDay,
     date: newDate});
 
+  const [maxSearch, setMaxSearch] = useState(false);
+
   useEffect (() => {
-    if (tempData.result.length === 0) {
-      searchFirstAvailability(tempData, setTempData);
+
+    const maxDate = new Date(selectedDay);
+    // search in next 180 days
+    maxDate.setDate(maxDate.getDate() + 180);
+    const dateObj = new Date(tempData.receivedDate)
+    if (dateObj.getTime() < maxDate.getTime()) {
+      if (tempData.result.length === 0 ) {
+        searchFirstAvailability(tempData, setTempData);
+        console.log('tempData \n', tempData);
+      }
+    } else {
+      setMaxSearch(true);
     }
   }, [tempData.options]); // eslint-disable-line
  
-  // console.log('tempData \n', tempData);
   
   return (
     <div>
-      { tempData.result.length !== 0 &&
+      { !maxSearch && tempData.result.length !== 0 &&
         <div className="unavailabel-time-box">
           <span className="title-1">Sorry, they're booked</span>
           <span className="title-2">They don't have any appointments available.</span>
@@ -29,6 +42,16 @@ const FirstAvailable = ({selectedDay, searchFirstAvailability, handleChangeDate}
           <button className="btn-go-to-date" onClick={() => handleChangeDate(tempData.receivedDate)}>Go to: {tempData.receivedDate.slice(0, 10)}</button>
         </div>
       }
+      {(!maxSearch && tempData.result.length === 0) &&  (
+        <div className="page-loading">
+          <LinearProgress color="secondary" />
+        </div>
+      )}
+      {(maxSearch) &&  (
+        <div className="unavailabel-time-box">
+          <span className="title-1">Sorry, There is no possible option!</span>
+        </div>
+      )}
     </div>
   )
 }
