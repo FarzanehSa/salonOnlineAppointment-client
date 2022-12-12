@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from "react";
 
-import './SuccessfullBook.scss';
+// import './SuccessfullBook.scss';
 
 const SuccessfullBook = () => {
 

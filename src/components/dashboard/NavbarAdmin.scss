@@ -1,0 +1,226 @@
+@import "../../styles/variables.scss";
+
+.navbar {
+  // border: $test;
+  background-color: $nav-color;
+  position: fixed;
+  top: 0;
+
+  height: 120px;
+  width: 100vw;
+  margin: auto;
+  
+  padding: 0px 20px 0px 20px;
+  z-index: 2000;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+
+  .logo-name {
+    font-family: $font-family-logo;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+  }
+  
+  .logo-image {
+    // border: $test3;
+    // border-radius: 50%;
+    height: 115px;
+    width: 130px;
+  }
+  
+  .nav-buttons {
+    border: none;
+    background-color: transparent;
+    margin: 0em 0.3em 0em 0.3em;
+    font-size: 1.5em;
+  }
+
+  .user-log {
+    display: flex;
+  }
+  
+  // ------
+  
+  .menu-bars {
+    margin-left: 0.5em;
+    font-size: 1.5em;
+    background: none;
+  
+    .bar {
+      
+      &:hover {
+        color: Firebrick;
+      }
+    }
+  }
+  
+  .nav-menu {
+    background-color: $nav-color;
+    width: 150px;
+    // height: 100hv;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    right: -100%;
+    transition: 850ms;
+    z-index: 2000;
+    padding-top: 50px;
+  
+    a {
+      color: black;
+      &:hover {
+        color: Firebrick;
+      }
+    }
+  
+    .btn-logout {
+      border: none;
+      background-color: transparent;
+      font-size: 1em;
+      color: black;
+      margin-bottom: 1em;
+      cursor: pointer;
+  
+      &:hover {
+        color: Firebrick;
+      }
+    }
+  }
+  
+  .nav-menu.active {
+    right: 0;
+    transition: 350ms;
+  }
+  
+  .nav-menu-items {
+    // width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+
+@media only screen and (max-width: 960px) {
+  .navbar {
+    position: fixed;
+    top: 0;
+  
+    height: 100px;
+    margin: auto;
+    
+    padding: 0px 10px 0px 10px;
+  
+    .logo-name {
+      font-size: 1.5em;
+    }
+    
+    .logo-image {
+      display: none;
+    }
+    
+    .nav-buttons {
+      border: none;
+      background-color: transparent;
+      margin: 0em 0em 0em 0em;
+      font-size: 1em;
+    }
+
+    .user-log {
+      font-size: 0.9em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    // ------
+    
+    .menu-bars {
+      margin-left: 0em;
+      font-size: 1em;
+    }
+    
+    .nav-menu {
+      width: 130px;
+      padding-top: 40px;
+    
+      .btn-logout {
+        font-size: 0.9em;
+        margin-bottom: 1em;
+      }
+    }
+    
+    .nav-menu-items {
+      // width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .navbar {
+    position: fixed;
+    top: 0;
+  
+    height: 100px;
+    margin: auto;
+    
+    padding: 0px 5px 0px 5px;
+  
+    .logo-name {
+      font-size: 1.2em;
+    }
+    
+    .nav-buttons {
+      border: none;
+      background-color: transparent;
+      margin: 0em;
+      font-size: 0.8em;
+    }
+
+    .user-log {
+      font-size: 0.7em;
+
+      .welcome-text {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+    
+    // ------
+    
+    .menu-bars {
+      margin-left: 0em;
+      font-size: 0.9em;
+    }
+    
+    .nav-menu {
+      width: 110px;
+      padding-top: 30px;
+      }
+    
+      .btn-logout {
+        font-size: 0.7em;
+        margin-bottom: 0.8em;
+      }
+    
+    .nav-menu-items {
+      // width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

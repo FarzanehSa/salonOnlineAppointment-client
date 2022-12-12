@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useMatch } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -19,6 +19,11 @@ import BookingConfirm from './components/BookingConfirm';
 import SuccessfullBook from './components/SuccessfullBook';
 import Appointments from './components/Appointments';
 
+import NavbarAdmin from './components/dashboard/NavbarAdmin';
+import Dashboard from './components/dashboard/Dashboard';
+import ServicesDashboard from './components/dashboard/ServicesDashboard';
+
+
 import './App.scss';
 
 function App() {
@@ -30,6 +35,7 @@ function App() {
   tomorrow.setDate(today.getDate() + 1);
 
   const [successfullBook, setSuccessfullBook] = useState(false);
+  const [title, setTitle] = useState("Online Book")
 
   const [stylists, setStylists] = useState([]);
   const [availability, setAvailability] = useState([]);
@@ -47,15 +53,14 @@ function App() {
   const [wantToBook, setWantToBook] = useState({});
   const [loginErrormsg, setLoginErrorMsg] = useState('');
 
-  // const salt = bcrypt.genSaltSync(10);
-  
-  useEffect(() => {
+  // use this to change the navbar
+  const matchDashboard = useMatch('/dashboard/*');
 
+  useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
       setUser(user);
     }
-
 
     const f1 = axios.get('http://localhost:7100/api/stylists');
     const f2 = axios.get('http://localhost:7100/api/services');
@@ -69,10 +74,14 @@ function App() {
         setServices(prev => r2.data.services);
       });
     }, []);
+
+  useEffect(() => {
+    document.title = title;
+  },[title]);
     
-    useEffect(() => {
-      localStorage.setItem('user', JSON.stringify(user));
-    }, [user]);
+  useEffect(() => {
+    localStorage.setItem('user', JSON.stringify(user));
+  }, [user]);
 
   const reqClicked = function(serviceId) {
     setFormReqBook(pre => ([{service: serviceId, stylists: []}]));
@@ -209,6 +218,10 @@ function App() {
     <main className="layout">
       <GeneralContext.Provider value={{ stylists, availability, serviceGroups, services, allSpots, allBooked, setAllBooked, setAllSpots, user }}>
 
+        {matchDashboard && !user.id && <NavbarAdmin setUser={setUser}/>}
+        {matchDashboard && user.id && <NavbarAdmin setUser={setUser}/>}
+        {!matchDashboard && <Navbar setUser={setUser}/>}
+
         <Modal
           isOpen={successfullBook}
           onRequestClose={closeModal}
@@ -217,9 +230,8 @@ function App() {
         >
           {successfullBook && <SuccessfullBook date={successBookInfo.date} info={successBookInfo.savedData} onClose={closeModal} />}
         </Modal>
-
-        <Navbar setUser={setUser}/>
         <ToastContainer />
+
         <div className="app-body">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -242,6 +254,8 @@ function App() {
               />}/>
             <Route path='/booking-confirm' element={<BookingConfirm info={wantToBook} handleSendRequest={handleSendRequest} />}/>
             <Route path='/appointments/:id' element={<Appointments />}/>
+            <Route path='/dashboard' element={<Dashboard />}/>
+            <Route path='/dashboard/service-group' element={<ServicesDashboard setServiceGroups={setServiceGroups}/>}/>
           </Routes>
         </div>
 
