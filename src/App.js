@@ -25,6 +25,7 @@ import ServiceGroupDashboard from './components/dashboard/ServiceGroupDashboard'
 import ServiceDashboard from './components/dashboard/ServiceDashboard';
 
 import './App.scss';
+import es from 'date-fns/esm/locale/es/index.js';
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
   const [successfullBook, setSuccessfullBook] = useState(false);
   const [title, setTitle] = useState("Online Book")
 
+  const [timeTable, setTimeTable] = useState([]);
   const [stylists, setStylists] = useState([]);
   const [availability, setAvailability] = useState([]);
   const [serviceGroups, setServiceGroups] = useState([]);
@@ -68,6 +70,7 @@ function App() {
     Promise.all([f1, f2])
       .then(([r1, r2]) => {
         // console.log(r2.data);
+        setTimeTable(r2.data.timeTable);
         setStylists(prev => r1.data.stylists);
         setAvailability(prev => r1.data.availability);
         setServiceGroups(prev => r2.data.groups);
@@ -118,35 +121,41 @@ function App() {
       console.log(error.message);
     })
   }
-
+  
   const checkAvailability = (allOptions, bookedOnes) => {
-    const newAllOptions = allOptions.map((task, index) => {
-      const newArr = task.map(row => {
-        const minsToAdd = 30;
-        const duration = row.duration;
-        let t = row.start;
-        const tArr = [];
-        while (t !== row.end) {
-          const estimateEnd = new Date(new Date("1970/01/01 " + t).getTime() + duration * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
-          const x = bookedOnes.filter(app => app.stylistid === row.stylist_id && ((t < app.start && app.start < estimateEnd) || (t >= app.start && t < app.end))); // eslint-disable-line
-          if (x.length === 0 && estimateEnd <= row.end) {
-            tArr.push(t);
+
+    const updateAllOptions = allOptions.map(taskOptions => {
+      const newTaskOptions = taskOptions.map(option => {
+        let goodGap = [];
+        let tempStart = option.start;
+        // get booked ones for current stylist
+        const badGap = bookedOnes.filter(book => book.stylistid === option.stylist_id).map(row => {
+          return ({start: row.start, end: row.end});
+        });
+        // console.log(badGap);
+        for (let i = 0; i < badGap.length; i++) {
+          if (tempStart < badGap[i].start) {
+            goodGap.push({start: tempStart, end: badGap[i].start})
           }
-          t = new Date(new Date("1970/01/01 " + t).getTime() + minsToAdd * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
+          tempStart = badGap[i].end;  
         }
-        return ({...row, timeAv: tArr});
-      })
-      return (newArr);
-    })
-    return newAllOptions;
+        if (tempStart < option.end) {
+          goodGap.push({start: tempStart, end: option.end})
+        }
+        // console.log(goodGap);
+        return (
+          {...option, goodGap, badGap}
+        )
+      });
+      return (newTaskOptions);
+    });
+     return updateAllOptions;
   }
 
   const onSearch = function(bookingReqs, receivedDate) {
     const day = new Date(receivedDate).toLocaleString('en-us', {weekday:'long'})
     axios.post(`http://localhost:7100/api/booking`, {bookingReqs, day, date: receivedDate})
     .then(res => {
-      console.log(res.data.options);
-      console.log(res.data.booked);
       const temp = checkAvailability(res.data.options, res.data.booked)
       setAllSpots(temp);
       setAllBooked(res.data.booked);
@@ -208,8 +217,8 @@ function App() {
   // console.log('👨🏼‍🎨👩‍🎨', stylists, availability);
   // console.log('✂️🪒', serviceGroups, services);
 
-  console.log('📖', allSpots);
-  console.log('📖❌', allBooked);
+  // console.log('📖', allSpots);
+  // console.log('📖❌', allBooked);
   // console.log('🧤 formReqBook \n', formReqBook);
   // console.log('👀👀 wanted to book \n', wantToBook);
   // console.log('❌❌❌ loginErrorMsg \n', loginErrormsg);
@@ -218,7 +227,7 @@ function App() {
 
   return (
     <main className="layout">
-      <GeneralContext.Provider value={{ stylists, availability, serviceGroups, services, allSpots, allBooked, setAllBooked, setAllSpots, user }}>
+      <GeneralContext.Provider value={{ stylists, availability, serviceGroups, services, allSpots, allBooked, setAllBooked, setAllSpots, user, timeTable }}>
 
         {matchDashboard && !user.id && <NavbarAdmin setUser={setUser}/>}
         {matchDashboard && user.id && <NavbarAdmin setUser={setUser}/>}

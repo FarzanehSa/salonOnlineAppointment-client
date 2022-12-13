@@ -23,7 +23,7 @@ const FirstAvailable = ({selectedDay, searchFirstAvailability, handleChangeDate}
     if (dateObj.getTime() < maxDate.getTime()) {
       if (tempData.result.length === 0 ) {
         searchFirstAvailability(tempData, setTempData);
-        console.log('tempData \n', tempData);
+        // console.log('tempData \n', tempData);
       }
     } else {
       setMaxSearch(true);

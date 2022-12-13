@@ -10,46 +10,65 @@ import  FirstAvailable from './FirstAvailable';
 
 const BookingOptions = ({formReqBook, selectedDay, timeClicked, handleChangeDate}) => {
 
-  const { allSpots } = useContext(GeneralContext);
+  const { allSpots, timeTable } = useContext(GeneralContext);
+
+  const calEndTime = (time, duration) => {
+    const estimateEnd = new Date(new Date("1970/01/01 " + time).getTime() + duration * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
+    return estimateEnd;
+  }
 
   const copyAllSpots = [];
   for (let i = 0; i < allSpots.length; i++) {
     copyAllSpots.push([])
     for (let j = 0; j < allSpots[i].length; j++) {
       // console.log(allSpots[i][j]);
-      copyAllSpots[i].push({...allSpots[i][j], timeAv: [...allSpots[i][j].timeAv]})
+      copyAllSpots[i].push({...allSpots[i][j], badGap: [...allSpots[i][j].badGap], goodGap: [...allSpots[i][j].goodGap]})
     }
   }
 
   let updateAllSpotts = groupServiceReqs(copyAllSpots);
-  updateAllSpotts = updateAllSpotts.map((optionGroup, index) => {
+  updateAllSpotts = updateAllSpotts.map((optionGroup) => {
     const len = optionGroup.length;
-    if (len === 1) return optionGroup 
+    let times = [];
+
+    for (const el of timeTable) {
+      const estimateEnd = calEndTime(el.time, optionGroup[0].duration);
+      const foundAv = optionGroup[0].goodGap.filter(app => el.time >= app.start && estimateEnd <= app.end) 
+      if (foundAv.length) times.push(el)
+    }
+
+    if (len === 0) {
+      return [{...optionGroup[0], timesAva: times}]
+    } 
     // ---------------------------------------------
     else {
-      let sumDuration = 0;
+      let ff = optionGroup[0].duration;
       for (let task = 1; task < len; task++) {
-        sumDuration += optionGroup[task - 1].duration;
-        optionGroup[0].timeAv = optionGroup[0].timeAv.filter(t => { // eslint-disable-line
-
-          let time = new Date(new Date("1970/01/01 " + t).getTime() + sumDuration * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
-          return (optionGroup[task].timeAv.indexOf(time) !== -1)
+        ff += optionGroup[task].duration;
+        times = times.filter(t => { // eslint-disable-line
+          const estimateEnd = calEndTime(t.time, ff);
+          const abc = optionGroup[task].goodGap.filter(app => t.time >= app.start && estimateEnd <= app.end) 
+          return (abc.length)
         })
       }
-      return optionGroup;
+      optionGroup = optionGroup.map((row, index) => {
+        if (index === 0) return {...row, timesAva: times}
+        else return row;
+      })
+      return optionGroup
     }
-  }).filter((group => group[0].timeAv.length !== 0));
+  }).filter((group => group[0].timesAva.length !== 0));
   
   const spotsArray = updateAllSpotts.map((optionGroup, index) => {
     const len = optionGroup.length;
+    const bTArr = optionGroup[0].timesAva.map(time => {
+      return (  
+        <NavLink to="/booking-confirm" onClick={() => timeClicked(time.time, optionGroup, selectedDay )} key={time.id}><button className="btn-time" >{time.name}</button></NavLink>
+      )
+    })
     if (len === 1) {
       const newArr = optionGroup.map((row, index2) => { // eslint-disable-line
-        const bTArr = row.timeAv.map(time => {
-          return (
-            <NavLink to="/booking-confirm" onClick={() => timeClicked(time, optionGroup, selectedDay )} key={time}><button className="btn-time" >{time}</button></NavLink>
-          )
-        })
-        if (row.timeAv.length !== 0) {
+        if (row.timesAva.length !== 0) {
           return (
             <div key={index2} className="availabel-time-box-one">
               <span className="availabel-time-box-time">{selectedDay.toDateString()}</span>
@@ -78,11 +97,7 @@ const BookingOptions = ({formReqBook, selectedDay, timeClicked, handleChangeDate
     } 
     // ---------------------------------------------
     else {
-      const bTArr = optionGroup[0].timeAv.map(time => {
-        return (
-          <NavLink to="/booking-confirm" onClick={() => timeClicked(time, optionGroup, selectedDay )} key={time}><button className="btn-time" >{time}</button></NavLink>
-        )
-      })
+      console.log(optionGroup);
       const newArr = optionGroup.map((row, index2) => {
         return (
           <div key={index2} className="availabel-time-box-one-info">
@@ -113,23 +128,30 @@ const BookingOptions = ({formReqBook, selectedDay, timeClicked, handleChangeDate
 // This Part is for calculating next available chance to book...
 
 const checkAvailability = (allOptions, bookedOnes) => {
-  const newAllOptions = allOptions.map((task, index) => {
-    const newArr = task.map(row => {
-      const minsToAdd = 30;
-      const duration = row.duration;
-      let t = row.start;
-      const tArr = [];
-      while (t !== row.end) {
-        const estimateEnd = new Date(new Date("1970/01/01 " + t).getTime() + duration * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
-        const x = bookedOnes.filter(app => app.stylistid === row.stylist_id && ((t < app.start && app.start < estimateEnd) || (t >= app.start && t < app.end))); // eslint-disable-line
-        if (x.length === 0 && estimateEnd <= row.end) {
-          tArr.push(t);
+  const newAllOptions = allOptions.map(taskOptions => {
+    const newTaskOptions = taskOptions.map(option => {
+      let goodGap = [];
+      let tempStart = option.start;
+      // get booked ones for current stylist
+      const badGap = bookedOnes.filter(book => book.stylistid === option.stylist_id).map(row => {
+        return ({start: row.start, end: row.end});
+      });
+      // console.log(badGap);
+      for (let i = 0; i < badGap.length; i++) {
+        if (tempStart < badGap[i].start) {
+          goodGap.push({start: tempStart, end: badGap[i].start})
         }
-        t = new Date(new Date("1970/01/01 " + t).getTime() + minsToAdd * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
+        tempStart = badGap[i].end;  
       }
-      return ({...row, timeAv: tArr});
-    })
-    return (newArr);
+      if (tempStart < option.end) {
+        goodGap.push({start: tempStart, end: option.end})
+      }
+      // console.log(goodGap);
+      return (
+        {...option, goodGap, badGap}
+      )
+    });
+    return (newTaskOptions);
   })
   return newAllOptions;
 }
@@ -148,22 +170,37 @@ const searchFirstAvailability = (tempData, setTempData) => {
 
     let updateAllSpotts = groupServiceReqs(temp).map((optionGroup, index) => {
       const len = optionGroup.length;
-      if (len === 1) return optionGroup 
+      let times = [];
+
+      for (const el of timeTable) {
+        const estimateEnd = calEndTime(el.time, optionGroup[0].duration);
+        const foundAv = optionGroup[0].goodGap.filter(app => el.time >= app.start && estimateEnd <= app.end) 
+        if (foundAv.length) times.push(el)
+      }
+  
+      if (len === 0) {
+        console.log(optionGroup);
+        return [{...optionGroup[0], timesAva: times}]
+      } 
       // ---------------------------------------------
       else {
-        let sumDuration = 0;
+        let sumDuration = optionGroup[0].duration;
         for (let task = 1; task < len; task++) {
-          sumDuration += optionGroup[task - 1].duration;
-          optionGroup[0].timeAv = optionGroup[0].timeAv.filter(t => { // eslint-disable-line
-
-            let time = new Date(new Date("1970/01/01 " + t).getTime() + sumDuration * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
-            return (optionGroup[task].timeAv.indexOf(time) !== -1)
+          sumDuration += optionGroup[task].duration;
+          times = times.filter(t => { // eslint-disable-line
+            const estimateEnd = calEndTime(t.time, sumDuration);
+            const abc = optionGroup[task].goodGap.filter(app => t.time >= app.start && estimateEnd <= app.end) 
+            return (abc.length)
           })
         }
-        // console.log('🟢🟢',optionGroup);
-        return optionGroup;
+        optionGroup = optionGroup.map((row, index) => {
+          if (index === 0) return {...row, timesAva: times}
+          else return row;
+        })
+        return optionGroup
       }
-    }).filter((group => group[0].timeAv.length !== 0));
+    }).filter((group => group[0].timesAva.length !== 0));
+
     setTempData(tempData => ({
       ...tempData, 
       options: checkAvailability(res.data.options, res.data.booked),
@@ -180,10 +217,8 @@ const searchFirstAvailability = (tempData, setTempData) => {
 }
 // ************************************************
 
-
 // console.log('tempData \n', tempData)
 
- 
   return (
     <div className="availabel-time-box">
       {updateAllSpotts.length === 0  && allSpots.length !== 0 && (

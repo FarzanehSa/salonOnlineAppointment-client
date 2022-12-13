@@ -1,5 +1,6 @@
 const helper = (arr, result) => {
 
+
   if (result.length === 0) {
     for (const e of arr) {
       result.push([e])
@@ -10,7 +11,8 @@ const helper = (arr, result) => {
   const temp = []
   for (let i = 0; i < result.length; i++) {
     for (const e of arr) {
-      if (e.timeAv.length !== 0) {
+      console.log(e);
+      if (e.goodGap.length !== 0) {
         temp.push([...result[i], e])
       }
     }
