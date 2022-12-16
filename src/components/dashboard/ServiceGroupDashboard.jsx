@@ -7,9 +7,9 @@ import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 
 import GeneralContext from "../../contexts/GeneralContext";
-import GroupAddModal from "./GroupAddModal";
-import GroupDeleteModal from "./GroupDeleteModal";
-import GroupEditModal from "./GroupEditModal";
+import ConfirmAddModal from "./ConfirmAddModal";
+import ConfirmDeleteModal from "./ConfirmDeleteModal";
+import ConfirmEditModal from "./ConfirmEditModal";
 import './ServiceGroupDashboard.scss';
 
 const CssTextField = styled(TextField)({
@@ -90,7 +90,6 @@ const ServiceGroupDashboard = ({setServiceGroups}) => {
   }
 
   const onConfirmAdd = () => {
-    setAddGroupForm({serviceGroup: ""});
     axios.post(`http://localhost:7100/api/service-groups`, {group: addGroupForm})
     .then(res => {
       setServiceGroups(res.data.updateGroups);
@@ -134,7 +133,7 @@ const ServiceGroupDashboard = ({setServiceGroups}) => {
           <div className="group-name">
             <span>{row.group}</span>
           </div>
-          <div>
+          <div className="buttons">
             <button className="btn-edit" onClick={() => onReqEdit(row.id, row.group)}><FontAwesomeIcon icon="fa-solid fa-pencil" /></button>
             <button className="btn-delete" onClick={() => onDelete(row.id, row.group)}><FontAwesomeIcon icon="fa-solid fa-trash" /></button>
           </div>
@@ -173,15 +172,15 @@ const ServiceGroupDashboard = ({setServiceGroups}) => {
         className="modal"
         shouldCloseOnOverlayClick={false}
       >
-        {modalAddIsOpen && <GroupAddModal onClose={closeModal} msg={msg} onConfirmAdd={onConfirmAdd}/>}
-        {modalDeleteIsOpen && <GroupDeleteModal onClose={closeModal} msg={msg} onConfirmDelete={onConfirmDelete}/>}
-        {modalEditIsOpen && <GroupEditModal onClose={closeModal} msg={msg} onConfirmEdit={onConfirmEdit}/>}
+        {modalAddIsOpen && <ConfirmAddModal onClose={closeModal} msg={msg} onConfirmAdd={onConfirmAdd}/>}
+        {modalDeleteIsOpen && <ConfirmDeleteModal onClose={closeModal} msg={msg} onConfirmDelete={onConfirmDelete}/>}
+        {modalEditIsOpen && <ConfirmEditModal onClose={closeModal} msg={msg} onConfirmEdit={onConfirmEdit}/>}
       </Modal>
       <div className="add-group-part">
         <span className="title">Add new service group</span>
         <form onSubmit={onAdd} className="add-form"> 
           <div className="input-group">
-            <span>name: </span>    
+            <span>Name: </span>    
             <CssTextField
               required
               id="serviceGroup"

@@ -160,9 +160,9 @@ const searchFirstAvailability = (tempData, setTempData) => {
   const myDate = new Date(tempData.date);
   const day = (myDate.getDate());
   myDate.setDate(day + 1);
-  setTempData(tempData => ({...tempData, date: myDate}))
+  setTempData(tempData => ({...tempData, date: myDate}));
 
-  const myDay = new Date(tempData.date).toLocaleString('en-us', {weekday:'long'})
+  const myDay = new Date(tempData.date).toLocaleString('en-us', {weekday:'long'});
 
   axios.post(`http://localhost:7100/api/booking`, {bookingReqs: formReqBook, day: myDay, date: tempData.date})
   .then(res => {

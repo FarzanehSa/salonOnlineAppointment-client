@@ -1,4 +1,4 @@
-const GroupDeleteModal = ({onClose, msg, onConfirmDelete}) => {
+const ConfirmDeleteModal = ({onClose, msg, onConfirmDelete}) => {
 
   return (
     <div className='confirm-delete-appointment-modal'>
@@ -20,4 +20,4 @@ const GroupDeleteModal = ({onClose, msg, onConfirmDelete}) => {
   )
 }
 
-export default GroupDeleteModal;
+export default ConfirmDeleteModal;

@@ -1,4 +1,4 @@
-const GroupEditModal = ({onClose, msg, onConfirmEdit}) => {
+const ConfirmEditModal = ({onClose, msg, onConfirmEdit}) => {
 
   return (
     <div className='confirm-delete-appointment-modal'>
@@ -20,4 +20,4 @@ const GroupEditModal = ({onClose, msg, onConfirmEdit}) => {
   )
 }
 
-export default GroupEditModal;
+export default ConfirmEditModal;

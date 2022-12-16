@@ -1,22 +1,29 @@
 @import "../styles/variables.scss";
 
 .services-page {
+  // border: $test3;
+  width: 90%;
+  margin: auto;
   margin-top: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   .service-group {
-    // background-color: gray;
-    // background-image: linear-gradient(#B8C6DB, #F5F7FA);
-    width: 95%;
+    // border: $test2;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
   
     .service-group-box {
-      background: linear-gradient(to right, #B8C6DB, #F5F7FA);
-      margin: 1em;
-      height: 4em;
+      // border: $test;
       width: 100%;
+      background: linear-gradient(to right, #B8C6DB, #F5F7FA);
+      margin-bottom: 1em;
+      height: 3em;
       cursor: pointer;
   
       display: flex;
@@ -36,9 +43,9 @@
   
   .service-box-main {
     width: 100%;
-    margin: 1em;
+    margin: auto;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     flex-wrap: wrap;
   }
   
@@ -93,13 +100,15 @@
     margin-top: 130px;
     
     .service-group {
-      width: 95%;
+      width: 100%;
     
       .service-group-box {
-        margin: 0.3em;
-        height: 3.5em;
+        margin: auto;
+        margin-bottom: 1em;
+        height: 3em;
         width: 100%;
       }
+        
       .service-group-line {
         font-size: 1.1em;
         padding-left: 0.2em;
@@ -143,13 +152,15 @@
     margin-top: 130px;
     
     .service-group {
-      width: 95%;
+      width: 100%;
     
       .service-group-box {
-        margin: 0.3em;
-        height: 2.5em;
+        margin: auto;
+        margin-bottom: 1em;
+        height: 3em;
         width: 100%;
       }
+
       .service-group-line {
         font-size: 1em;
         padding-left: 0.2em;

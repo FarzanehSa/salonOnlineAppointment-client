@@ -17,8 +17,9 @@ const FirstAvailable = ({selectedDay, searchFirstAvailability, handleChangeDate}
   useEffect (() => {
 
     const maxDate = new Date(selectedDay);
-    // search in next 180 days
-    maxDate.setDate(maxDate.getDate() + 180);
+    console.log(maxDate);
+    // search in next 30 days
+    maxDate.setDate(maxDate.getDate() + 30);
     const dateObj = new Date(tempData.receivedDate)
     if (dateObj.getTime() < maxDate.getTime()) {
       if (tempData.result.length === 0 ) {
@@ -49,7 +50,7 @@ const FirstAvailable = ({selectedDay, searchFirstAvailability, handleChangeDate}
       )}
       {(maxSearch) &&  (
         <div className="unavailabel-time-box">
-          <span className="title-1">Sorry, There is no possible option!</span>
+          <span className="title-1">Sorry, There is no possible option in next 30 days!</span>
         </div>
       )}
     </div>

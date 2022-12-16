@@ -4,10 +4,337 @@
   // border: $test;
   margin: 3em;
   margin-top: 150px;
+
+  .add-service-part {
+    border-bottom: 1px solid gray;
+  }
+
+  .edit-service-part {
+    border-top: 1px solid gray;
+    padding-top: 2em;
+    width: 100%;
+  }
+
+  .add-service-part, .edit-service-part, .show-service-part {
+    // border: $test1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+
+    .title {
+      font-size: 1.2em;
+      font-weight: 600;
+    }
+
+    .add-form, .edit-form, .show-service {
+      // border: $test2;
+      // width: 100%;
+      padding: 2em;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+
+      .name-price, .group-duration {
+        margin-bottom: 1em;
+        display: flex;
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .description {
+        margin-top: 0.5em;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: flex-start;
+        align-items: flex-start;
+      }
+
+      .input-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 1em;
+      }
+
+      .select-group, .select-duration {
+        margin-left: 0.5em;
+        min-width: 245px;
+        width: 245px;
+      }
+
+      .input-name {
+        margin-left: 0.5em;
+        min-width: 245px;
+        width: 245px;
+      }
+
+      .input-price {
+        margin-left: 2em;
+        min-width: 245px;
+        width: 245px;
+      }
+
+      .input-description {
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+        min-width: 625px;
+        width: 625px;
+        text-align: justify;
+      }
+
+      .text-name-price, .text-group-duration, .text-description {
+        margin-bottom: 1.5em;
+      }
+    }
+
+    .buttons {
+      margin-top: 1em;
+    }
+
+    .btn-save, .btn-cancel {
+      border: 0.2em solid LightSeaGreen;
+      border-radius: 10px;
+      width: 120px;
+      background-color: LightSeaGreen ;
+      color: white;
+      cursor: pointer;
+      font-size: 1.1em;
+      padding: 0.5em 1em;
+      vertical-align: middle;
+      // white-space: nowrap;
+      margin: 0.2em;
+  
+      &:hover, &:focus {
+        outline: none;
+        // background-color: #eb6663;
+        border:0.2em solid PaleTurquoise;
+        border-radius: 10px;
+        color: PaleTurquoise;
+      }
+    }
+
+    .btn-edit, .btn-delete {
+      border: none;
+      background-color: transparent;
+      font-size: 1.1em;
+      color: black;
+      cursor: pointer;
+  
+      &:hover, &:focus {
+        outline: none;
+        color: LightSeaGreen;
+      }
+    }
+
+    .name-field {
+      color: LightSeaGreen;
+    }
+  }
+
+  .search-service-part {
+    margin-bottom: 1em;
+    padding: 2em;
+    height: 10vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .title-2 {
+      font-size: 1.2em;
+      // font-weight: 600;
+    }
+
+    .search-service {
+      margin-left: 0.5em;
+      min-width: 245px;
+      width: 245px;
+    }
+  }
+
+  .error-msg {
+    margin-top: 1em;
+    color: red;
+  }
+
 }
+
+
 
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none; 
   margin: 0; 
+}
+
+@media only screen and (max-width: 960px) {
+  .service-dashboard-page {
+    margin: 1em;
+    margin-top: 120px;
+  
+    .add-service-part, .edit-service-part, .show-service-part {
+      .title {
+        font-size: 1.2em;
+        font-weight: 600;
+      }
+  
+      .add-form, .edit-form, .show-service {
+        // border: $test2;
+        // width: 100%;
+        padding: 2em;
+  
+        .name-price, .group-duration {
+          margin-bottom: 0em;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: flex-start;
+        }
+  
+        .description {
+          margin-top: 0.3em;
+        }
+  
+        .input-group {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-right: 0em;
+        }
+  
+        .select-group {
+          margin: 0.3em 0em 0.3em 1.2em;
+        }
+
+        .select-duration {
+          margin: 0.3em 0em 0.3em 0.2em;
+        }
+  
+        .input-name {
+          margin: 0.3em 0em 0.3em 1.2em;
+        }
+  
+        .input-price {
+          margin: 0.3em 0em 0.3em 1.7em;
+        }
+  
+        .input-description {
+          margin: 0.3em 0em 0.3em 0em;
+          min-width: 310px;
+          width: 310px;
+        }
+      }
+
+      .buttons {
+        margin-top: 0.5em;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .service-dashboard-page {
+    margin: 1em;
+    margin-top: 120px;
+  
+    .add-service-part, .edit-service-part, .show-service-part {
+      .title {
+        font-size: 1em;
+        font-weight: 600;
+      }
+  
+      .add-form, .edit-form, .show-service {
+        // border: $test3;
+        // width: 100%;
+        padding: 1em;
+  
+        .name-price, .group-duration {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+        }
+  
+        .description {
+          margin-top: 0.3em;
+        }
+  
+        .input-group {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-items: flex-start;
+          margin-right: 0em;
+        }
+  
+        .select-group {
+          margin: 0.5em 0em 1em 0em;
+        }
+
+        .select-duration {
+          margin: 0.5em 0em 1em 0em;
+        }
+  
+        .input-name {
+          margin: 0.5em 0em 1em 0em;
+        }
+  
+        .input-price {
+          margin: 0.5em 0em 1em 0em;
+        }
+  
+        .input-description {
+          margin: 0.5em 0em 1em 0em;
+          min-width: 245px;
+          width: 245px;
+        }
+      }
+  
+      .btn-save, .btn-cancel {
+        border: 0.2em solid LightSeaGreen;
+        border-radius: 10px;
+        width: 100px;
+        background-color: LightSeaGreen ;
+        color: white;
+        cursor: pointer;
+        font-size: 1em;
+        padding: 0.5em 1em;
+        vertical-align: middle;
+        // white-space: nowrap;
+        margin: 0.2em;
+    
+        &:hover, &:focus {
+          outline: none;
+          // background-color: #eb6663;
+          border:0.2em solid PaleTurquoise;
+          border-radius: 10px;
+          color: PaleTurquoise;
+        }
+      }
+    }
+    
+    .search-service-part {
+      margin-bottom: 1em;
+      padding: 1em;
+      height: 15vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+  
+      .title-2 {
+        font-size: 1em;
+        // font-weight: 600;
+      }
+  
+      .search-service {
+        margin: 0.5em 0em 1em 0em;
+      }
+    }
+  
+  }
 }

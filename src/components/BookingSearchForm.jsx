@@ -59,7 +59,7 @@ const CssSelect = styled(Select)({
     "&.Mui-focused fieldset": {
       borderColor: "MediumPurple"
     },
-  }
+  },
 });
 
 const BookingSearchForm = ({formReqBook, selectedDay, handleChangeService, handleChangeStylists, handleChangeDate, handleAddToForm, handleDelete, handleSearchSubmit, handleCloseDayPicker, qualifiedStylists}) => {
@@ -81,7 +81,7 @@ const BookingSearchForm = ({formReqBook, selectedDay, handleChangeService, handl
         result.push(<ListSubheader>{gRow.group}</ListSubheader>);
       }
       else {
-        result.push(<MenuItem value={goodServices[i]}>{goodServices[i].service}</MenuItem>);
+        result.push(<MenuItem style={{whiteSpace: 'normal'}} value={goodServices[i]}>{goodServices[i].service}</MenuItem>);
       }
     }
     return result;
@@ -104,6 +104,9 @@ const BookingSearchForm = ({formReqBook, selectedDay, handleChangeService, handl
             MenuProps={MenuProps}
             required
             className="service-select"
+            sx={{
+              whiteSpace: "wrap",
+            }}
           >
             {serviceSelectArray}
           </CssSelect>

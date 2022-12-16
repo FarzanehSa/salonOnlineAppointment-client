@@ -34,7 +34,7 @@
         display: flex;
 
         .date-picker {
-          min-width: 16.5em;
+          min-width: 19em;
         }
       }
     }
@@ -50,6 +50,7 @@
       .search-form-service {
         padding-right: 0.4em;
         min-width: 16.5em;
+        width: 19em;
       }
 
       .stylist-delete {
@@ -59,10 +60,12 @@
 
         .search-form-stylist-first {
           min-width: 16.5em;
+          width: 19em;
         }
 
         .search-form-stylist {
           min-width: 14em;
+          width: 16.5em;
         }
       }
 
@@ -267,11 +270,11 @@
   }
 }
 
-@media only screen and (max-width: 960px) {
+@media only screen and (max-width: 1200px) {
 
   .booking-page {
 
-    margin-top: 120px;
+    // margin-top: 120px;
     .search-form-main {
   
       .search-form {
@@ -290,12 +293,9 @@
   
           .btn-search {
             width: 7em;
-            font-size: 1em;
             margin-top: 0.5em;
             margin-bottom: 0.5em;
-            padding: 1em 1em;
-            cursor: pointer;
-        
+
             background-color: #eb6663;
             color: black;
           }
@@ -328,7 +328,28 @@
         .btn-add-service-to-form {
           font-size: 0.8em;
           margin: 0em;
-          padding: 0.5em 1.5em;
+          // padding: 0.5em 1.5em;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 960px) {
+
+  .booking-page {
+
+    margin-top: 120px;
+    .search-form-main {
+      .search-form {
+        .search-form-date {
+          .btn-search {
+            width: 7em;
+            font-size: 1em;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+            padding: 1em 1em;
+          }
         }
       }
     }
