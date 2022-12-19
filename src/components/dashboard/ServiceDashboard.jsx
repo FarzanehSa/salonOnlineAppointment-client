@@ -136,6 +136,7 @@ const ServiceDashboard = ({setServices}) => {
   }
 
   const onCancelEdit = () => {
+    setSearchForm({service: editServiceForm.id});
     setEditServiceForm({id:"", groupId:"", service:"", price:"", description:"", duration:""});
     setErrorMsgEdit("");
   }
@@ -373,9 +374,9 @@ const ServiceDashboard = ({setServices}) => {
           }
         </CssSelect>
       </div>
-      <div className="show-service-part">
+      <div>
         {searchForm.service && 
-          <div>
+          <div className="show-service-part">
             {serviceDetails}
           </div>
         }
@@ -479,8 +480,6 @@ const ServiceDashboard = ({setServices}) => {
             </form>
           </div>
         }
-        
-
       </div>
     </div>
   )

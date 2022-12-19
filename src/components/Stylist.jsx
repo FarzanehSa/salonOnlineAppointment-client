@@ -15,7 +15,10 @@ const Stylist = () => {
   useEffect(() => {
 
     const myStylist = stylists.filter(sty => sty.id === id)[0];
-    const myAvailability = availability.filter(sch => sch.name === myStylist.name);
+    let myAvailability = [];
+    if (myStylist) {
+      myAvailability = availability.filter(sch => sch.name === myStylist.name);
+    }
 
     setStylist(prev => myStylist);
     setStylistAvailability(prev => myAvailability);
