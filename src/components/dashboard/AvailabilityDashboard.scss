@@ -1,0 +1,254 @@
+@import "../../styles/variables.scss";
+
+.availability-dashboard-page {
+  // border: $test;
+  margin: 3em;
+  margin-top: 150px;
+
+  .search-employee-part {
+    margin-bottom: 1em;
+    padding: 2em;
+    height: 10vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .title-2 {
+      font-size: 1.2em;
+      // font-weight: 600;
+    }
+
+    .search-employee {
+      margin-left: 0.5em;
+      min-width: 245px;
+      width: 245px;
+    }
+  }
+
+  .availability-part {
+    // border: $test2;
+    width: 100%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: flex-start;
+
+    .old-data {
+      // border: $test3;
+      width: 35%;
+      padding: 1em 1em 1em 1em;
+      display: flex;
+      flex-direction: column;
+      // justify-content: center;
+      // align-items: flex-start;
+
+      .title {
+        font-size: 1.2em;
+        font-weight: 600;
+        margin-bottom: 1.5em;
+      }
+
+      .row-av-data {
+        display: flex;
+        margin-bottom: 1em;
+        font-size: 1.1em;
+
+        .d-day {
+          width: 6em;
+          color: Sienna;
+        }
+
+        .d-to {
+          margin-left: 0.4em;
+          margin-right: 0.4em;
+        }
+      }
+    }
+    
+    .update-availability-form {
+      // border: $test3;
+      width: 55%;
+      padding: 1em 1em 1em 1em;
+
+      .title {
+        font-size: 1.2em;
+        font-weight: 600;
+        margin-bottom: 1.5em;
+      }
+
+      .timerange-picker {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+
+      .day-text {
+        width: 6em;
+        color: Sienna;
+      }
+
+      .buttons {
+        margin-top: 1em;
+      }
+  
+      .btn-update, .btn-cancel {
+        border: 0.2em solid LightSeaGreen;
+        border-radius: 10px;
+        width: 120px;
+        background-color: LightSeaGreen ;
+        color: white;
+        cursor: pointer;
+        font-size: 1.1em;
+        padding: 0.5em 1em;
+        vertical-align: middle;
+        // white-space: nowrap;
+        margin: 0.2em;
+    
+        &:hover, &:focus {
+          outline: none;
+          // background-color: #eb6663;
+          border:0.2em solid PaleTurquoise;
+          border-radius: 10px;
+          color: PaleTurquoise;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 960px) {
+  .availability-dashboard-page {
+    margin: 2em;
+    margin-top: 120px;
+  
+    .availability-part {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+  
+      .old-data {
+        border-bottom: 0.5px solid gray;
+        width: 100%;
+        padding: 1em 1em 1em 1em;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .update-availability-form {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .availability-dashboard-page {
+    margin: 1em;
+    margin-top: 120px;
+  
+    .search-employee-part {
+      margin-bottom: 1em;
+      padding: 1em;
+      height: 15vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+  
+      .title-2 {
+        font-size: 1.1em;
+      }
+  
+      .search-employee {
+        margin-top: 0.5em;
+        margin-left: 0em;
+        min-width: 245px;
+        width: 245px;
+      }
+    }
+  
+    .availability-part {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+  
+      .old-data {
+        width: 100%;
+        padding: 1em 1em 1em 1em;
+        display: flex;
+        flex-direction: column;
+        // justify-content: center;
+        // align-items: flex-start;
+  
+        .title {
+          font-size: 1em;
+          font-weight: 600;
+          margin-bottom: 1em;
+        }
+  
+        .row-av-data {
+          display: flex;
+          margin-bottom: 0.8em;
+          font-size: 1em;
+        }
+      }
+      
+      .update-availability-form {
+        width: 100%;
+        padding: 1em 1em 1em 1em;
+  
+        .title {
+          font-size: 1em;
+          font-weight: 600;
+          margin-bottom: 1em;
+        }
+  
+        .timerange-picker {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          margin-bottom: 0.6em;
+        }
+  
+        .day-text {
+          width: 6em;
+          color: Sienna;
+        }
+  
+        .buttons {
+          margin-top: 1em;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        .btn-update, .btn-cancel {
+          border: 0.2em solid LightSeaGreen;
+          border-radius: 10px;
+          width: 100px;
+          background-color: LightSeaGreen ;
+          color: white;
+          cursor: pointer;
+          font-size: 1em;
+          padding: 0.5em 1em;
+          vertical-align: middle;
+          // white-space: nowrap;
+          margin: 0.2em;
+      
+          &:hover, &:focus {
+            outline: none;
+            // background-color: #eb6663;
+            border:0.2em solid PaleTurquoise;
+            border-radius: 10px;
+            color: PaleTurquoise;
+          }
+        }
+      }
+    }
+  }
+}

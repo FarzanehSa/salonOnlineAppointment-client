@@ -25,7 +25,7 @@ const NavbarAdmin = ({setUser}) => {
         </div>
       </div>
       <div className='main-links'>
-        <button className='nav-buttons'><NavLink className="navlink" to="/dashboard">Dashboard</NavLink></button>
+        <button className='nav-buttons'><NavLink className="navlink" to="/dashboard">Settings</NavLink></button>
       </div>
       <div className='login-part'>
         {!user.id &&

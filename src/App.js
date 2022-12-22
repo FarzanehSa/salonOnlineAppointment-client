@@ -24,6 +24,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import ServiceGroupDashboard from './components/dashboard/ServiceGroupDashboard';
 import ServiceDashboard from './components/dashboard/ServiceDashboard';
 import EmployeeDashboard from './components/dashboard/EmployeeDashboard';
+import AvailabilityDashboard from './components/dashboard/AvailabilityDashboard';
 
 import './App.scss';
 import es from 'date-fns/esm/locale/es/index.js';
@@ -215,8 +216,8 @@ function App() {
 
   }
 
-  console.log('👨🏼‍🎨👩‍🎨', stylists, availability);
-  console.log('✂️🪒', serviceGroups, services);
+  // console.log('👨🏼‍🎨👩‍🎨', stylists, availability);
+  // console.log('✂️🪒', serviceGroups, services);
 
   // console.log('📖', allSpots);
   // console.log('📖❌', allBooked);
@@ -270,6 +271,7 @@ function App() {
             <Route path='/dashboard/service-group' element={<ServiceGroupDashboard setServiceGroups={setServiceGroups}/>}/>
             <Route path='/dashboard/service' element={<ServiceDashboard setServices={setServices}/>}/>
             <Route path='/dashboard/employee' element={<EmployeeDashboard setStylists={setStylists}/>}/>
+            <Route path='/dashboard/availability' element={<AvailabilityDashboard />}/>
           </Routes>
         </div>
 

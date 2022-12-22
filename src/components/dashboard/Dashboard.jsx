@@ -12,19 +12,25 @@ const Dashboard = () => {
       <NavLink to="/dashboard/service-group">
         <button className="btn-setting">
           <div className="sign"><FontAwesomeIcon icon="fa-solid fa-gear" /></div>
-          <br/>Service Group
+          <span>Service Group</span>
         </button>
       </NavLink>
       <NavLink to="/dashboard/service">
         <button className="btn-setting">
           <div className="sign"><FontAwesomeIcon icon="fa-solid fa-gear" /></div>
-          <br/>Service
+          <span>Service</span>
         </button>
       </NavLink>
       <NavLink to="/dashboard/employee">
         <button className="btn-setting">
           <div className="sign"><FontAwesomeIcon icon="fa-solid fa-gear" /></div>
-          <br/>Employee
+          <span>Employee</span>
+        </button>
+      </NavLink>
+      <NavLink to="/dashboard/availability">
+        <button className="btn-setting">
+          <div className="sign"><FontAwesomeIcon icon="fa-solid fa-gear" /></div>
+          <span>Availability</span>
         </button>
       </NavLink>
     </div>

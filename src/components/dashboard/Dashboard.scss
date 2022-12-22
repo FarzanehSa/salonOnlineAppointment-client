@@ -2,13 +2,18 @@
 
 .dashboard-page {
   margin-top: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 
   .btn-setting {
     border: none;
+    width: 100px;
     background-color: transparent;
-    font-size: 1.1em;
+    font-size: 1.2em;
     color: black;
     cursor: pointer;
+    margin: 0em 1em 0em 1em;
 
     &:hover {
       color: LightSeaGreen;
@@ -16,7 +21,55 @@
   }
 
   .sign {
-    font-size: 3em;
+    font-size: 2.5em;
   }
+}
 
+@media only screen and (max-width: 960px) {
+  .dashboard-page {
+    margin-top: 150px;
+    flex-wrap: wrap;
+  
+    .btn-setting {
+      border: none;
+      width: 100px;
+      background-color: transparent;
+      font-size: 1em;
+      color: black;
+      cursor: pointer;
+      margin: 0em 1em 0em 1em;
+  
+      &:hover {
+        color: LightSeaGreen;
+      }
+    }
+  
+    .sign {
+      font-size: 2em;
+    }
+  }
+}
+@media only screen and (max-width: 500px) {
+  .dashboard-page {
+    margin-top: 150px;
+    flex-wrap: wrap;
+  
+    .btn-setting {
+      border: none;
+      width: 100px;
+      background-color: transparent;
+      font-size: 0.9em;
+      color: black;
+      cursor: pointer;
+      margin: 0em 1em 0em 1em;
+  
+      &:hover {
+        color: LightSeaGreen;
+      }
+    }
+  
+    .sign {
+      font-size: 1.7em;
+    }
+  }
 }
