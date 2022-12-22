@@ -2,29 +2,42 @@
 
 .home-page {
   margin-top: 120px;
-
-  background-image: url("https://res.cloudinary.com/demoshoebox/image/upload/v1670099268/Salon/important/background4_gvwyts.jpg");
-  // background-image: url("https://res.cloudinary.com/demoshoebox/image/upload/v1670096153/Salon/important/background_ye3c23.jpg");
   height: 100vh;
-  background-size: cover;
+  // background-image: url("https://res.cloudinary.com/demoshoebox/image/upload/v1670099268/Salon/important/background4_gvwyts.jpg");
+  // background-image: url("https://res.cloudinary.com/demoshoebox/image/upload/v1670096153/Salon/important/background_ye3c23.jpg");
+  // background-size: cover;
 
   .info {
-    height: 70%;
-    width: 90%;
+    height: 70vh;
+    width: 100%;
   
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  
-    position: absolute;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    .video {
+      object-fit: cover;
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .info-details {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+    
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
 
     .title {
       font-size: 3em;
     }
+
     .address {
       font-size: 1.5em;
       display: flex;
@@ -36,25 +49,40 @@
         margin-bottom: 0.5em;
       }
     }
-  }
 
-  .btn-booking {
-    display: block;
-    width: 40%;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2em;
-    padding: 0.5em 2em;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    cursor: pointer;
+    .navlink {
+      width: 40%;
+    }
 
-    background-color: MediumAquamarine;
-    color: black;
+    .btn-booking {
 
-    &:hover {
-      background-color: LightSalmon;
-      color: white;
+      display: block;
+      box-sizing: border-box; 
+      margin: 0 auto; 
+      padding: 16px; 
+      width: 100%; 
+      // max-width: 500px; 
+      background: rgba(255, 255, 255, 0.5); 
+      border-radius: 8px; 
+      color: black;
+      font-size: 1.5em; 
+      text-align: center; 
+      text-decoration: none; 
+      letter-spacing: 1px; 
+      transition: all 0.3s ease-out;
+      cursor: pointer;
     }
   }
+}
+
+@media only screen and (max-width: 960px) {
+  .home-page {
+    margin-top: 100px;
+    .info {
+      height: 78vh;
+    }
+  }
+}
+@media only screen and (max-width: 500px) {
+
 }
