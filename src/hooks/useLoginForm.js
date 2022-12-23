@@ -6,7 +6,7 @@ export default function useLoginForm(baseData, action, setError) {
   const handleChange = (event) => {
     const { name, value } = event.target;
     setError('')
-    setFormData({ ...formData, [name]: value.trim() });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (event) => {

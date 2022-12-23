@@ -1,5 +1,6 @@
-import {React, useContext, useEffect} from 'react';
+import {React, useContext, useEffect, useState} from 'react';
 import { NavLink, Navigate, useNavigate} from 'react-router-dom';
+import axios from 'axios';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -8,9 +9,9 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import { styled } from '@mui/material/styles';
 
-import GeneralContext from "../contexts/GeneralContext";
-import useLoginForm from "../hooks/useLoginForm";
-import './Register.scss';
+import GeneralContext from "../../contexts/GeneralContext";
+import useLoginForm from "../../hooks/useLoginForm";
+import './AdminLogin.scss';
 
 const CssTextField = styled(TextField)({
   '& label.Mui-focused': {
@@ -32,32 +33,48 @@ const CssTextField = styled(TextField)({
   },
 });
 
-const Login = ({onLogin, error, setError, wantToBook}) => {
+const Login = ({setUser}) => {
 
   const { user } = useContext(GeneralContext);
+  const [loginForm, setLoginForm] = useState({email: "", password: ""})
+  const [error, setError] = useState(''); 
 
-  const baseFormLogin = { email: "", password: "" };
-  const { formData, handleChange, handleSubmit } = useLoginForm(baseFormLogin, onLogin, setError);
-  const navigate = useNavigate();
-
-  useEffect(() => {
+  const handleChange = (event) => {
+    const { name, value } = event.target;
     setError('');
-  }, []);
+    setLoginForm({ ...loginForm, [name]: value });
+  };
 
-  useEffect(() => {
-    if (user.id) {
-      navigate(-1);
-    }
-  }, [user]);
+  const onLogin = (event) => {
+    event.preventDefault();
+    axios.post(`http://localhost:7100/api/login`, {info: {...loginForm}})
+    .then(res => {
+      if (res.data.errorCode) {
+        setError(res.data.errorMsg);
+      } else {
+        const userX = res.data.user;
+        if (userX.access !== 0) {
+          setError("No admin access!");
+        } else {
+          setUser(userX);
+          setError("");
+        }
+      }
+    })
+    .catch(error => {
+      console.log(error.message);
+    })
+  }
+
 
   return (
-    <div className='login-page'>
+    <div className='login-modal'>
       <div className='left-section'>
         <img src="https://res.cloudinary.com/demoshoebox/image/upload/v1669945577/Salon/important/1_vtbdyv.jpg" alt="salon" className='register-image'/>
       </div>
       <div className='right-section'>
-        <span className='title'>Welcome</span>
-        <form onSubmit={handleSubmit} className='login-form'>
+        <span className='title'>Admin Login</span>
+        <form onSubmit={onLogin} className='login-form'>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', width: '100%' }}>
             <div className='login-username'>
               <CssTextField
@@ -65,17 +82,17 @@ const Login = ({onLogin, error, setError, wantToBook}) => {
                 id="email"
                 // label="Email"
                 name="email"
-                value={formData.email}
+                value={loginForm.email}
                 onChange={handleChange}
                 variant="outlined"
                 margin="normal"
                 size="small"
-                placeholder="Email"
+                placeholder="Username"
                 fullWidth
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <FontAwesomeIcon icon="fa-solid fa-envelope" />
+                      <FontAwesomeIcon icon="fa-solid fa-user-secret" />
                     </InputAdornment>
                   ),
                 }}
@@ -88,7 +105,7 @@ const Login = ({onLogin, error, setError, wantToBook}) => {
                 // label="Password"
                 name="password"
                 type="password" 
-                value={formData.password}
+                value={loginForm.password}
                 onChange={handleChange}
                 variant="outlined"
                 margin="normal"
@@ -107,10 +124,6 @@ const Login = ({onLogin, error, setError, wantToBook}) => {
           </Box>
           {error && <span className='login-error'>{error}</span>}
           <button type="submit" className="btn-login-button"> Login </button>
-          <div>
-            <span className='text'>Don't have an account?</span>
-            <NavLink className="navlink" to="/register"><button type="button" className="btn-go-to-login">Sign Up Now</button></NavLink>
-          </div>
         </form>
       </div>
     </div>

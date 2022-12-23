@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import { Routes, Route, useMatch } from 'react-router-dom';
+import { Routes, Route, useMatch, Navigate, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -20,6 +20,7 @@ import SuccessfullBook from './components/SuccessfullBook';
 import Appointments from './components/Appointments';
 
 import NavbarAdmin from './components/dashboard/NavbarAdmin';
+import AdminLogin from './components/dashboard/AdminLogin';
 import Dashboard from './components/dashboard/Dashboard';
 import ServiceGroupDashboard from './components/dashboard/ServiceGroupDashboard';
 import ServiceDashboard from './components/dashboard/ServiceDashboard';
@@ -38,7 +39,8 @@ function App() {
   tomorrow.setDate(today.getDate() + 1);
 
   const [successfullBook, setSuccessfullBook] = useState(false);
-  const [title, setTitle] = useState("Online Book")
+  const [adminLogin, setAdminLogin] = useState(false);
+  const [title, setTitle] = useState("")
 
   const [timeTable, setTimeTable] = useState([]);
   const [stylists, setStylists] = useState([]);
@@ -86,7 +88,19 @@ function App() {
     
   useEffect(() => {
     localStorage.setItem('user', JSON.stringify(user));
-  }, [user]);
+    if (matchDashboard) {
+      setTitle("Online Booking Dashboard");
+      if (!user.id || user.access !== 0) {
+        setAdminLogin(true);
+      } 
+      else {
+        setAdminLogin(false);
+      }
+    } else {
+      setTitle("Online Booking");
+      setAdminLogin(false);
+    }
+  }, [user, matchDashboard]);
 
   const reqClicked = function(serviceId) {
     setFormReqBook(pre => ([{service: serviceId, stylists: []}]));
@@ -94,6 +108,7 @@ function App() {
 
   function closeModal() {
     setSuccessfullBook(false);
+    setAdminLogin(false);
   }
 
   const onRegister = (formData) => {
@@ -114,7 +129,7 @@ function App() {
     axios.post(`http://localhost:7100/api/login`, {info: {...formData}})
     .then(res => {
       if (res.data.errorCode) {
-        setLoginErrorMsg("This email had sign up before, please login to your account.")
+        setLoginErrorMsg(res.data.errorMsg)
       } else {
         setUser(res.data.user);
       }
@@ -224,15 +239,15 @@ function App() {
   // console.log('🧤 formReqBook \n', formReqBook);
   // console.log('👀👀 wanted to book \n', wantToBook);
   // console.log('❌❌❌ loginErrorMsg \n', loginErrormsg);
-  // console.log('🦋 user \n', user);
+  console.log('🦋 user \n', user);
 
 
   return (
     <main className="layout">
       <GeneralContext.Provider value={{ stylists, availability, serviceGroups, services, allSpots, allBooked, setAllBooked, setAllSpots, user, timeTable }}>
 
-        {matchDashboard && !user.id && <NavbarAdmin setUser={setUser}/>}
-        {matchDashboard && user.id && <NavbarAdmin setUser={setUser}/>}
+        {matchDashboard && (!user.id || user.access !== 0) && <NavbarAdmin zIndex={-1}/>}
+        {matchDashboard && user.id && !user.access && <NavbarAdmin zIndex={1100}/>}
         {!matchDashboard && <Navbar setUser={setUser}/>}
 
         <Modal
@@ -242,6 +257,15 @@ function App() {
           className="modal"
         >
           {successfullBook && <SuccessfullBook date={successBookInfo.date} info={successBookInfo.savedData} onClose={closeModal} />}
+        </Modal>
+        <Modal
+          isOpen={adminLogin}
+          onRequestClose={closeModal}
+          appElement={document.getElementById('root')}
+          className="admin-login"
+          shouldCloseOnOverlayClick={false}
+        >
+          {adminLogin && <AdminLogin onClose={closeModal} setUser={setUser}/>}
         </Modal>
         <ToastContainer />
 

@@ -1,5 +1,5 @@
-import {React, useContext} from 'react';
-import { NavLink, Navigate} from 'react-router-dom';
+import {React, useContext, useEffect} from 'react';
+import { NavLink, Navigate, useNavigate} from 'react-router-dom';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -38,12 +38,19 @@ const Register = ({onRegister, error, setError}) => {
 
   const baseFormRegister = { firstname: "", lastname:"", email:"", password: "", tel:"" };
   const { formData, handleChange, handleSubmit } = useLoginForm(baseFormRegister, onRegister, setError);
+  const navigate = useNavigate();
 
   // console.log(formData);
 
-  if (user.id) {
-    return <Navigate to="/" />;
-  }
+  useEffect(() => {
+    setError('');
+  }, []);
+
+  useEffect(() => {
+    if (user.id) {
+      navigate(-1);
+    }
+  }, [user]);
 
   return (
     <div className='login-modal'>

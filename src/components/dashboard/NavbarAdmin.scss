@@ -1,6 +1,6 @@
 @import "../../styles/variables.scss";
 
-.navbar {
+.navbar-admin-page {
   // border: $test;
   border-bottom: 1px solid gray;
   background-color: $nav-color;
@@ -12,7 +12,7 @@
   margin: auto;
   
   padding: 0px 20px 0px 20px;
-  z-index: 2000;
+  // z-index: 2000;
 
   display: flex;
   justify-content: space-between;

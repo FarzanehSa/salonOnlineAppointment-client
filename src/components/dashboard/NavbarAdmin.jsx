@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import GeneralContext from "../../contexts/GeneralContext";
 import './NavbarAdmin.scss';
 
-const NavbarAdmin = ({setUser}) => {
+const NavbarAdmin = (props) => {
 
   const { user } = useContext(GeneralContext);
   const [sidebar, setSidebar] = useState(false);
@@ -17,7 +17,7 @@ const NavbarAdmin = ({setUser}) => {
 
 
   return (
-    <div className="navbar">
+    <div className="navbar-admin-page" style={{zIndex:props.zIndex}}>
       <div className='logo-name'>
         <img className='logo-image' src='https://res.cloudinary.com/demoshoebox/image/upload/v1666570065/Salon/logo-salon_ih1z7f.png' alt="logo" />
         <div className='logo-name'>
@@ -28,22 +28,22 @@ const NavbarAdmin = ({setUser}) => {
         <button className='nav-buttons'><NavLink className="navlink" to="/dashboard">Settings</NavLink></button>
       </div>
       <div className='login-part'>
-        {!user.id &&
+        {/* {!user.id &&
           <button className='nav-buttons'><NavLink className="navlink" to="/login">Login</NavLink></button>
-        }
+        } */}
 
-        {user.id &&
+        {user.id && !user.access && 
           <div className='user-log'>
             <div className='welcome-text'>
               <span>Welcome, </span>
               <span>{user.firstname}!</span>
             </div>
-            <NavLink to="#" className='menu-bars'>
+            {/* <NavLink to="#" className='menu-bars'>
               <FontAwesomeIcon className='bar' icon="fa-solid fa-grip-lines" onClick={() => showSidebar()} />
-            </NavLink>
+            </NavLink> */}
           </div>
         }
-        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
+        {/* <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
           <div 
             className='nav-menu-items'
             onClick={() => showSidebar()}
@@ -52,7 +52,7 @@ const NavbarAdmin = ({setUser}) => {
             <button className='btn-logout' onClick={() => {setUser({})}}>Logout</button>
             <button className='btn-logout'><NavLink className="navlink" to={`/appointments/${user.id}`}>Appointments</NavLink></button>
           </div>
-        </nav>
+        </nav> */}
       </div>
     </div>
   )
