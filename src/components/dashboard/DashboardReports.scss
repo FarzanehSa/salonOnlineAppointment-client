@@ -91,6 +91,10 @@
       color: DodgerBlue;
     }
 
+    th {
+      font-size: 1.1em; 
+    }
+
     .date-row {
       background-color: black;
     }
@@ -210,19 +214,12 @@
         margin: 1em;
         font-size: 1em;
       }
-  
-      .report-param {
-        color: DodgerBlue;
-      }
-  
-      .date-row {
-        background-color: black;
-      }
+
       .date-cell {
         color: white;
         font-size: 1em; 
       }
-  
+
       .noting-found {
         width: 100%;
         font-size: 1em;

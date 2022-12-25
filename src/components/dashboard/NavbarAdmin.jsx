@@ -8,14 +8,14 @@ import './NavbarAdmin.scss';
 
 const NavbarAdmin = (props) => {
 
-  const { user } = useContext(GeneralContext);
+  const { user, storeInfo } = useContext(GeneralContext);
 
   return (
     <div className="navbar-admin-page" style={{zIndex:props.zIndex}}>
       <div className='logo-name'>
-        <img className='logo-image' src='https://res.cloudinary.com/demoshoebox/image/upload/v1666570065/Salon/logo-salon_ih1z7f.png' alt="logo" />
+        <img className='logo-image' src={storeInfo.logo} alt="logo" />
         <div className='logo-name'>
-          <NavLink className="navlink" to="/">Salon</NavLink>
+          <NavLink className="navlink" to="/">{storeInfo.name}</NavLink>
         </div>
       </div>
       <div className='main-links'>

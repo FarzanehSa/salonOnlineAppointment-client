@@ -11,7 +11,7 @@ const helper = (arr, result) => {
   const temp = []
   for (let i = 0; i < result.length; i++) {
     for (const e of arr) {
-      console.log(e);
+      // console.log(e);
       if (e.goodGap.length !== 0) {
         temp.push([...result[i], e])
       }

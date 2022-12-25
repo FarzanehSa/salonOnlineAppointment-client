@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,11 +6,6 @@ import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import CircularProgress from '@mui/material/CircularProgress';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import FormHelperText from '@mui/material/FormHelperText';
-import { cyan } from '@mui/material/colors';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -21,7 +16,6 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
 import GeneralContext from "../../contexts/GeneralContext";
@@ -95,7 +89,6 @@ const DashboardReports = () => {
 
   const handleChangeSearch = (event) => {
     const {name, value} = event.target;
-    console.log(name, value);
     setSearchForm({...searchForm, [name]: value});
   };
 
@@ -143,7 +136,7 @@ const DashboardReports = () => {
           <TableCell align='center'>
             <div>
               <div>{row.firstname} {row.lastname}</div>
-              <div>{row.tel}</div>
+              <div><FontAwesomeIcon icon="fa-solid fa-phone" /> {row.tel}</div>
             </div>
           </TableCell>
         </TableRow>
@@ -151,9 +144,6 @@ const DashboardReports = () => {
     })
     appointmentsArr.push(group);
   }
-  
-  console.log(result);
-  console.log(dateKeys);
 
   return (
     <div className="dashboard-report-page">

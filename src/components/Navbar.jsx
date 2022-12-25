@@ -8,7 +8,7 @@ import './Navbar.scss';
 
 const Navbar = ({setUser}) => {
 
-  const { user } = useContext(GeneralContext);
+  const { user, storeInfo } = useContext(GeneralContext);
   const [sidebar, setSidebar] = useState(false);
 
   const showSidebar = () => {
@@ -19,8 +19,8 @@ const Navbar = ({setUser}) => {
   return (
     <div className="navbar">
       <div className='logo-name'>
-        <img className='logo-image' src='https://res.cloudinary.com/demoshoebox/image/upload/v1666570065/Salon/logo-salon_ih1z7f.png' alt="logo" />
-        <div className='logo-name' >Salon</div>
+        <img className='logo-image' src={storeInfo.logo} alt="logo" />
+        <div className='logo-name' >{storeInfo.name}</div>
       </div>
       <div className='main-links'>
         <button className='nav-buttons'><NavLink className="navlink" to="/services">Services</NavLink></button>
@@ -51,6 +51,9 @@ const Navbar = ({setUser}) => {
           >
             <button className='btn-logout' onClick={() => {setUser({})}}>Logout</button>
             <button className='btn-logout'><NavLink className="navlink" to={`/appointments/${user.id}`}>Appointments</NavLink></button>
+            {user.access === 0 &&
+              <button className='btn-logout'><NavLink className="navlink" to={`/dashboard`}>Admin Dashboard</NavLink></button>
+            }
           </div>
         </nav>
       </div>

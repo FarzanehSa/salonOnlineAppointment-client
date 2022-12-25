@@ -10,7 +10,6 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { styled } from '@mui/material/styles';
 
 import GeneralContext from "../../contexts/GeneralContext";
-import useLoginForm from "../../hooks/useLoginForm";
 import './AdminLogin.scss';
 
 const CssTextField = styled(TextField)({
@@ -35,7 +34,6 @@ const CssTextField = styled(TextField)({
 
 const Login = ({setUser}) => {
 
-  const { user } = useContext(GeneralContext);
   const [loginForm, setLoginForm] = useState({email: "", password: ""})
   const [error, setError] = useState(''); 
 

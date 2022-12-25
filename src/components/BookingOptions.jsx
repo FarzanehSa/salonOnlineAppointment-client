@@ -97,7 +97,7 @@ const BookingOptions = ({formReqBook, selectedDay, timeClicked, handleChangeDate
     } 
     // ---------------------------------------------
     else {
-      console.log(optionGroup);
+      // console.log(optionGroup);
       const newArr = optionGroup.map((row, index2) => {
         return (
           <div key={index2} className="availabel-time-box-one-info">

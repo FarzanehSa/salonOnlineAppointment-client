@@ -41,7 +41,8 @@ function App() {
 
   const [successfullBook, setSuccessfullBook] = useState(false);
   const [adminLogin, setAdminLogin] = useState(false);
-  const [title, setTitle] = useState("")
+  const [title, setTitle] = useState("");
+  const [storeInfo, setStoreInfo] = useState({});
 
   const [timeTable, setTimeTable] = useState([]);
   const [stylists, setStylists] = useState([]);
@@ -71,15 +72,17 @@ function App() {
 
     const f1 = axios.get('http://localhost:7100/api/stylists');
     const f2 = axios.get('http://localhost:7100/api/service-groups');
+    const f3 = axios.get('http://localhost:7100/api/spec/storeinfo');
 
-    Promise.all([f1, f2])
-      .then(([r1, r2]) => {
-        // console.log(r2.data);
+
+    Promise.all([f1, f2, f3])
+      .then(([r1, r2, r3]) => {
         setTimeTable(r2.data.timeTable);
         setStylists(prev => r1.data.stylists);
         setAvailability(prev => r1.data.availability);
         setServiceGroups(prev => r2.data.groups);
         setServices(prev => r2.data.services);
+        setStoreInfo(prev => r3.data.storeInfo);
       });
     }, []);
 
@@ -241,11 +244,12 @@ function App() {
   // console.log('👀👀 wanted to book \n', wantToBook);
   // console.log('❌❌❌ loginErrorMsg \n', loginErrormsg);
   // console.log('🦋 user \n', user);
+  // console.log('🛖 storeInfo \n', storeInfo);
 
 
   return (
     <main className="layout">
-      <GeneralContext.Provider value={{ stylists, availability, serviceGroups, services, allSpots, allBooked, setAllBooked, setAllSpots, user, timeTable }}>
+      <GeneralContext.Provider value={{ stylists, availability, serviceGroups, services, allSpots, allBooked, setAllBooked, setAllSpots, user, timeTable, storeInfo }}>
 
         {matchDashboard && (!user.id || user.access !== 0) && <NavbarAdmin zIndex={-1}/>}
         {matchDashboard && user.id && !user.access && <NavbarAdmin zIndex={1100}/>}
