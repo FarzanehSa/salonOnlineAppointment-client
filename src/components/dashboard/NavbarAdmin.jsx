@@ -9,12 +9,6 @@ import './NavbarAdmin.scss';
 const NavbarAdmin = (props) => {
 
   const { user } = useContext(GeneralContext);
-  const [sidebar, setSidebar] = useState(false);
-
-  const showSidebar = () => {
-    setSidebar(!sidebar);
-  };
-
 
   return (
     <div className="navbar-admin-page" style={{zIndex:props.zIndex}}>
@@ -26,33 +20,17 @@ const NavbarAdmin = (props) => {
       </div>
       <div className='main-links'>
         <button className='nav-buttons'><NavLink className="navlink" to="/dashboard">Settings</NavLink></button>
+        <button className='nav-buttons'><NavLink className="navlink" to="/dashboard/reports">Reports</NavLink></button>
       </div>
       <div className='login-part'>
-        {/* {!user.id &&
-          <button className='nav-buttons'><NavLink className="navlink" to="/login">Login</NavLink></button>
-        } */}
-
         {user.id && !user.access && 
           <div className='user-log'>
             <div className='welcome-text'>
               <span>Welcome, </span>
               <span>{user.firstname}!</span>
             </div>
-            {/* <NavLink to="#" className='menu-bars'>
-              <FontAwesomeIcon className='bar' icon="fa-solid fa-grip-lines" onClick={() => showSidebar()} />
-            </NavLink> */}
           </div>
         }
-        {/* <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-          <div 
-            className='nav-menu-items'
-            onClick={() => showSidebar()}
-            onMouseLeave={() => setSidebar(false)}
-          >
-            <button className='btn-logout' onClick={() => {setUser({})}}>Logout</button>
-            <button className='btn-logout'><NavLink className="navlink" to={`/appointments/${user.id}`}>Appointments</NavLink></button>
-          </div>
-        </nav> */}
       </div>
     </div>
   )

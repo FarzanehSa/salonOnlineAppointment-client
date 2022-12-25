@@ -17,7 +17,7 @@ const FirstAvailable = ({selectedDay, searchFirstAvailability, handleChangeDate}
   useEffect (() => {
 
     const maxDate = new Date(selectedDay);
-    console.log(maxDate);
+    // console.log(maxDate);
     // search in next 30 days
     maxDate.setDate(maxDate.getDate() + 30);
     const dateObj = new Date(tempData.receivedDate)
