@@ -1,5 +1,5 @@
-import {useState, useEffect} from 'react';
-import { Routes, Route, useMatch, Navigate, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Routes, Route, useMatch } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -29,7 +29,6 @@ import AvailabilityDashboard from './components/dashboard/AvailabilityDashboard'
 import DashboardReports from './components/dashboard/DashboardReports';
 
 import './App.scss';
-import es from 'date-fns/esm/locale/es/index.js';
 
 function App() {
 

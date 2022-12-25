@@ -160,7 +160,6 @@ const EmployeeDashboard = ({setStylists}) => {
 
   const handleChangeAddSkill = (event) => {
     const id = Number(event.target.value);
-    const name = event.target.name;
     const checked = event.target.checked;
     setAddSkillsForm(addSkillsForm.map(row => {
       if (row.id === id ) return {...row, select: checked}
@@ -176,7 +175,6 @@ const EmployeeDashboard = ({setStylists}) => {
 
   const handleChangeEditSkill = (event) => {
     const id = Number(event.target.value);
-    const name = event.target.name;
     const checked = event.target.checked;
     setEditSkillsForm(editSkillsForm.map(row => {
       if (row.id === id ) return {...row, select: checked}

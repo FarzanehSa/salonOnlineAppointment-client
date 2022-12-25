@@ -1,5 +1,4 @@
-import {React, useContext, useEffect, useState} from 'react';
-import { NavLink, Navigate, useNavigate} from 'react-router-dom';
+import {React, useState} from 'react';
 import axios from 'axios';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,7 +8,6 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import { styled } from '@mui/material/styles';
 
-import GeneralContext from "../../contexts/GeneralContext";
 import './AdminLogin.scss';
 
 const CssTextField = styled(TextField)({

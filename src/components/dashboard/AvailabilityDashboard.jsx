@@ -2,17 +2,12 @@ import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import Modal from 'react-modal';
 
-import moment from 'moment';
 import { TimePicker } from 'antd';
 import dayjs from 'dayjs';
 
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import InputAdornment from '@mui/material/InputAdornment';
 
 import GeneralContext from "../../contexts/GeneralContext";
 import ConfirmAddModal from "./ConfirmAddModal";
@@ -45,7 +40,7 @@ const CssSelect = styled(Select)({
 
 const AvailabilityDashboard = () => {
 
-  const { serviceGroups, services, stylists } = useContext(GeneralContext);
+  const { stylists } = useContext(GeneralContext);
 
   const [openHours, setOpenHours] = useState([]);
   const [searchForm, setSearchForm] = useState({stylist: ""});

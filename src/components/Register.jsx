@@ -1,5 +1,5 @@
 import {React, useContext, useEffect} from 'react';
-import { NavLink, Navigate, useNavigate} from 'react-router-dom';
+import { NavLink, useNavigate} from 'react-router-dom';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -44,13 +44,13 @@ const Register = ({onRegister, error, setError}) => {
 
   useEffect(() => {
     setError('');
-  }, []);
+  }, []); // eslint-disable-line
 
   useEffect(() => {
     if (user.id) {
       navigate(-1);
     }
-  }, [user]);
+  }, [user]); // eslint-disable-line
 
   return (
     <div className='login-modal'>

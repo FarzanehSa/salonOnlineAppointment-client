@@ -1,7 +1,5 @@
-import {React, useContext, useState} from 'react';
+import { React, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import GeneralContext from "../../contexts/GeneralContext";
 import './NavbarAdmin.scss';
