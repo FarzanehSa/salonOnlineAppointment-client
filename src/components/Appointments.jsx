@@ -29,7 +29,7 @@ const Appointments = () => {
   const time = new Date().toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });
 
   const getPastApps = () => {
-    axios.get(`http://localhost:7100/api/appointments/${user.id}`, {
+    axios.get(`${url}/api/appointments/${user.id}`, {
       params: {date, time, status: "past"}
     })
     .then(res => {
@@ -39,7 +39,7 @@ const Appointments = () => {
   }
 
   const getComingApps = () => {
-    axios.get(`http://localhost:7100/api/appointments/${user.id}`, {
+    axios.get(`${url}/api/appointments/${user.id}`, {
       params: { date, time, status: "coming"}
     })
     .then(res => {
@@ -58,7 +58,7 @@ const Appointments = () => {
   }
 
   const onConfirm = (id) => {
-    axios.delete(`http://localhost:7100/api/appointments/${id}`)
+    axios.delete(`${url}/api/appointments/${id}`)
     .then(res => {
       console.log(res.data);
       setDeleteApp({});

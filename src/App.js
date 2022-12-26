@@ -71,9 +71,9 @@ function App() {
       setUser(user);
     }
 
-    const f1 = axios.get('http://localhost:7100/api/stylists');
-    const f2 = axios.get('http://localhost:7100/api/service-groups');
-    const f3 = axios.get('http://localhost:7100/api/spec/storeinfo');
+    const f1 = axios.get(`${url}/api/stylists`);
+    const f2 = axios.get(`${url}/api/service-groups`);
+    const f3 = axios.get(`${url}/api/spec/storeinfo`);
 
 
     Promise.all([f1, f2, f3])
@@ -123,7 +123,7 @@ function App() {
   }
 
   const onRegister = (formData) => {
-    axios.post(`http://localhost:7100/api/register`, {info: {...formData}})
+    axios.post(`${url}/api/register`, {info: {...formData}})
     .then(res => {
       if (res.data.errorCode) {
         setLoginErrorMsg("This email had sign up before, please login to your account.")
@@ -137,7 +137,7 @@ function App() {
   }
 
   const onLogin = (formData) => {
-    axios.post(`http://localhost:7100/api/login`, {info: {...formData}})
+    axios.post(`${url}/api/login`, {info: {...formData}})
     .then(res => {
       if (res.data.errorCode) {
         setLoginErrorMsg(res.data.errorMsg)
@@ -182,7 +182,7 @@ function App() {
 
   const onSearch = function(bookingReqs, receivedDate) {
     const day = new Date(receivedDate).toLocaleString('en-us', {weekday:'long'})
-    axios.post(`http://localhost:7100/api/booking`, {bookingReqs, day, date: receivedDate})
+    axios.post(`${url}/api/booking`, {bookingReqs, day, date: receivedDate})
     .then(res => {
       const temp = checkAvailability(res.data.options, res.data.booked)
       setAllSpots(temp);
@@ -223,7 +223,7 @@ function App() {
   }
   
   const handleSendRequest = function(info) {
-    axios.post(`http://localhost:7100/api/booking/save`, {tasks: info, user: user})
+    axios.post(`${url}/api/booking/save`, {tasks: info, user: user})
     .then(res => {
       setSuccessBookInfo(res.data)
       setFormReqBook([{service: "", stylists: []}]);

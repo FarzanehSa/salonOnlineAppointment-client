@@ -90,7 +90,7 @@ const ServiceGroupDashboard = ({setServiceGroups}) => {
   }
 
   const onConfirmAdd = () => {
-    axios.post(`http://localhost:7100/api/service-groups`, {group: addGroupForm})
+    axios.post(`${url}/api/service-groups`, {group: addGroupForm})
     .then(res => {
       setServiceGroups(res.data.updateGroups);
     })
@@ -98,7 +98,7 @@ const ServiceGroupDashboard = ({setServiceGroups}) => {
   }
 
   const onConfirmEdit = () => {
-    axios.put(`http://localhost:7100/api/service-groups`, {group: editGroupForm})
+    axios.put(`${url}/api/service-groups`, {group: editGroupForm})
     .then(res => {
       const newGroup = serviceGroups.map(row => {
         return (row.id === res.data.updated.id ? {...row, group: res.data.updated.name} : row)
@@ -110,7 +110,7 @@ const ServiceGroupDashboard = ({setServiceGroups}) => {
   }
 
   const onConfirmDelete = () => {
-    axios.delete(`http://localhost:7100/api/service-groups/${deletedGroup}`)
+    axios.delete(`${url}/api/service-groups/${deletedGroup}`)
     .then(res => {
       const newGroup = serviceGroups.filter(row => row.id !== res.data.deleted.id);
       setServiceGroups(newGroup);

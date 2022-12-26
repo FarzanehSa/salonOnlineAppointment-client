@@ -43,7 +43,7 @@ const Login = ({setUser}) => {
 
   const onLogin = (event) => {
     event.preventDefault();
-    axios.post(`http://localhost:7100/api/login`, {info: {...loginForm}})
+    axios.post(`${url}/api/login`, {info: {...loginForm}})
     .then(res => {
       if (res.data.errorCode) {
         setError(res.data.errorMsg);

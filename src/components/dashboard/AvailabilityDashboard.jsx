@@ -63,14 +63,14 @@ const AvailabilityDashboard = () => {
   const format = 'HH:mm';
 
   useEffect(() => {
-    axios.get('http://localhost:7100/api/spec/open-hours')
+    axios.get(`${url}/api/spec/open-hours`)
     .then(res => {
       setOpenHours(res.data.openHours);
     })
   }, []);
 
   useEffect(() => {
-    axios.get(`http://localhost:7100/api/availability/${searchForm.stylist}`, {
+    axios.get(`${url}/api/availability/${searchForm.stylist}`, {
     })
     .then(res => {
       // console.log(res.data);
@@ -283,7 +283,7 @@ const AvailabilityDashboard = () => {
   }
 
   const onConfirmAdd = () => {
-    axios.post(`http://localhost:7100/api/availability/${searchForm.stylist}`, {ava: availabilityForm})
+    axios.post(`${url}/api/availability/${searchForm.stylist}`, {ava: availabilityForm})
     .then(res => {
       setAvailability(res.data.availability);
       onCancelAdd();

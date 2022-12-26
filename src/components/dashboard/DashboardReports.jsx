@@ -100,7 +100,7 @@ const DashboardReports = () => {
   const handleSearch = (event) => {
     event.preventDefault();
     setSParams({...searchForm});
-    axios.get(`http://localhost:7100/api/report`, {
+    axios.get(`${url}/api/report`, {
       params: {...searchForm}
     })
     .then(res => {

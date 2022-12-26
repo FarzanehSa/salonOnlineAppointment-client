@@ -160,7 +160,7 @@ const ServiceDashboard = ({setServices}) => {
   }
 
   const onConfirmAdd = () => {
-    axios.post(`http://localhost:7100/api/services`, {...addServiceForm, service: addServiceForm.service.trim(), description: addServiceForm.description.trim()})
+    axios.post(`${url}/api/services`, {...addServiceForm, service: addServiceForm.service.trim(), description: addServiceForm.description.trim()})
     .then(res => {
       setServices(res.data.newServices);
     })
@@ -168,7 +168,7 @@ const ServiceDashboard = ({setServices}) => {
   }
 
   const onConfirmEdit = () => {
-    axios.put(`http://localhost:7100/api/services`, {...editServiceForm, service: editServiceForm.service.trim(), description: editServiceForm.description.trim()})
+    axios.put(`${url}/api/services`, {...editServiceForm, service: editServiceForm.service.trim(), description: editServiceForm.description.trim()})
     .then(res => {
       setServices(res.data.newServices);
     })
@@ -176,7 +176,7 @@ const ServiceDashboard = ({setServices}) => {
   }
 
   const onConfirmDelete = () => {
-    axios.delete(`http://localhost:7100/api/services/${deletedService}`)
+    axios.delete(`${url}/api/services/${deletedService}`)
     .then(res => {
       const newServices = services.filter(row => row.id !== res.data.deleted.id);
       setServices(newServices);

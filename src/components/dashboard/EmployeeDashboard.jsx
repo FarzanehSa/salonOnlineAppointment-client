@@ -88,7 +88,7 @@ const EmployeeDashboard = ({setStylists}) => {
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
-    axios.get('http://localhost:7100/api/spec/levels')
+    axios.get(`${url}/api/spec/levels`)
     .then(res => {
       setLevels(res.data.levels);
     })
@@ -190,7 +190,7 @@ const EmployeeDashboard = ({setStylists}) => {
   };
 
   const onConfirmAdd = () => {
-    axios.post(`http://localhost:7100/api/stylists`, {stylist:{...addEmployeeForm}, skills:[...addSkillsForm]})
+    axios.post(`${url}/api/stylists`, {stylist:{...addEmployeeForm}, skills:[...addSkillsForm]})
     .then(res => {
       // console.log(res.data);
       setStylists(res.data.stylists);
@@ -200,7 +200,7 @@ const EmployeeDashboard = ({setStylists}) => {
   }
 
   const onConfirmEdit = () => {
-    axios.put(`http://localhost:7100/api/stylists`, {stylist:{...editEmployeeForm}, skills:[...editSkillsForm]})
+    axios.put(`${url}/api/stylists`, {stylist:{...editEmployeeForm}, skills:[...editSkillsForm]})
     .then(res => {
       setStylists(res.data.stylists);
     })
@@ -209,7 +209,7 @@ const EmployeeDashboard = ({setStylists}) => {
   }
 
   const onConfirmDelete = () => {
-    axios.delete(`http://localhost:7100/api/stylists/${deletedEmployee}`)
+    axios.delete(`${url}/api/stylists/${deletedEmployee}`)
     .then(res => {
       const newStylists = stylists.filter(row => row.id !== res.data.deleted.id);
       setStylists(newStylists);
