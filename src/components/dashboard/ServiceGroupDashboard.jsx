@@ -34,7 +34,7 @@ const CssTextField = styled(TextField)({
 
 const ServiceGroupDashboard = ({setServiceGroups}) => {
 
-  const { serviceGroups } = useContext(GeneralContext);
+  const { serviceGroups, url } = useContext(GeneralContext);
 
   const [addGroupForm, setAddGroupForm] = useState({serviceGroup: ""});
   const [editGroupForm, setEditGroupForm] = useState({id:"", serviceGroup: ""});

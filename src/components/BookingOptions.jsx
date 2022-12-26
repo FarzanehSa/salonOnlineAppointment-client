@@ -44,7 +44,7 @@ const groupServiceReqs = (arr) => {
 
 const BookingOptions = ({formReqBook, selectedDay, timeClicked, handleChangeDate}) => {
 
-  const { allSpots, timeTable } = useContext(GeneralContext);
+  const { allSpots, timeTable, url } = useContext(GeneralContext);
 
   const calEndTime = (time, duration) => {
     const estimateEnd = new Date(new Date("1970/01/01 " + time).getTime() + duration * 60000).toLocaleTimeString('en-UK', { hour: '2-digit', minute: '2-digit', hour12: false });

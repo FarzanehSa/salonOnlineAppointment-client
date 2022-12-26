@@ -60,6 +60,7 @@ function App() {
   const [wantToBook, setWantToBook] = useState({});
   const [loginErrormsg, setLoginErrorMsg] = useState('');
 
+  // const [url, setUrl] = useState("http://localhost:7100");
   const [url, setUrl] = useState("https://salon-online-booking-production.up.railway.app");
 
   // use this to change the navbar
@@ -69,6 +70,12 @@ function App() {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
       setUser(user);
+    }
+
+    if (process.env.REACT_APP_API_BASE_URL) {
+      setUrl("https://salon-online-booking-production.up.railway.app");
+    } else {
+      setUrl("http://localhost:7100");
     }
 
     const f1 = axios.get(`${url}/api/stylists`);
@@ -106,12 +113,6 @@ function App() {
       setAdminLogin(false);
     }
   }, [user, matchDashboard]);
-
-  if (process.env.REACT_APP_API_BASE_URL) {
-    setUrl("https://salon-online-booking-production.up.railway.app");
-  } else {
-    setUrl("http://localhost:7100");
-  }
 
   const reqClicked = function(serviceId) {
     setFormReqBook(pre => ([{service: serviceId, stylists: []}]));
@@ -256,7 +257,7 @@ function App() {
 
   return (
     <main className="layout">
-      <GeneralContext.Provider value={{ stylists, availability, serviceGroups, services, allSpots, allBooked, setAllBooked, setAllSpots, user, timeTable, storeInfo }}>
+      <GeneralContext.Provider value={{ stylists, availability, serviceGroups, services, allSpots, allBooked, setAllBooked, setAllSpots, user, timeTable, storeInfo, url }}>
 
         {matchDashboard && (!user.id || user.access !== 0) && <NavbarAdmin zIndex={-1}/>}
         {matchDashboard && user.id && !user.access && <NavbarAdmin zIndex={1100}/>}

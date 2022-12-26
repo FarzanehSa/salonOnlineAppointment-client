@@ -74,7 +74,7 @@ const DashboardReports = () => {
   let tomorrow =  new Date();
   tomorrow.setDate(today.getDate() + 1);
 
-  const { services, stylists } = useContext(GeneralContext);
+  const { services, stylists, url } = useContext(GeneralContext);
   const [searchForm, setSearchForm] = useState({stylist: "all", service: "all", date: null, dateAfter: today});
   const [result, setResult] = useState([]);
   const [sParams, setSParams] = useState({});

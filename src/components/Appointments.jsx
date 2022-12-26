@@ -18,7 +18,7 @@ import './Appointments.scss';
 
 const Appointments = () => {
 
-  const { user } = useContext(GeneralContext);
+  const { user, url } = useContext(GeneralContext);
   const [pastAppointments, setPastAppointments] = useState([]);
   const [comingAppointments, setComingAppointments] = useState([]);
   const [showApps, setShowApps] = useState({past: false, coming: false});

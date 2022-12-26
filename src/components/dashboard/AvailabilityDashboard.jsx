@@ -40,7 +40,7 @@ const CssSelect = styled(Select)({
 
 const AvailabilityDashboard = () => {
 
-  const { stylists } = useContext(GeneralContext);
+  const { stylists, url } = useContext(GeneralContext);
 
   const [openHours, setOpenHours] = useState([]);
   const [searchForm, setSearchForm] = useState({stylist: ""});

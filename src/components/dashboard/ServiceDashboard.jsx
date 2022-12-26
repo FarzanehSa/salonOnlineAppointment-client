@@ -62,7 +62,7 @@ const CssSelect = styled(Select)({
 
 const ServiceDashboard = ({setServices}) => {
 
-  const { serviceGroups, services } = useContext(GeneralContext);
+  const { serviceGroups, services, url } = useContext(GeneralContext);
   
   const [addServiceForm, setAddServiceForm] = useState({groupId:"", service:"", price:"", description:"", duration:""});
   const [editServiceForm, setEditServiceForm] = useState({id:"", groupId:"", service:"", price:"", description:"", duration:""});

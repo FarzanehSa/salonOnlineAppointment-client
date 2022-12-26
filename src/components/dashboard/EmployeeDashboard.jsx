@@ -66,7 +66,7 @@ const CssSelect = styled(Select)({
 
 const EmployeeDashboard = ({setStylists}) => {
 
-  const { serviceGroups, stylists } = useContext(GeneralContext);
+  const { serviceGroups, stylists, url } = useContext(GeneralContext);
 
   const [levels, setLevels] = useState([])
   const [addEmployeeForm, setAddEmployeeForm] = useState({name:"", image:"", bio:"", level:""});
