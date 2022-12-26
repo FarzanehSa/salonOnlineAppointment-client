@@ -4,9 +4,43 @@ import { NavLink } from 'react-router-dom';
 
 import GeneralContext from "../contexts/GeneralContext";
 
-import {groupServiceReqsN} from '../helper/groupServiceReqs'
+// import {groupServiceReqsN} from '../helper/groupServiceReqs'
 
 import  FirstAvailable from './FirstAvailable';
+
+const helper = (arr, result) => {
+
+  if (result.length === 0) {
+    for (const e of arr) {
+      result.push([e])
+    } 
+    return result;
+  }
+
+  const temp = []
+  for (let i = 0; i < result.length; i++) {
+    for (const e of arr) {
+      // console.log(e);
+      if (e.goodGap.length !== 0) {
+        temp.push([...result[i], e])
+      }
+    }
+  }
+  return temp
+}
+
+const groupServiceReqs = (arr) => {
+  let result = [];
+  const notValid = arr.filter(task => task.length === 0).length
+  if (notValid) return result;
+
+  for (const e of arr) {
+    result = helper(e, result)
+    // console.log('💇🏻‍♀️',result);
+  }
+  return result;
+}
+
 
 const BookingOptions = ({formReqBook, selectedDay, timeClicked, handleChangeDate}) => {
 
@@ -26,7 +60,7 @@ const BookingOptions = ({formReqBook, selectedDay, timeClicked, handleChangeDate
     }
   }
 
-  let updateAllSpotts = groupServiceReqsN(copyAllSpots);
+  let updateAllSpotts = groupServiceReqs(copyAllSpots);
   updateAllSpotts = updateAllSpotts.map((optionGroup) => {
     const len = optionGroup.length;
     let times = [];
@@ -168,7 +202,7 @@ const searchFirstAvailability = (tempData, setTempData) => {
   .then(res => {
     const temp = checkAvailability(res.data.options, res.data.booked)
 
-    let updateAllSpotts = groupServiceReqsN(temp).map((optionGroup, index) => {
+    let updateAllSpotts = groupServiceReqs(temp).map((optionGroup, index) => {
       const len = optionGroup.length;
       let times = [];
 
