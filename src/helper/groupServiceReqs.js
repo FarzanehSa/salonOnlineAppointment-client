@@ -19,7 +19,7 @@ const helper = (arr, result) => {
   return temp
 }
 
-const groupServiceReqs = (arr) => {
+const groupServiceReqsN = (arr) => {
   let result = [];
   const notValid = arr.filter(task => task.length === 0).length
   if (notValid) return result;
@@ -31,4 +31,4 @@ const groupServiceReqs = (arr) => {
   return result;
 }
 
-module.exports = {groupServiceReqs};
+module.exports = {groupServiceReqsN};
