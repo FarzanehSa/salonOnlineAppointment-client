@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { NavLink } from 'react-router-dom';
 
 import GeneralContext from "../contexts/GeneralContext";
-import './Stylists.scss';
+import './StylistsN.scss';
 
 const Stylists = () => {
 
