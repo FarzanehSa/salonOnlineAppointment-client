@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import GeneralContext from "../contexts/GeneralContext";
 
-import {groupServiceReqs} from '../helper/groupServiceReqsN'
+import {groupServiceReqsN} from '../helper/groupServiceReqs'
 
 import  FirstAvailable from './FirstAvailable';
 
@@ -26,7 +26,7 @@ const BookingOptions = ({formReqBook, selectedDay, timeClicked, handleChangeDate
     }
   }
 
-  let updateAllSpotts = groupServiceReqs(copyAllSpots);
+  let updateAllSpotts = groupServiceReqsN(copyAllSpots);
   updateAllSpotts = updateAllSpotts.map((optionGroup) => {
     const len = optionGroup.length;
     let times = [];
@@ -168,7 +168,7 @@ const searchFirstAvailability = (tempData, setTempData) => {
   .then(res => {
     const temp = checkAvailability(res.data.options, res.data.booked)
 
-    let updateAllSpotts = groupServiceReqs(temp).map((optionGroup, index) => {
+    let updateAllSpotts = groupServiceReqsN(temp).map((optionGroup, index) => {
       const len = optionGroup.length;
       let times = [];
 
