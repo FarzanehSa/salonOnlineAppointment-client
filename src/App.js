@@ -60,6 +60,8 @@ function App() {
   const [wantToBook, setWantToBook] = useState({});
   const [loginErrormsg, setLoginErrorMsg] = useState('');
 
+  const [url, setUrl] = useState("https://salon-online-booking-production.up.railway.app");
+
   // use this to change the navbar
   const matchDashboard = useMatch('/dashboard/*');
 
@@ -104,6 +106,12 @@ function App() {
       setAdminLogin(false);
     }
   }, [user, matchDashboard]);
+
+  if (process.env.REACT_APP_API_BASE_URL) {
+    setUrl("https://salon-online-booking-production.up.railway.app");
+  } else {
+    setUrl("http://localhost:7100");
+  }
 
   const reqClicked = function(serviceId) {
     setFormReqBook(pre => ([{service: serviceId, stylists: []}]));
