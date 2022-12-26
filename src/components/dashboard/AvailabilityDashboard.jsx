@@ -67,7 +67,7 @@ const AvailabilityDashboard = () => {
     .then(res => {
       setOpenHours(res.data.openHours);
     })
-  }, []);
+  }, []); // eslint-disable-line
 
   useEffect(() => {
     axios.get(`${url}/api/availability/${searchForm.stylist}`, {
@@ -76,7 +76,7 @@ const AvailabilityDashboard = () => {
       // console.log(res.data);
       setAvailability(res.data.availability)
     })
-  }, [searchForm]);
+  }, [searchForm]); // eslint-disable-line
 
   const handleChangeSearch = (event) => {
     const {name, value} = event.target;

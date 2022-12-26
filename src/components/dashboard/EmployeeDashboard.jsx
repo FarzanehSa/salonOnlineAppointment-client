@@ -92,7 +92,7 @@ const EmployeeDashboard = ({setStylists}) => {
     .then(res => {
       setLevels(res.data.levels);
     })
-  }, []);
+  }, []); // eslint-disable-line
 
   useEffect(() => {
     const groups = serviceGroups.map(row => {
