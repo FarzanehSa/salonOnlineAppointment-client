@@ -1,6 +1,5 @@
 const helper = (arr, result) => {
 
-
   if (result.length === 0) {
     for (const e of arr) {
       result.push([e])

@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 
 import GeneralContext from "../contexts/GeneralContext";
 
-import {groupServiceReqs} from '../helper/groupServiceReqs'
+import {groupServiceReqs} from '../helper/groupServiceReqsN'
 
 import  FirstAvailable from './FirstAvailable';
 
