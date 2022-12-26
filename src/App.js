@@ -92,7 +92,7 @@ function App() {
         setServices(prev => r2.data.services);
         setStoreInfo(prev => r3.data.storeInfo);
       });
-    }, []);
+    }, []); // eslint-disable-line
 
   useEffect(() => {
     document.title = title;
