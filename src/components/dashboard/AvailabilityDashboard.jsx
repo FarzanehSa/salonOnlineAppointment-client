@@ -294,9 +294,9 @@ const AvailabilityDashboard = () => {
     setModalUpdateIsOpen(false);
   }
 
-  console.log('openHours', openHours);
-  console.log('availabilityForm', availabilityForm);
-  console.log('availability', availability);
+  // console.log('openHours', openHours);
+  // console.log('availabilityForm', availabilityForm);
+  // console.log('availability', availability);
 
   return (
     <div className="availability-dashboard-page">

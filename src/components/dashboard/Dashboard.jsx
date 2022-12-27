@@ -11,25 +11,25 @@ const Dashboard = () => {
       <NavLink to="/dashboard/service-group">
         <button className="btn-setting">
           <div className="sign"><FontAwesomeIcon icon="fa-solid fa-gear" /></div>
-          <span>Service Group</span>
+          <span>Service Groups</span>
         </button>
       </NavLink>
       <NavLink to="/dashboard/service">
         <button className="btn-setting">
           <div className="sign"><FontAwesomeIcon icon="fa-solid fa-gear" /></div>
-          <span>Service</span>
+          <span>Services</span>
         </button>
       </NavLink>
       <NavLink to="/dashboard/employee">
         <button className="btn-setting">
           <div className="sign"><FontAwesomeIcon icon="fa-solid fa-gear" /></div>
-          <span>Employee</span>
+          <span>Stylists</span>
         </button>
       </NavLink>
       <NavLink to="/dashboard/availability">
         <button className="btn-setting">
           <div className="sign"><FontAwesomeIcon icon="fa-solid fa-gear" /></div>
-          <span>Availability</span>
+          <span>Stylist's Availabilities</span>
         </button>
       </NavLink>
     </div>

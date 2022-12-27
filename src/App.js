@@ -27,6 +27,8 @@ import ServiceDashboard from './components/dashboard/ServiceDashboard';
 import EmployeeDashboard from './components/dashboard/EmployeeDashboard';
 import AvailabilityDashboard from './components/dashboard/AvailabilityDashboard';
 import DashboardReports from './components/dashboard/DashboardReports';
+import DashboardAppointmentsReport from './components/dashboard/DashboardAppointmentsReport';
+import DashboardCustomersReport from './components/dashboard/DashboardCustomersReport';
 
 import { API_BASE_URL } from './config';
 import './App.scss';
@@ -69,7 +71,7 @@ function App() {
 
   
   useEffect(() => {
-    console.log('Salon App, 💫 v.01');
+    console.log('Salon App, 💫 v.02');
 
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
@@ -306,6 +308,8 @@ function App() {
             <Route path='/dashboard/employee' element={<EmployeeDashboard setStylists={setStylists}/>}/>
             <Route path='/dashboard/availability' element={<AvailabilityDashboard />}/>
             <Route path='/dashboard/reports' element={<DashboardReports />}/>
+            <Route path='/dashboard/reports/appointments' element={<DashboardAppointmentsReport />}/>
+            <Route path='/dashboard/reports/customers' element={<DashboardCustomersReport />}/>
           </Routes>
         </div>
 

@@ -1,9 +1,9 @@
 @import "../../styles/variables.scss";
 
 .dashboard-page {
-  margin-top: 200px;
+  margin-top: 150px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
 
   .btn-setting {
@@ -13,7 +13,7 @@
     font-size: 1.2em;
     color: black;
     cursor: pointer;
-    margin: 0em 1em 0em 1em;
+    margin: 1.5em 1em 1.5em 1em;
 
     &:hover {
       color: LightSeaGreen;
@@ -27,7 +27,7 @@
 
 @media only screen and (max-width: 960px) {
   .dashboard-page {
-    margin-top: 150px;
+    margin-top: 120px;
     flex-wrap: wrap;
   
     .btn-setting {
@@ -37,7 +37,7 @@
       font-size: 1em;
       color: black;
       cursor: pointer;
-      margin: 0em 1em 0em 1em;
+      margin: 1em 0.7em 1em 0.7em;
   
       &:hover {
         color: LightSeaGreen;
@@ -51,7 +51,7 @@
 }
 @media only screen and (max-width: 500px) {
   .dashboard-page {
-    margin-top: 150px;
+    margin-top: 120px;
     flex-wrap: wrap;
   
     .btn-setting {
@@ -61,7 +61,7 @@
       font-size: 0.9em;
       color: black;
       cursor: pointer;
-      margin: 0em 1em 0em 1em;
+      margin: 0.7em 0.5em 0.7em 0.5em;
   
       &:hover {
         color: LightSeaGreen;
