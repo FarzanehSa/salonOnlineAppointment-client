@@ -122,7 +122,7 @@ function App() {
   }
 
   const onRegister = (formData) => {
-    axios.post(`${url}/api/register`, {info: {...formData}})
+    axios.post(`${url}/api/register`, {info: {...formData, email: formData.email.toLowerCase()}})
     .then(res => {
       if (res.data.errorCode) {
         setLoginErrorMsg("This email had sign up before, please login to your account.")
@@ -136,7 +136,7 @@ function App() {
   }
 
   const onLogin = (formData) => {
-    axios.post(`${url}/api/login`, {info: {...formData}})
+    axios.post(`${url}/api/login`, {info: {...formData, email: formData.email.toLowerCase()}})
     .then(res => {
       if (res.data.errorCode) {
         setLoginErrorMsg(res.data.errorMsg)
