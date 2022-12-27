@@ -28,6 +28,7 @@ import EmployeeDashboard from './components/dashboard/EmployeeDashboard';
 import AvailabilityDashboard from './components/dashboard/AvailabilityDashboard';
 import DashboardReports from './components/dashboard/DashboardReports';
 
+import { API_BASE_URL } from './config';
 import './App.scss';
 
 function App() {
@@ -61,21 +62,18 @@ function App() {
   const [loginErrormsg, setLoginErrorMsg] = useState('');
 
   // const [url, setUrl] = useState("http://localhost:7100");
-  const [url, setUrl] = useState("https://salon-online-booking-production.up.railway.app");
+  const url = API_BASE_URL;
 
   // use this to change the navbar
   const matchDashboard = useMatch('/dashboard/*');
 
+  
   useEffect(() => {
+    console.log('Salon App, 💫 v.01');
+
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
       setUser(user);
-    }
-
-    if (process.env.REACT_APP_API_BASE_URL) {
-      setUrl("https://salon-online-booking-production.up.railway.app");
-    } else {
-      setUrl("http://localhost:7100");
     }
 
     const f1 = axios.get(`${url}/api/stylists`);
@@ -240,7 +238,6 @@ function App() {
       toast(`Something goes wrong, please try again later!`, {type: 'error'});
       console.log(error.message);
     })
-
   }
 
   // console.log('👨🏼‍🎨👩‍🎨', stylists, availability);
@@ -253,7 +250,6 @@ function App() {
   // console.log('❌❌❌ loginErrorMsg \n', loginErrormsg);
   // console.log('🦋 user \n', user);
   // console.log('🛖 storeInfo \n', storeInfo);
-
 
   return (
     <main className="layout">
