@@ -389,7 +389,7 @@ const EmployeeDashboard = ({setStylists}) => {
                 className="input-name"
               />
             </div>
-            <div className="input-level">
+            <div className="input-group">
               <span>Level: </span>    
               <CssSelect
                 required
