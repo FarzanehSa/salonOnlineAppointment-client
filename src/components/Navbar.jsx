@@ -20,7 +20,9 @@ const Navbar = ({setUser}) => {
     <div className="navbar">
       <div className='logo-name'>
         <img className='logo-image' src={storeInfo.logo} alt="logo" />
-        <div className='logo-name' >{storeInfo.name}</div>
+        <div className='logo-name'>
+          <NavLink className="navlink" to="/">{storeInfo.name}</NavLink>
+        </div>
       </div>
       <div className='main-links'>
         <button className='nav-buttons'><NavLink className="navlink" to="/services">Services</NavLink></button>
