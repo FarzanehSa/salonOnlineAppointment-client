@@ -70,12 +70,14 @@ const AvailabilityDashboard = () => {
   }, []); // eslint-disable-line
 
   useEffect(() => {
-    axios.get(`${url}/api/availability/${searchForm.stylist}`, {
-    })
-    .then(res => {
-      // console.log(res.data);
-      setAvailability(res.data.availability)
-    })
+    if (searchForm.stylist) {
+      axios.get(`${url}/api/availability/${searchForm.stylist}`, {
+      })
+      .then(res => {
+        // console.log(res.data);
+        setAvailability(res.data.availability)
+      })
+    }
   }, [searchForm]); // eslint-disable-line
 
   const handleChangeSearch = (event) => {

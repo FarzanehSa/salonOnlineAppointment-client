@@ -185,7 +185,6 @@ function App() {
     const day = new Date(receivedDate).toLocaleString('en-us', {weekday:'long'})
     axios.post(`${url}/api/booking`, {bookingReqs, day, date: receivedDate})
     .then(res => {
-
       console.log(res.data.options);
       const temp = checkAvailability(res.data.options, res.data.booked)
       setAllSpots(temp);
@@ -247,8 +246,8 @@ function App() {
   // console.log('👨🏼‍🎨👩‍🎨', stylists, availability);
   // console.log('✂️🪒', serviceGroups, services);
 
-  console.log('📖', allSpots);
-  console.log('📖❌', allBooked);
+  // console.log('📖', allSpots);
+  // console.log('📖❌', allBooked);
   // console.log('🧤 formReqBook \n', formReqBook);
   // console.log('👀👀 wanted to book \n', wantToBook);
   // console.log('❌❌❌ loginErrorMsg \n', loginErrormsg);
