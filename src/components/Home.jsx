@@ -20,7 +20,7 @@ const Home = () => {
         <div className="info-details">
           <div className="title">Salon</div>
           <div className="bio">
-            <span>{storeInfo.bio}</span>
+            <span className='bio-text'>{storeInfo.bio}</span>
           </div>
           <div className="address">
             <span className="text-address">{storeInfo.address}</span>
