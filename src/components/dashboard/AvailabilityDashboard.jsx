@@ -67,6 +67,9 @@ const AvailabilityDashboard = () => {
     .then(res => {
       setOpenHours(res.data.openHours);
     })
+    .catch(e => {
+      console.log(e.error);
+    })
   }, []); // eslint-disable-line
 
   useEffect(() => {
@@ -289,6 +292,9 @@ const AvailabilityDashboard = () => {
     .then(res => {
       setAvailability(res.data.availability);
       onCancelAdd();
+    })
+    .catch(e => {
+      console.log(e.error);
     })
   }
 
