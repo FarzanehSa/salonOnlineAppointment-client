@@ -294,7 +294,7 @@ const AvailabilityDashboard = () => {
       onCancelAdd();
     })
     .catch(e => {
-      console.log(e.error);
+      console.log(e);
     })
   }
 
