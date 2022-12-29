@@ -213,7 +213,6 @@ const searchFirstAvailability = (tempData, setTempData) => {
       }
   
       if (len === 0) {
-        console.log(optionGroup);
         return [{...optionGroup[0], timesAva: times}]
       } 
       // ---------------------------------------------

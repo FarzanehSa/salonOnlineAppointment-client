@@ -71,7 +71,7 @@ function App() {
 
   
   useEffect(() => {
-    console.log('Salon App, 💫 v.02');
+    console.log('Salon App, 💫 v.03');
 
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
@@ -185,7 +185,7 @@ function App() {
     const day = new Date(receivedDate).toLocaleString('en-us', {weekday:'long'})
     axios.post(`${url}/api/booking`, {bookingReqs, day, date: receivedDate})
     .then(res => {
-      console.log(res.data.options);
+      // console.log(res.data.options);
       const temp = checkAvailability(res.data.options, res.data.booked)
       setAllSpots(temp);
       setAllBooked(res.data.booked);

@@ -60,7 +60,6 @@ const Appointments = () => {
   const onConfirm = (id) => {
     axios.delete(`${url}/api/appointments/${id}`)
     .then(res => {
-      console.log(res.data);
       setDeleteApp({});
       const newApps = comingAppointments.filter(row => row.id !== res.data.deletedApp.id)
       setComingAppointments(newApps);
